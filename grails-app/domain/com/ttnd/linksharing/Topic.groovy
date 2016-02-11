@@ -16,6 +16,7 @@ class Topic {
         createdBy(nullable: false)
     }
 
-    static hasMany = [subscriptions: Subscription, resources: Resource]
     static belongsTo = [user: User]
+    static hasMany = [subscriptions: Subscription, resources: Resource]
+
 }
