@@ -31,3 +31,15 @@
 
 # "temporary" build files
 /target
+
+
+#iml files
+*.iml
+
+#idea folder
+/.idea
+
+#Non-sense Files
+.classpath
+.project
+/.slcache
