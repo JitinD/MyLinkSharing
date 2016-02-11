@@ -1,6 +1,8 @@
 class BootStrap {
 
-    def init = { servletContext ->
+    def grailsApplication
+    
+    def init = { servletContext -> println(grailsApplication.config.grails.sampleVariable)
     }
     def destroy = {
     }
