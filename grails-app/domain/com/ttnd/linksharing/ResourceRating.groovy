@@ -2,8 +2,6 @@ package com.ttnd.linksharing
 
 class ResourceRating {
 
-    //Resource resource;
-    //User user;
     Integer score;
     Date dateCreated;
     Date lastUpdated;
