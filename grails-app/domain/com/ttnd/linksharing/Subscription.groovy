@@ -13,7 +13,7 @@ class Subscription {
     static constraints = {
         user(nullable: false)
         topic(nullable: false, unique: ['user'])
-        seriousness(nullable: false)
+        seriousness(inList: Seriousness.values().toList(), nullable: false, blank: false)
     }
 
     static belongsTo = [topic: Topic, user: User]

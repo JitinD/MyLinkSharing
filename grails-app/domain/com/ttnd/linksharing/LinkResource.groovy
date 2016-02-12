@@ -6,6 +6,6 @@ class LinkResource extends Resource{
 
     static constraints = {
 
-        url(blank: false, nullable: false, url: true)
+        url(blank: false, nullable : true, url: true)
     }
 }

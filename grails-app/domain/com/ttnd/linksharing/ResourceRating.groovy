@@ -2,8 +2,8 @@ package com.ttnd.linksharing
 
 class ResourceRating {
 
-    Resource resource;
-    User user;
+    //Resource resource;
+    //User user;
     Integer score;
     Date dateCreated;
     Date lastUpdated;
@@ -14,5 +14,5 @@ class ResourceRating {
         score(nullable: false, min: 1, max: 5)
     }
 
-    static belongsTo = [resource: Resource]
+    static belongsTo = [resource: Resource, user: User]
 }
