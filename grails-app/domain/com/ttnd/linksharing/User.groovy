@@ -15,7 +15,7 @@ class User {
 
     static constraints = {
         userName(blank: false)
-        emailID(unique: true, blank: false, null: false, email: true)
+        emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
@@ -26,11 +26,19 @@ class User {
 
     }
 
-    static transients = ['name'];
+    //static transients = ['name'];
+
+    String getName()
+    {
+        return [firstName, lastName].findAll {it}.join(' ');
+    }
 
     static mapping = {
-        photo type : 'longblob'
+        photo sqlType : 'longblob'
     }
 
     static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources:Resource]
+
+
+
 }
