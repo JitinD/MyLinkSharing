@@ -2,6 +2,7 @@ package com.ttnd.linksharing
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
@@ -9,57 +10,76 @@ import spock.lang.Specification
 @TestFor(User)
 class UserSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
-
-    def "EmailID validated when"()
-    {
+    @Unroll
+    def "validating User basic constraints related to blank, nullable and size : #sno"() {
         setup:
         User user = new User(userName: userName, firstName: firstName, lastName: lastName, emailID: emailID, password: password);
 
         when:
-        Boolean result = user.validate()
+        Boolean isValid = user.validate()
 
         then:
-        result == valid
+        isValid == result
 
         where:
 
-        userName    |   firstName   |   lastName    |   emailID     |   password    |   valid
-        ""          |   ""          |   ""          |   ""          |   ""          |   false
-        "JitinD"    |   "Jitin"     |   "Dominic"   |   "jitin.dom" |   "sdfasfsdf" |   false
-        "JitinD"    |   "Jitin"     |   "Dominic"   |   "jit@m.com" |   "abcdefgh"  |   true
+        sno | userName       | firstName       | lastName       | emailID             | password       | isAdmin | isActive | photo         | result
+        1   | ""             | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        2   | null           | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        3   | "testUserName" | ""              | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        4   | "testUserName" | null            | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        5   | "testUserName" | "testFirstName" | ""             | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        6   | "testUserName" | "testFirstName" | null           | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        7   | "testUserName" | "testFirstName" | "testLastName" | ""                  | "testPassword" | true    | true     | "photo".bytes | false
+        8   | "testUserName" | "testFirstName" | "testLastName" | null                | "testPassword" | true    | true     | "photo".bytes | false
+        9   | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | ""             | true    | true     | "photo".bytes | false
+        10  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | null           | true    | true     | "photo".bytes | false
+        11  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | false   | true     | "photo".bytes | true
+        12  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
+        13  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | null    | true     | "photo".bytes | true
+        14  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | false    | "photo".bytes | true
+        15  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
+        16  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | null     | "photo".bytes | true
+        17  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "".bytes      | true
+        18  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | null          | true
+        19  | "testUserName" | "testFirstName" | "testLastName" | "testUsermail.com"  | "testPassword" | true    | true     | "photo".bytes | false
+        20  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "test"         | true    | true     | "photo".bytes | false
+        21  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
 
     }
 
 
-    def "Email address should be unique"()
-    {
+    def "validating email address is unique for users"() {
+
         setup:
-        String emailID = "jitin.dominic@gmail.com"
-        String password = '12345678'
-        User user = new User(firstName: "Jitin", lastName: "Dominic", emailID: emailID, password: password)
+        User user = new User(userName: "testUser1", firstName: "test", lastName: "user", emailID: "testUser@mail.com", password: "testPassword")
+        User newUser = new User(userName: "testUser1", firstName: "test", lastName: "user", emailID: "testUser@mail.com", password: "testPassword")
 
         when:
-        user.save()
+        user.save(flush: true)
+        newUser.save(flush: true)
 
         then:
-        User.count() == 1
-
-        when:
-        User newUser = new User(firstName: "Neha", lastName: "Gupta", emailID: emailID, password: password)
-        newUser.save()
-
-        then:
-        User.count() == 1
+        user.errors.allErrors.size() == 0
         newUser.errors.allErrors.size() == 1
-        newUser.errors.getFieldErrorCount('email') == 1
+        newUser.errors.getFieldErrorCount('emailID')
     }
+
+    def "validating full name of user"() {
+        setup:
+        User user = new User(firstName: firstName, lastName: lastName);
+
+        expect:
+        user.getName() == result
+
+        where:
+
+        firstName | lastName  | result
+        ""        | ""        | ""
+        "Jitin"   | "Dominic" | "Jitin Dominic"
+        null      | null      | ""
+
+    }
+
 
 }
