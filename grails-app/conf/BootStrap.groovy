@@ -16,9 +16,9 @@ class BootStrap {
 
         List<User> users = createUsers()
         List<Topic> topics = createTopics()
-        //createResources()
+        createResources()
         //subscribeTopics()
-        createReadingItems()
+        //createReadingItems()
 
     }
     def destroy = {
@@ -60,7 +60,7 @@ class BootStrap {
                         if (!user.topics?.count()) {
                             (1..5).each
                                     {
-                                        Topic topic = new Topic(name: "Topic" + it, visibility: Visibility.PUBLIC, createdBy: user)
+                                        Topic topic = new Topic(name: "Topic $it", visibility: Visibility.PUBLIC, createdBy: user)
                                         user.addToTopics(topic)
                                         topics.add(topic)
 
@@ -92,11 +92,15 @@ class BootStrap {
                         if (!topic.resources?.count()) {
                             2.times
                                     {
-                                        DocumentResource documentResource = new DocumentResource(description: topic.name + "Doc" + it, createdBy: topic.createdBy, filePath: "some/file/path")
-                                        LinkResource linkResource = new LinkResource(description: topic.name + "Doc" + it, createdBy: topic.createdBy, url: "http://www.someurl.com")
+                                        Resource documentResource = new DocumentResource(description: "${topic.name}Doc${it}", createdBy: topic.createdBy, filePath: "some/file/path")
+                                        Resource linkResource = new LinkResource(description: "${topic.name}Doc${it}", createdBy: topic.createdBy, url: "http://www.someurl.com")
 
                                         if (documentResource.save() && linkResource.save())
+                                        {
+                                            topic.addToResources(documentResource)
+                                            topic.addToResources(linkResource)
                                             log.info "${documentResource} and ${linkResource} saved successfully"
+                                        }
                                         else
                                             log.error "Error saving ${documentResource.errors.allErrors} and ${linkResource.errors.allErrors}"
                                     }

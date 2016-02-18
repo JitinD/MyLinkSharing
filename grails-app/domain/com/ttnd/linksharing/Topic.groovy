@@ -31,9 +31,9 @@ class Topic {
                             Subscription subscription = new Subscription(user: this.createdBy, topic: this, seriousness: Seriousness.VERY_SERIOUS)
 
                             if(subscription.save())
-                                log.info "Subscriptions saved successfully"
+                                log.info "${subscription} saved successfully"
                             else
-                                log.info "Error while saving subscriptions"
+                                log.error "Error saving ${subscription.errors.allErrors}"
                         }
             }
 }
