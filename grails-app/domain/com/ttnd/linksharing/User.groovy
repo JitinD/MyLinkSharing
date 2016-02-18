@@ -28,17 +28,36 @@ class User {
 
     //static transients = ['name'];
 
-    String getName()
-    {
-        return [firstName, lastName].findAll {it}.join(' ');
+    String getName() {
+        return [firstName, lastName].findAll { it }.join(' ');
     }
 
     static mapping = {
-        photo sqlType : 'longblob'
+        photo sqlType: 'longblob'
     }
 
-    static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources:Resource]
+    static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource]
 
 
+    String toString()
+    {
+        return userName
+    }
+/*
+    public static User save(User user) {
+        user.validate()
+        if (user.hasErrors())
+        {
+            user.errors.each {
+                log.error("error while saving user", it)
+            }
+            return null
+        }
+        else {
+            user.save(flush: true)
+
+            return user
+        }
+    }*/
 
 }

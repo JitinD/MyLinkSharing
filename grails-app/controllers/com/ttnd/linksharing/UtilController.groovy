@@ -1,5 +1,8 @@
 package com.ttnd.linksharing
 
+import groovy.util.logging.Log4j
+
+@Log4j
 class UtilController {
 
     def index()
