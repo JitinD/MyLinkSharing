@@ -16,7 +16,7 @@ class BootStrap {
 
         List<User> users = createUsers()
         List<Topic> topics = createTopics()
-        createResources()
+        List<Resource> resources = createResources()
         //subscribeTopics()
         //createReadingItems()
 
@@ -81,10 +81,9 @@ class BootStrap {
 
     }
 
-    //Not working
-    void createResources() {
+    List<Resource> createResources() {
         List<Topic> topics = Topic.list()
-        //List<Resource> resources = []
+        List<Resource> resources = []
 
         topics.each
                 {
@@ -92,11 +91,13 @@ class BootStrap {
                         if (!topic.resources?.count()) {
                             2.times
                                     {
-                                        Resource documentResource = new DocumentResource(description: "${topic.name}Doc${it}", createdBy: topic.createdBy, filePath: "some/file/path")
-                                        Resource linkResource = new LinkResource(description: "${topic.name}Doc${it}", createdBy: topic.createdBy, url: "http://www.someurl.com")
+                                        Resource documentResource = new DocumentResource(description: "${topic.name}Doc${it}", topic: topic, createdBy: topic.createdBy, filePath: "some/file/path")
+                                        Resource linkResource = new LinkResource(description: "${topic.name}Link${it}", topic: topic, createdBy: topic.createdBy, url: "http://www.someurl.com")
 
                                         if (documentResource.save() && linkResource.save())
                                         {
+                                            resources.add(documentResource)
+                                            resources.add(linkResource)
                                             topic.addToResources(documentResource)
                                             topic.addToResources(linkResource)
                                             log.info "${documentResource} and ${linkResource} saved successfully"
@@ -112,8 +113,10 @@ class BootStrap {
                         }
 
                 }
+        return resources
     }
 
+    //Incomplete
     void subscribeTopics() {
         List<User> users = User.list()
         List<Topic> topics = Topic.list()
