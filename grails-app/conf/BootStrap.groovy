@@ -1,6 +1,8 @@
 import com.ttnd.linksharing.DocumentResource
 import com.ttnd.linksharing.LinkResource
+import com.ttnd.linksharing.ReadingItem
 import com.ttnd.linksharing.Resource
+import com.ttnd.linksharing.ResourceRating
 import com.ttnd.linksharing.Subscription
 import com.ttnd.linksharing.Topic
 import com.ttnd.linksharing.User
@@ -17,8 +19,9 @@ class BootStrap {
         List<User> users = createUsers()
         List<Topic> topics = createTopics()
         List<Resource> resources = createResources()
-        //subscribeTopics()
-        //createReadingItems()
+        List<Subscription> subscriptions = subscribeTopics()
+        List<ReadingItem> readingItems = createReadingItems()
+        List<ResourceRating> resourceRatings = createResourceRatings()
 
     }
     def destroy = {
@@ -116,7 +119,6 @@ class BootStrap {
         return resources
     }
 
-    //Incomplete
     void subscribeTopics() {
         List<User> users = User.list()
         List<Topic> topics = Topic.list()
@@ -125,7 +127,7 @@ class BootStrap {
         users.each {
                         user -> topics.each
                                 {
-                                    topic ->    if(topic.createdBy != user)
+                                    topic ->    if(!Subscription.findByUserAndTopic(user, topic))
                                                 {
                                                     Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.VERY_SERIOUS)
 
@@ -139,9 +141,60 @@ class BootStrap {
     }
 
 
-    void createReadingItems()
+    List<ReadingItem> createReadingItems()
     {
         List<User> users = User.list()
+        List<Topic> topics = Topic.list()
+        List<Resource> resources = Resource.list()
+        //List<Subscription> subscriptions = Subscription.list()
+        List<ReadingItem> readingItems = []
 
+        users.each
+                {
+                    user ->     if(!user.readingItems?.count())
+                                {
+                                        log.info "Reading items empty for $user"
+
+                                        topics.each
+                                                   {
+                                                           topic -> if(Subscription.findByUserAndTopic(user, topic))
+                                                                        {
+
+                                                                            topic.resources.each
+                                                                                        {
+                                                                                            resource -> if(resource.createdBy != user)
+                                                                                                        {
+                                                                                                            ReadingItem readingItem = new ReadingItem(user: user, resource: resource, isRead: false)
+                                                                                                            readingItems.add(readingItem)
+
+                                                                                                            if(readingItem.save())
+                                                                                                            {
+                                                                                                                user.addToReadingItems(readingItem)
+                                                                                                                log.info "${readingItem} saved successfully"
+                                                                                                            }
+                                                                                                            else
+                                                                                                                log.error "Error saving ${readingItem.errors.allErrors}"
+
+                                                                                                        }
+
+                                                                                        }
+
+                                                                        }
+                                                   }
+
+                                        user.save()
+                                }
+                                else
+                                    log.info "Reading items not empty for $user"
+                }
+
+        return readingItems
+    }
+
+    List<ResourceRating> createResourceRatings()
+    {
+        List<ResourceRating> resourceRatings = []
+
+        return  resourceRatings
     }
 }
