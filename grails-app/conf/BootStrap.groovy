@@ -21,7 +21,7 @@ class BootStrap {
         List<Resource> resources = createResources()
         List<Subscription> subscriptions = subscribeTopics()
         List<ReadingItem> readingItems = createReadingItems()
-        List<ResourceRating> resourceRatings = createResourceRatings()
+        //List<ResourceRating> resourceRatings = createResourceRatings()
 
     }
     def destroy = {
@@ -33,21 +33,17 @@ class BootStrap {
         User normalUser = new User('userName': 'normal', emailID: 'normal@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'normal', lastName: 'user', isAdmin: false)
         User adminUser = new User('userName': 'admin', emailID: 'admin@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'admin', lastName: 'user', isAdmin: true)
 
-        if (User.count() == 0)
-        {
+        if (User.count() == 0) {
             log.info "Initially, no users exist in the table"
 
-            if (normalUser.save(failOnError: true, flush: true) && adminUser.save(failOnError: true, flush: true))
-            {
+            if (normalUser.save(failOnError: true, flush: true) && adminUser.save(failOnError: true, flush: true)) {
                 users.add(normalUser)
                 users.add(adminUser)
 
                 log.info "${normalUser} and ${adminUser} saved successfully"
-            }
-            else
+            } else
                 log.error "Error saving ${normalUser.errors.allErrors} and ${adminUser.errors.allErrors}"
-        }
-        else
+        } else
             log.info "There are some records present in the table. Hence, could not perform desired operations."
 
         return users
@@ -97,15 +93,13 @@ class BootStrap {
                                         Resource documentResource = new DocumentResource(description: "${topic.name}Doc${it}", topic: topic, createdBy: topic.createdBy, filePath: "some/file/path")
                                         Resource linkResource = new LinkResource(description: "${topic.name}Link${it}", topic: topic, createdBy: topic.createdBy, url: "http://www.someurl.com")
 
-                                        if (documentResource.save() && linkResource.save())
-                                        {
+                                        if (documentResource.save() && linkResource.save()) {
                                             resources.add(documentResource)
                                             resources.add(linkResource)
                                             topic.addToResources(documentResource)
                                             topic.addToResources(linkResource)
                                             log.info "${documentResource} and ${linkResource} saved successfully"
-                                        }
-                                        else
+                                        } else
                                             log.error "Error saving ${documentResource.errors.allErrors} and ${linkResource.errors.allErrors}"
                                     }
 
@@ -125,24 +119,24 @@ class BootStrap {
         List<Subscription> subscriptions = Subscription.list()
 
         users.each {
-                        user -> topics.each
-                                {
-                                    topic ->    if(!Subscription.findByUserAndTopic(user, topic))
-                                                {
-                                                    Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.VERY_SERIOUS)
+            user ->
+                topics.each
+                        {
+                            topic ->
+                                if (!Subscription.findByUserAndTopic(user, topic)) {
+                                    Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.VERY_SERIOUS)
 
-                                                    if(subscription.save())
-                                                        log.info "${subscription} saved successfully"
-                                                    else
-                                                        log.error "Error saving ${subscription.errors.allErrors}"
-                                                }
+                                    if (subscription.save())
+                                        log.info "${subscription} saved successfully"
+                                    else
+                                        log.error "Error saving ${subscription.errors.allErrors}"
                                 }
-                    }
+                        }
+        }
     }
 
 
-    List<ReadingItem> createReadingItems()
-    {
+    List<ReadingItem> createReadingItems() {
         List<User> users = User.list()
         List<Topic> topics = Topic.list()
         List<Resource> resources = Resource.list()
@@ -151,50 +145,44 @@ class BootStrap {
 
         users.each
                 {
-                    user ->     if(!user.readingItems?.count())
+                    user ->
+                        log.info "Reading items empty for $user"
+
+                        topics.each
                                 {
-                                        log.info "Reading items empty for $user"
+                                    topic ->
+                                        if (Subscription.findByUserAndTopic(user, topic)) {
 
-                                        topics.each
-                                                   {
-                                                           topic -> if(Subscription.findByUserAndTopic(user, topic))
-                                                                        {
+                                            topic.resources.each
+                                                    {
+                                                        resource ->
+                                                            if (resource.createdBy != user && !user.readingItems?.contains(resource)) {
+                                                                ReadingItem readingItem = new ReadingItem(user: user, resource: resource, isRead: false)
+                                                                readingItems.add(readingItem)
 
-                                                                            topic.resources.each
-                                                                                        {
-                                                                                            resource -> if(resource.createdBy != user)
-                                                                                                        {
-                                                                                                            ReadingItem readingItem = new ReadingItem(user: user, resource: resource, isRead: false)
-                                                                                                            readingItems.add(readingItem)
+                                                                if (readingItem.save()) {
+                                                                    user.addToReadingItems(readingItem)
+                                                                    log.info "${readingItem} saved successfully"
+                                                                } else
+                                                                    log.error "Error saving ${readingItem.errors.allErrors}"
 
-                                                                                                            if(readingItem.save())
-                                                                                                            {
-                                                                                                                user.addToReadingItems(readingItem)
-                                                                                                                log.info "${readingItem} saved successfully"
-                                                                                                            }
-                                                                                                            else
-                                                                                                                log.error "Error saving ${readingItem.errors.allErrors}"
+                                                            }
 
-                                                                                                        }
+                                                    }
 
-                                                                                        }
-
-                                                                        }
-                                                   }
-
-                                        user.save()
+                                        }
                                 }
-                                else
-                                    log.info "Reading items not empty for $user"
+
+                        user.save()
+
                 }
 
         return readingItems
     }
 
-    List<ResourceRating> createResourceRatings()
-    {
+    List<ResourceRating> createResourceRatings() {
         List<ResourceRating> resourceRatings = []
 
-        return  resourceRatings
+        return resourceRatings
     }
 }
