@@ -11,7 +11,7 @@ import enums.Seriousness
 import enums.Visibility
 import groovy.util.logging.Log4j
 
-@Log4j
+//@Log4j
 class BootStrap {
 
     def grailsApplication
