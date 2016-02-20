@@ -36,28 +36,32 @@ class User {
         photo sqlType: 'longblob'
     }
 
-    static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource]
+    static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource, resourceRatings: ResourceRating]
 
 
     String toString()
     {
         return userName
     }
-/*
+
     public static User save(User user) {
+
         user.validate()
+
         if (user.hasErrors())
         {
             user.errors.each {
-                log.error("error while saving user", it)
+                log.error("error saving user", it)
             }
+
             return null
         }
-        else {
-            user.save(flush: true)
+        else
+        {
+            user.save(failOnError: true, flush: true)
 
             return user
         }
-    }*/
+    }
 
 }

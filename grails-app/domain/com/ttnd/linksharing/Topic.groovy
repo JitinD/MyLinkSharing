@@ -24,14 +24,37 @@ class Topic {
         return name
     }
 
+    public static Topic save(Topic topic) {
+
+        topic.validate()
+
+        if (topic.hasErrors())
+        {
+            topic.errors.each {
+                log.error("error saving topic", it)
+            }
+
+            return null
+        }
+        else
+        {
+            topic.save(failOnError: true, flush: true)
+
+            return topic
+        }
+    }
+
+
     def afterInsert =
             {
                 Topic.withNewSession
                         {
                             Subscription subscription = new Subscription(user: this.createdBy, topic: this, seriousness: Seriousness.VERY_SERIOUS)
 
-                            if(subscription.save())
+                            if(Subscription.save(subscription)) {
+                                this.createdBy.addToSubscriptions(subscription)
                                 log.info "${subscription} saved successfully"
+                            }
                             else
                                 log.error "Error saving ${subscription.errors.allErrors}"
                         }

@@ -20,4 +20,24 @@ abstract class Resource {
     static  belongsTo = [topic: Topic]
     static hasMany = [ratings: ResourceRating, readItems: ReadingItem]
 
+
+    public static Resource save(Resource resource) {
+
+        resource.validate()
+
+        if (resource.hasErrors())
+        {
+            resource.errors.each {
+                log.error("error saving resource", it)
+            }
+
+            return null
+        }
+        else
+        {
+            resource.save(failOnError: true, flush: true)
+
+            return resource
+        }
+    }
 }

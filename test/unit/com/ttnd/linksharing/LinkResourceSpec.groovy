@@ -36,4 +36,19 @@ class LinkResourceSpec extends Specification {
 
     }
 
+    def "validating toString of linkResource"() {
+        setup:
+        LinkResource linkResource = new LinkResource(url: url)
+
+        when:
+        linkResource.toString() == result
+
+        then:
+        noExceptionThrown()
+
+        where:
+        url                               | result
+        "http://www.testLinkResource.com" | "http://www.testLinkResource.com"
+    }
+
 }

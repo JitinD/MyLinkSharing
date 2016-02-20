@@ -12,4 +12,24 @@ class ReadingItem {
     }
 
     static belongsTo = [resource: Resource, user: User]
+
+    public static ReadingItem save(ReadingItem readingItem) {
+
+        readingItem.validate()
+
+        if (readingItem.hasErrors())
+        {
+            readingItem.errors.each {
+                log.error("error saving readingItem", it)
+            }
+
+            return null
+        }
+        else
+        {
+            readingItem.save(failOnError: true, flush: true)
+
+            return readingItem
+        }
+    }
 }
