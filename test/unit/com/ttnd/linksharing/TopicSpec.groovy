@@ -62,13 +62,14 @@ class TopicSpec extends Specification {
         Topic topic = new Topic(name: name)
 
         when:
-        topic.toString() == result
+        String topicName = topic.toString()
 
         then:
         noExceptionThrown()
+        topicName == result
 
         where:
-        name        | result
+        name            | result
         "testTopicName" | "testTopicName"
     }
 }

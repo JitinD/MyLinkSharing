@@ -41,10 +41,11 @@ class LinkResourceSpec extends Specification {
         LinkResource linkResource = new LinkResource(url: url)
 
         when:
-        linkResource.toString() == result
+        String resourceURL = linkResource.toString()
 
         then:
         noExceptionThrown()
+        resourceURL == result
 
         where:
         url                               | result

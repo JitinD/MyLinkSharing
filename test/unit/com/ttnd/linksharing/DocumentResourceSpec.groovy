@@ -39,10 +39,11 @@ class DocumentResourceSpec extends Specification {
         DocumentResource documentResource = new DocumentResource(filePath: filePath)
 
         when:
-        documentResource.toString() == result
+        String resourePath = documentResource.toString()
 
         then:
         noExceptionThrown()
+        resourePath == result
 
         where:
         filePath                 | result

@@ -86,10 +86,11 @@ class UserSpec extends Specification {
         User user = new User(userName: userName)
 
         when:
-        user.toString() == result
+        String name = user.toString()
 
         then:
         noExceptionThrown()
+        name == result
 
         where:
         userName       | result
