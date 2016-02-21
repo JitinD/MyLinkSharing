@@ -4,6 +4,7 @@ class User {
 
     String userName;
     String password;
+    String confirmPassword;
     String firstName;
     String lastName;
     String emailID;
@@ -17,6 +18,18 @@ class User {
         userName(blank: false)
         emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
+
+        confirmPassword(validator:{
+            value, user ->
+                if (user.id && User.exists(user.id)) {
+                    confirmPassword nullable: true, blank: true
+                }
+                else
+                {
+                    return value && value == password
+                }
+        })
+
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
         photo(nullable: true)
@@ -26,19 +39,17 @@ class User {
 
     }
 
-    //static transients = ['name'];
+    static transients = ['confirmPassword'];
 
-    String getName()
-    {
-        return [firstName, lastName].findAll {it}.join(' ');
+    String getName() {
+        return [firstName, lastName].findAll { it }.join(' ');
     }
 
     static mapping = {
-        photo sqlType : 'longblob'
+        photo sqlType: 'longblob'
     }
 
-    static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources:Resource]
-
+    static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource]
 
 
 }
