@@ -30,8 +30,8 @@ class BootStrap {
     List<User> createUsers() {
         List<User> users = []
 
-        User normalUser = new User('userName': 'normal', emailID: 'normal@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'normal', lastName: 'user', isAdmin: false)
-        User adminUser = new User('userName': 'admin', emailID: 'admin@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'admin', lastName: 'user', isAdmin: true)
+        User normalUser = new User('userName': 'normal', emailID: 'normal@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
+        User adminUser = new User('userName': 'admin', emailID: 'admin@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'admin', lastName: 'user', isAdmin: true, isActive: true)
 
         if (User.count() == 0) {
             log.info "Initially, no users exist in the table"
