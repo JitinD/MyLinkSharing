@@ -13,4 +13,24 @@ class ResourceRating {
     }
 
     static belongsTo = [resource: Resource, user: User]
+
+    public static ResourceRating save(ResourceRating resourceRating) {
+
+        resourceRating.validate()
+
+        if (resourceRating.hasErrors())
+        {
+            resourceRating.errors.each {
+                log.error("error saving resourceRating", it)
+            }
+
+            return null
+        }
+        else
+        {
+            resourceRating.save(failOnError: true, flush: true)
+
+            return resourceRating
+        }
+    }
 }

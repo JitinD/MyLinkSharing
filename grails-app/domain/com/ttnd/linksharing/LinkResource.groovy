@@ -8,4 +8,9 @@ class LinkResource extends Resource{
 
         url(blank: false, nullable : true, url: true)
     }
+
+    String toString()
+    {
+        return url
+    }
 }

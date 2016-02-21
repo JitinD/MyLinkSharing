@@ -56,4 +56,20 @@ class TopicSpec extends Specification {
         5   | "testTopic" | Visibility.PUBLIC  | null       | false
         6   | "testTopic" | Visibility.PRIVATE | new User() | true
     }
+
+    def "validating toString of topic"() {
+        setup:
+        Topic topic = new Topic(name: name)
+
+        when:
+        String topicName = topic.toString()
+
+        then:
+        noExceptionThrown()
+        topicName == result
+
+        where:
+        name            | result
+        "testTopicName" | "testTopicName"
+    }
 }

@@ -116,10 +116,9 @@ log4j.main = {
            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
            'org.springframework',
            'org.hibernate',
-           'net.sf.ehcache.hibernate',
-            'com.ttnd.linksharing'
+           'net.sf.ehcache.hibernate'
 
-    info    'com.ttnd.linksharing'
+    info    'grails.app'
 
-    warn    'com.ttnd.linksharing'
+
 }

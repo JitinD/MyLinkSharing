@@ -33,4 +33,20 @@ class DocumentResourceSpec extends Specification {
         7   | null                     | new User() | new Topic() | "test/doc/resource" | false
 
     }
+
+    def "validating toString of documentResource"() {
+        setup:
+        DocumentResource documentResource = new DocumentResource(filePath: filePath)
+
+        when:
+        String resourePath = documentResource.toString()
+
+        then:
+        noExceptionThrown()
+        resourePath == result
+
+        where:
+        filePath                 | result
+        "test/document/resource" | "test/document/resource"
+    }
 }

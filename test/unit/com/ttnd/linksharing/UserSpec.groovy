@@ -81,5 +81,19 @@ class UserSpec extends Specification {
 
     }
 
+    def "validating toString of user"() {
+        setup:
+        User user = new User(userName: userName)
 
+        when:
+        String name = user.toString()
+
+        then:
+        noExceptionThrown()
+        name == result
+
+        where:
+        userName       | result
+        "testUserName" | "testUserName"
+    }
 }
