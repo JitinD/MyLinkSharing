@@ -19,6 +19,8 @@ class User {
         emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
 
+
+/*
         confirmPassword(validator:{
             value, user ->
                 if (user.id && User.exists(user.id)) {
@@ -29,13 +31,14 @@ class User {
                     return value && value == password
                 }
         })
+*/
+
 
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
         photo(nullable: true)
         isActive(nullable: true)
         isAdmin(nullable: true)
-
 
     }
 
@@ -55,6 +58,11 @@ class User {
     String toString()
     {
         return userName
+    }
+
+    String getConfirmPassword()
+    {
+        return confirmPassword
     }
 
     public static User save(User user) {
