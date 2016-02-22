@@ -21,42 +21,41 @@ class Topic {
 
     String toString()
     {
-        return name
+        return name?:""
     }
 
-    public static Topic save(Topic topic) {
+    public Topic saveInstance() {
+
+        Topic topic = this
 
         topic.validate()
 
         if (topic.hasErrors())
         {
-            topic.errors.each {
-                log.error("error saving topic", it)
-            }
+            log.error("Topic has validation errors : ${topic.errors}")
 
             return null
         }
         else
         {
             topic.save(failOnError: true, flush: true)
+            log.info "${topic} saved successfully"
 
             return topic
         }
     }
 
 
-    def afterInsert =
-            {
-                Topic.withNewSession
-                        {
-                            Subscription subscription = new Subscription(user: this.createdBy, topic: this, seriousness: Seriousness.VERY_SERIOUS)
+    def afterInsert() {
+        Subscription.withNewSession
+                {
+                    Subscription subscription = new Subscription(user: this.createdBy, topic: this, seriousness: Seriousness.VERY_SERIOUS)
 
-                            if(Subscription.save(subscription)) {
-                                this.createdBy.addToSubscriptions(subscription)
-                                log.info "${subscription} saved successfully"
-                            }
-                            else
-                                log.error "Error saving ${subscription.errors.allErrors}"
-                        }
-            }
+                    if (subscription.saveInstance()) {
+                        this.createdBy.addToSubscriptions(subscription)
+                        log.info "${subscription} saved successfully"
+                    } else
+                        log.error "Error saving ${subscription.errors.allErrors}"
+                }
+    }
 }

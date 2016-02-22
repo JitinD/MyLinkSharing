@@ -38,27 +38,44 @@ class User {
 
     static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource, resourceRatings: ResourceRating]
 
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
 
-    String toString()
-    {
-        return userName
+        User user = (User) o
+
+        if (emailID != user.emailID) return false
+        if (id != user.id) return false
+        if (userName != user.userName) return false
+
+        return true
     }
 
-    public static User save(User user) {
+    int hashCode() {
+        int result
+        result = userName.hashCode()
+        result = 31 * result + emailID.hashCode()
+        result = 31 * result + (id != null ? id.hashCode() : 0)
+        return result
+    }
+
+    String toString() {
+        return userName ?: ""
+    }
+
+    public User saveInstance() {
+
+        User user = this
 
         user.validate()
 
-        if (user.hasErrors())
-        {
-            user.errors.each {
-                log.error("error saving user", it)
-            }
+        if (user.hasErrors()) {
+            log.error("User has validation errors : ${user.errors}")
 
             return null
-        }
-        else
-        {
+        } else {
             user.save(failOnError: true, flush: true)
+            log.info "${user} saved successfully"
 
             return user
         }

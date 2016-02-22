@@ -14,21 +14,22 @@ class ResourceRating {
 
     static belongsTo = [resource: Resource, user: User]
 
-    public static ResourceRating save(ResourceRating resourceRating) {
+    public ResourceRating saveInstance() {
+
+        ResourceRating resourceRating = this
 
         resourceRating.validate()
 
         if (resourceRating.hasErrors())
         {
-            resourceRating.errors.each {
-                log.error("error saving resourceRating", it)
-            }
+            log.error("Resource rating has validation errors : ${resourceRating.errors}")
 
             return null
         }
         else
         {
             resourceRating.save(failOnError: true, flush: true)
+            log.info "${resourceRating} saved successfully"
 
             return resourceRating
         }

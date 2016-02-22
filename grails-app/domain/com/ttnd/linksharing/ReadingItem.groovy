@@ -13,21 +13,22 @@ class ReadingItem {
 
     static belongsTo = [resource: Resource, user: User]
 
-    public static ReadingItem save(ReadingItem readingItem) {
+    public ReadingItem saveInstance() {
+
+        ReadingItem readingItem = this
 
         readingItem.validate()
 
         if (readingItem.hasErrors())
         {
-            readingItem.errors.each {
-                log.error("error saving readingItem", it)
-            }
+            log.error("ReadingItem has validation errors : ${readingItem.errors}")
 
             return null
         }
         else
         {
             readingItem.save(failOnError: true, flush: true)
+            log.info "${readingItem} saved successfully"
 
             return readingItem
         }

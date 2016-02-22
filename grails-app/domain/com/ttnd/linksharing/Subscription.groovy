@@ -16,21 +16,22 @@ class Subscription {
 
     static belongsTo = [topic: Topic, user: User]
 
-    public static Subscription save(Subscription subscription) {
+    public Subscription saveInstance() {
+
+        Subscription subscription = this
 
         subscription.validate()
 
         if (subscription.hasErrors())
         {
-            subscription.errors.each {
-                log.error("error saving subscription", it)
-            }
+            log.error("Subscription has validation errors : ${subscription.errors}")
 
             return null
         }
         else
         {
             subscription.save(failOnError: true, flush: true)
+            log.info "${subscription} saved successfully"
 
             return subscription
         }
