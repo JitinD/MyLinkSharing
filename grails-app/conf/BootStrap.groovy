@@ -16,7 +16,7 @@ class BootStrap {
 
     def grailsApplication
 
-    def init = { servletContext -> //println(grailsApplication.config.grails.sampleVariable)
+    def init = { servletContext ->
 
         List<User> users = createUsers()
         List<Topic> topics = createTopics()
@@ -36,14 +36,14 @@ class BootStrap {
         if (User.count() == 0) {
             log.info "Initially, no users exist in the table"
 
-            if (User.save(normalUser) && User.save(adminUser)) {
-
+            if (normalUser.saveInstance()) {
                 users.add(normalUser)
-                users.add(adminUser)
+            }
 
-                log.info "${normalUser} and ${adminUser} saved successfully"
-            } else
-                log.error "Error saving ${normalUser.errors.allErrors} and ${adminUser.errors.allErrors}"
+            if (adminUser.saveInstance()) {
+
+                users.add(adminUser)
+            }
         } else
             log.info "There are some records present in the table. Hence, could not perform desired operations."
 
@@ -57,23 +57,16 @@ class BootStrap {
         users.each
                 {
                     user ->
-                        if (!user.topics?.count()) {
+                        if (!user.topics?.size()) {
                             (1..5).each
                                     {
                                         Topic topic = new Topic(name: "Topic $it", visibility: Visibility.PUBLIC, createdBy: user)
 
-                                        if (Topic.save(topic)) {
+                                        if (topic.saveInstance()) {
                                             user.addToTopics(topic)
                                             topics.add(topic)
-                                            log.info "Topic ${topic} saved successfully"
-                                        } else
-                                            log.error "Error saving ${topic.errors.allErrors}"
+                                        }
                                     }
-
-                            /*if (user.save())
-                                log.info "User ${user} saved successfully"
-                            else
-                                log.error "Error saving ${user.errors.allErrors}"*/
                         }
                 }
 
@@ -88,28 +81,24 @@ class BootStrap {
         topics.each
                 {
                     topic ->
-                        if (!topic.resources?.count()) {
+                        if (!topic.resources?.size()) {
                             2.times
                                     {
                                         Resource documentResource = new DocumentResource(description: "${topic.name}Doc${it}", topic: topic, createdBy: topic.createdBy, filePath: "some/file/path")
                                         Resource linkResource = new LinkResource(description: "${topic.name}Link${it}", topic: topic, createdBy: topic.createdBy, url: "http://www.someurl.com")
 
-                                        if (Resource.save(documentResource) && Resource.save(linkResource)) {
+                                        if (documentResource.saveInstance()) {
 
                                             resources.add(documentResource)
-                                            resources.add(linkResource)
-
                                             topic.addToResources(documentResource)
-                                            topic.addToResources(linkResource)
-                                            log.info "${documentResource} and ${linkResource} saved successfully"
-                                        } else
-                                            log.error "Error saving ${documentResource.errors.allErrors} and ${linkResource.errors.allErrors}"
-                                    }
+                                        }
 
-                            /*if (topic.save())
-                                log.info "Topic ${topic} saved successfully"
-                            else
-                                log.error "Error saving ${topic.errors.allErrors}"*/
+                                        if (linkResource.saveInstance()) {
+
+                                            resources.add(linkResource)
+                                            topic.addToResources(linkResource)
+                                        }
+                                    }
                         }
 
                 }
@@ -126,14 +115,12 @@ class BootStrap {
                 topics.each
                         {
                             topic ->
-                                if (!Subscription.findByUserAndTopic(user, topic)) {
+                                if (!Subscription.countByUserAndTopic(user, topic)) {
                                     Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.VERY_SERIOUS)
 
-                                    if (Subscription.save(subscription)) {
+                                    if (subscription.saveInstance()) {
                                         user.addToSubscriptions(subscription)
-                                        log.info "${subscription} saved successfully"
-                                    } else
-                                        log.error "Error saving ${subscription.errors.allErrors}"
+                                    }
                                 }
                         }
         }
@@ -142,40 +129,26 @@ class BootStrap {
 
     List<ReadingItem> createReadingItems() {
         List<User> users = User.list()
-        List<Topic> topics = Topic.list()
         List<ReadingItem> readingItems = []
 
-        users.each
-                {
-                    user ->
-                        topics.each
-                                {
-                                    topic ->
-                                        if (Subscription.findByUserAndTopic(user, topic)) {
-
-                                            topic.resources.each
-                                                    {
-                                                        resource ->
-                                                            if (resource.createdBy != user && !user.readingItems?.contains(resource)) {
-                                                                ReadingItem readingItem = new ReadingItem(user: user, resource: resource, isRead: false)
-
-                                                                if (ReadingItem.save(readingItem)) {
-                                                                    readingItems.add(readingItem)
-                                                                    user.addToReadingItems(readingItem)
-                                                                    log.info "${readingItem} saved successfully"
-                                                                }
-                                                                else
-                                                                    log.error "Error saving ${readingItem.errors.allErrors}"
-                                                            }
-
-                                                    }
-
-                                        }
+        Subscription.list().each {
+            Subscription subscription ->
+                User user = subscription.user
+                Topic topic = subscription.topic
+                if (topic.createdBy != user) {
+                    Resource.findAllByTopic(topic).each {
+                        Resource resource ->
+                            if (!ReadingItem.countByUserAndResource(user, resource)) {
+                                ReadingItem readingItem = new ReadingItem(user: user, resource: resource, isRead: false)
+                                if (readingItem.saveInstance()) {
+                                    readingItems.add(readingItem)
+                                    user.addToReadingItems(readingItem)
                                 }
-
-                        //user.save()
-
+                            }
+                    }
                 }
+
+        }
 
         return readingItems
     }
@@ -183,35 +156,27 @@ class BootStrap {
     List<ResourceRating> createResourceRatings() {
         List<ResourceRating> resourceRatings = []
         List<User> users = User.list()
+        List<ReadingItem> readingItems = ReadingItem.list()
 
-        users.each
+
+        readingItems.each
                 {
-                    user ->
-                        user.readingItems?.each
-                                {
-                                    readingItem ->
-                                        if (!readingItem.isRead) {
-                                            ResourceRating resourceRating = new ResourceRating(user: readingItem.user, resource: readingItem.resource, score: 3)
+                    readingItem ->
+                        if (!readingItem.isRead) {
+                            ResourceRating resourceRating = new ResourceRating(user: readingItem.user, resource: readingItem.resource, score: 3)
 
-                                            if (ResourceRating.save(resourceRating)) {
+                            if (resourceRating.saveInstance()) {
 
-                                                resourceRatings.add(resourceRating)
-                                                user.addToResourceRatings(resourceRating)
-                                                log.info "${resourceRating} saved successfully"
-                                            }
-                                            else
-                                                log.error "Error saving ${resourceRating.errors.allErrors}"
-                                        }
-                                }
+                                resourceRatings.add(resourceRating)
+                                readingItem.user.addToResourceRatings(resourceRating)
+                            }
+                        }
                 }
-
         return resourceRatings
     }
 
     def destroy = {
     }
-
-
 
 
 }

@@ -21,21 +21,22 @@ abstract class Resource {
     static hasMany = [ratings: ResourceRating, readItems: ReadingItem]
 
 
-    public static Resource save(Resource resource) {
+    public Resource saveInstance() {
+
+        Resource resource = this
 
         resource.validate()
 
         if (resource.hasErrors())
         {
-            resource.errors.each {
-                log.error("error saving resource", it)
-            }
+            log.error("Resource has validation errors : ${resource.errors}")
 
             return null
         }
         else
         {
             resource.save(failOnError: true, flush: true)
+            log.info "${resource} saved successfully"
 
             return resource
         }

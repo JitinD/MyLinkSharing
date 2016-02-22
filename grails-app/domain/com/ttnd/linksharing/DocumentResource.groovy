@@ -10,6 +10,6 @@ class DocumentResource extends Resource {
 
     String toString()
     {
-        return filePath
+        return filePath?:""
     }
 }
