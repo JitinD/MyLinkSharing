@@ -1,13 +1,13 @@
 package conf
 
-class ApplicationFilters {
+class SessionCheckFilters {
 
     def filters = {
-        all(controller:'*', action:'*') {
+        loginCheck(controller: 'login', invert: true) {
             before = {
 
-                log.info "Controller : ${controllerName}, Action : ${actionName}"
-                log.info params
+                if(!session.user)
+                    redirect(controller: "login", action: "index")
 
             }
             after = { Map model ->
@@ -18,6 +18,4 @@ class ApplicationFilters {
             }
         }
     }
-
-
 }

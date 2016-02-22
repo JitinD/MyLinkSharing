@@ -19,20 +19,12 @@ class User {
         emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
 
-
-/*
-        confirmPassword(validator:{
+        confirmPassword(bindable:true, nullable: true, blank: true, validator:{
             value, user ->
-                if (user.id && User.exists(user.id)) {
-                    confirmPassword nullable: true, blank: true
-                }
-                else
-                {
-                    return value && value == password
+                if (!user.id) {
+                    return value && value == user.password
                 }
         })
-*/
-
 
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
