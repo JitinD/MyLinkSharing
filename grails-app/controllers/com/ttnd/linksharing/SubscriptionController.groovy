@@ -47,7 +47,18 @@ class SubscriptionController {
     {
         Subscription subscription = Subscription.load(id)
 
-        if(subscription)
+        try
+        {
+            subscription.delete(flush: true)
+            render "${subscription} deleted successfully."
+        }catch (Exception e)
+        {
+            flash.message = "Subscription could not be deleted"
+            render e.message
+        }
+
+
+        /*if(subscription)
         {
             subscription.delete(flush: true)
             render "Subscription ${subscription} deleted."
@@ -56,6 +67,6 @@ class SubscriptionController {
         {
             flash.error = "${subscription} could not be deleted, ${subscription.errors.allErrors}"
             render "${subscription} could not be deleted, ${subscription.errors.allErrors}"
-        }
+        }*/
     }
 }
