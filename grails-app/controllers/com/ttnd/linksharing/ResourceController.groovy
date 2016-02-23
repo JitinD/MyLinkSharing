@@ -4,19 +4,17 @@ class ResourceController {
 
     def index() { }
 
-    def delete(Integer id)
+    def delete(Long id)
     {
         Resource resource = Resource.load(id)
 
-        if(resource)
+        try {
+            resource.delete(flush: true)
+            render "${resource} deleted successfully."
+        }catch (Exception e)
         {
-            resource.delete()
-            render "Resource ${resource} deleted."
-        }
-        else
-        {
-            flash.message = "${resource} could not be deleted, ${resource.errors.allErrors}"
-            render "${resource.errors.allErrors.collect { message(error: it) }}"
+            flash.message = "Resource could not be deleted"
+            render e.message
         }
 
     }

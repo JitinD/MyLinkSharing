@@ -6,7 +6,7 @@ class TopicController {
 
     def index() { }
 
-    def show(Integer id)
+    def show(Long id)
     {
         Topic topic = Topic.get(id)
 
@@ -52,6 +52,7 @@ class TopicController {
         {
             flash.error = "Topic could not be saved"
             render "Topic could not be saved. ~FAILURE~"
+            render "${topic.errors.allErrors.collect { message(error: it) }}"
 
         }
     }

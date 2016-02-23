@@ -6,7 +6,7 @@ class SubscriptionController {
 
     def index() { }
 
-    def save(Integer topicId)
+    def save(Long topicId)
     {
         Topic topic = Topic.get(topicId)
 
@@ -22,12 +22,11 @@ class SubscriptionController {
         }
     }
 
-    def update(Integer id, String serious)
+    def update(Long id, String serious)
     {
         Subscription subscription = Subscription.get(id)
 
         Seriousness seriousness = Seriousness.getSeriousness(serious)
-
 
         if(subscription && seriousness)
         {
@@ -44,13 +43,13 @@ class SubscriptionController {
         }
     }
 
-    def delete(Integer id)
+    def delete(Long id)
     {
         Subscription subscription = Subscription.load(id)
 
         if(subscription)
         {
-            subscription.delete()
+            subscription.delete(flush: true)
             render "Subscription ${subscription} deleted."
         }
         else

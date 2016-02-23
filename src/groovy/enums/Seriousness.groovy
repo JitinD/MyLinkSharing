@@ -9,21 +9,11 @@ enum Seriousness {
     CASUAL
 
 
-    static getSeriousness(String seriousness) {
+    static Seriousness getSeriousness(String seriousness) {
 
-        String seriousnessInLowerCase = seriousness.toLowerCase()
+        String seriousnessInUpperCase = seriousness.toUpperCase()
 
-        switch (seriousnessInLowerCase) {
-            case "serious":
-                return Seriousness.SERIOUS
-                break
-
-            case "very_serious": return Seriousness.VERY_SERIOUS
-                break
-
-            case "casual": return Seriousness.CASUAL
-                break
-        }
+        return valueOf(seriousnessInUpperCase)
 
     }
 }

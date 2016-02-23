@@ -49,10 +49,10 @@ class Topic {
     def afterInsert() {
         Subscription.withNewSession
                 {
-                    Subscription subscription = new Subscription(user: this.createdBy, topic: this, seriousness: Seriousness.VERY_SERIOUS)
+                    Subscription subscription = new Subscription(user: this.createdBy, topic: this)
 
                     if (subscription.saveInstance()) {
-                        this.createdBy.addToSubscriptions(subscription)
+                        //this.createdBy.addToSubscriptions(subscription)
                         log.info "${subscription} saved successfully"
                     } else
                         log.error "Error saving ${subscription.errors.allErrors}"
