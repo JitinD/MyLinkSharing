@@ -8,4 +8,20 @@ enum Visibility {
     PUBLIC,
     PRIVATE
 
+    static getVisibility(String visibility) {
+
+        String visibilityInLowerCase = visibility.toLowerCase()
+
+        switch (visibility) {
+            case "public":
+                return Visibility.PUBLIC
+                break
+
+            case "private":
+                return Visibility.PRIVATE
+                break
+        }
+
+    }
+
 }

@@ -17,11 +17,14 @@ class Topic {
         createdBy(nullable: false)
     }
 
+    static mapping = {
+                sort name:'asc'
+            }
+
     static hasMany = [subscriptions: Subscription, resources: Resource]
 
-    String toString()
-    {
-        return name?:""
+    String toString() {
+        return name ?: ""
     }
 
     public Topic saveInstance() {
@@ -30,14 +33,11 @@ class Topic {
 
         topic.validate()
 
-        if (topic.hasErrors())
-        {
+        if (topic.hasErrors()) {
             log.error("Topic has validation errors : ${topic.errors}")
 
             return null
-        }
-        else
-        {
+        } else {
             topic.save(failOnError: true, flush: true)
             log.info "${topic} saved successfully"
 

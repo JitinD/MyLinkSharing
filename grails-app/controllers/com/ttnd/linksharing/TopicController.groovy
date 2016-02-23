@@ -33,8 +33,26 @@ class TopicController {
         }
         else
         {
-            flash.error = "User is not subscribed to the topic."
+            flash.error = "Not a valid topic id."
             redirect(controller: "login", action: "index")
+        }
+    }
+
+    def save(String topicName, String visibility)
+    {
+        User user = session.user
+        Topic topic = new Topic(createdBy: user, name: topicName, visibility: Visibility.getVisibility(visibility))
+
+        if(topic.saveInstance())
+        {
+            flash.message = "Topic saved successfully"
+            render "Topic saved. ~SUCCESS~"
+        }
+        else
+        {
+            flash.error = "Topic could not be saved"
+            render "Topic could not be saved. ~FAILURE~"
+
         }
     }
 }

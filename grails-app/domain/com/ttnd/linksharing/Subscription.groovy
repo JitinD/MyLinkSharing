@@ -4,7 +4,7 @@ import enums.Seriousness
 
 class Subscription {
 
-    Seriousness seriousness;
+    Seriousness seriousness = Seriousness.SERIOUS;
     Date dateCreated;
     Date lastUpdated;
 
