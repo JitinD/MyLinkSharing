@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import CO.ResourceSearchCO
+
 class ResourceController {
 
     def index() { }
@@ -17,5 +19,11 @@ class ResourceController {
             render e.message
         }
 
+    }
+
+    def search(ResourceSearchCO resourceSearchCO)
+    {
+        List<Resource> resources = Resource.search(resourceSearchCO).list()
+        render "${resources}"
     }
 }
