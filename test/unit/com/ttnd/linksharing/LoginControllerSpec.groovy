@@ -91,4 +91,11 @@ class LoginControllerSpec extends Specification {
         "normal" | "defaultPassword"
     }
 
+    def "testing login/register when new user is a valid user"() {
+        when:
+        controller.register()
+
+        then:
+        response.contentAsString == "New user added. ~SUCCESS~"
+    }
 }
