@@ -17,4 +17,17 @@ class UserControllerSpec extends Specification {
 
     void "test something"() {
     }
+
+    def "validating user/index"()
+    {
+        setup:
+        User user = new User(userName: "testUser")
+        session.user = user
+
+        when:
+        controller.index()
+
+        then:
+        response.contentAsString == "Dashboard of user : testUser"
+    }
 }

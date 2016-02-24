@@ -17,4 +17,39 @@ class ResourceControllerSpec extends Specification {
 
     void "test something"() {
     }
+
+    def "testing resource/delete when id is valid"() {
+
+        setup:
+        Resource resource = Resource.load(id)
+
+        when:
+        controller.delete(id)
+
+        then:
+        noExceptionThrown()
+        response.contentAsString == "${resource} deleted successfully.".toString()
+
+        where:
+        id << [1, 2, 3]
+
+    }
+
+    def "testing resource/delete when id is invalid"() {
+
+        setup:
+        Resource resource = Resource.load(id)
+
+        when:
+        controller.delete(id)
+
+        then:
+        Exception e = thrown(Exception)
+        flash.message == "Resource could not be deleted"
+        response.contentAsString == e.message
+
+        where:
+        id << [1, 2, 3]
+
+    }
 }
