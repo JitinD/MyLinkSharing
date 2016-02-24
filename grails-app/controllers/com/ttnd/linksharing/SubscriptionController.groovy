@@ -57,16 +57,5 @@ class SubscriptionController {
             render e.message
         }
 
-
-        /*if(subscription)
-        {
-            subscription.delete(flush: true)
-            render "Subscription ${subscription} deleted."
-        }
-        else
-        {
-            flash.error = "${subscription} could not be deleted, ${subscription.errors.allErrors}"
-            render "${subscription} could not be deleted, ${subscription.errors.allErrors}"
-        }*/
     }
 }

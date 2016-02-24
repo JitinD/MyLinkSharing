@@ -67,4 +67,44 @@ class TopicControllerSpec extends Specification {
         where:
         id << [1, 2, 3]
     }
+
+    def "testing topic/save when topic name and visibility are valid"() {
+
+        setup:
+        session.user = user
+
+        when:
+        controller.save(topicName, visibility)
+
+        then:
+        flash.message == "Topic saved successfully"
+        response.contentAsString == "Topic saved. ~SUCCESS~"
+
+        where:
+        topicName  | visibility
+        "newTopic" | "public"
+    }
+
+
+    def "testing topic/save when topic name or visibility are invalid"() {
+
+        setup:
+        session.user = user
+
+        when:
+        controller.save(topicName, visibility)
+
+        then:
+        flash.error == "Topic could not be saved"
+        response.contentAsString == "Topic could not be saved. ~FAILURE~"
+
+        where:
+        topicName  | visibility
+        "newTopic" | ""
+        "newTopic" | null
+        ""         | "public"
+        null       | "public"
+        "newTopic" | "abcd"
+
+    }
 }
