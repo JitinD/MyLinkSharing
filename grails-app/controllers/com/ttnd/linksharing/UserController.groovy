@@ -24,5 +24,6 @@ class UserController {
         //Class clazz = grailsApplication.domainClasses.find { it.clazz.simpleName == className }.clazz
 
         //render "${userName}"
+
     }
 }

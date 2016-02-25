@@ -1,6 +1,9 @@
 package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
+import VO.RatingInfoVo
+import VO.TopicVo
+import enums.Visibility
 
 abstract class Resource {
 
@@ -22,6 +25,7 @@ abstract class Resource {
     static belongsTo = [topic: Topic]
     static hasMany = [ratings: ResourceRating, readItems: ReadingItem]
 
+    static transients = ['ratingInfo']
 
     static namedQueries = {
         search {
@@ -31,7 +35,9 @@ abstract class Resource {
                 }
 
                 if (resourceSearchCO.visibility) {
-                    eq('topic.visibility', resourceSearchCO.visibility)
+                    'topic' {
+                        eq('visibility', resourceSearchCO.visibility)
+                    }
                 }
         }
     }
@@ -53,4 +59,39 @@ abstract class Resource {
             return resource
         }
     }
+
+    def getRatingInfo() {
+        List<Integer> result = ResourceRating.createCriteria().get {
+            projections {
+                count('id', 'totalVotes')
+                sum('score', 'totalScore')
+                avg('score', 'avgScore')
+            }
+            eq('resource', this)
+            order('totalVotes', 'desc')
+        }
+
+        new RatingInfoVo(totalVotes: result[0], totalScore: result[1], averageScore: result[2])
+    }
+
+    public static List<Resource> getTopPosts() {
+
+        List<Resource> resources = []
+
+        def result = ResourceRating.createCriteria().list(max: 5) {
+            projections {
+                property('resource.id')
+            }
+
+            groupProperty('resource')
+            count('id', 'totalVotes')
+            order('totalVotes', 'desc')
+        }
+
+        List list = result.collect { it[0] }
+        resources = Resource.getAll(list)
+
+        return resources
+    }
+
 }

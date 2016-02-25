@@ -56,8 +56,8 @@ grails.project.dependency.resolution = {
     plugins {
         // plugins for the build system only
         build ":tomcat:7.0.55.3" // or ":tomcat:8.0.22"
-
-        // plugins for the compile step
+        compile "org.grails.plugins:console:1.5.7"
+// plugins for the compile step
         compile ":scaffolding:2.1.2"
         compile ':cache:1.1.8'
         // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6

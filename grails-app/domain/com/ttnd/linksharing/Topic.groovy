@@ -1,7 +1,9 @@
 package com.ttnd.linksharing
 
+import VO.TopicVo
 import enums.Seriousness
 import enums.Visibility
+import Logging.LogSql
 
 class Topic {
 
@@ -18,8 +20,8 @@ class Topic {
     }
 
     static mapping = {
-                sort name:'asc'
-            }
+        sort name: 'asc'
+    }
 
     static hasMany = [subscriptions: Subscription, resources: Resource]
 
@@ -46,6 +48,39 @@ class Topic {
     }
 
 
+    public static def getTrendingTopics() {
+
+        List<TopicVo> topicVoList = []
+
+        LogSql.executeWithBindings
+                {
+                    Resource.createCriteria().list(max: 5) {
+
+                        projections {
+                            createAlias('topic', 't')
+                            property('t.id', 'topicId')
+                            property('t.name', 'topicName')
+                            property('t.visibility', 'topicVisibility')
+                            count('id', 'resource_count')
+                            property('t.createdBy')
+                        }
+
+                        groupProperty('t.id')
+                        eq('t.visibility', Visibility.PUBLIC)
+                        order('t.name', 'desc')
+                        order('resource_count', 'desc')
+
+                    }
+
+                }
+
+//        result.each {
+//            record -> topicVoList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
+//        }
+
+        //return topicVoList
+    }
+
     def afterInsert() {
         Subscription.withNewSession
                 {
@@ -58,4 +93,5 @@ class Topic {
                         log.error "Error saving ${subscription.errors.allErrors}"
                 }
     }
+
 }

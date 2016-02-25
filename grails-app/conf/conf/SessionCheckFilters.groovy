@@ -3,7 +3,7 @@ package conf
 class SessionCheckFilters {
 
     def filters = {
-        loginCheck(controller: 'login', invert: true) {
+        loginCheck(controller: 'login|console', invert: true) {
             before = {
 
                 if(!session.user)

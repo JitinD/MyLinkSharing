@@ -1,14 +1,15 @@
 package com.ttnd.linksharing
 
+import CO.ResourceSearchCO
 import enums.Visibility
 
 class TopicController {
 
     def index() { }
 
-    def show(Long id)
+    def show(ResourceSearchCO resourceSearchCO)
     {
-        Topic topic = Topic.get(id)
+        Topic topic = Topic.get(resourceSearchCO.topicId)
 
         if(topic)
         {

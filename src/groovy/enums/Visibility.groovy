@@ -15,4 +15,5 @@ enum Visibility {
         return valueOf(visibilityInUpperCase)
     }
 
+
 }

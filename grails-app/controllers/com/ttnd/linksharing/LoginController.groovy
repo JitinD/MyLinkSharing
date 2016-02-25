@@ -7,9 +7,15 @@ class LoginController {
     def index() {
         if (session.user) {
             forward(controller: "user", action: "index")
-        } else
+        } else {
             render "You must login. ~Failure~"
+
+            def result = Resource.getTopPosts()
+            render result
+
+        }
     }
+
 
     def loginHandler(String userName, String password) {
 
@@ -19,31 +25,30 @@ class LoginController {
             if (user.isActive) {
                 session.user = user
                 redirect(action: "index")
-            }
-            else{
-                flash.error =  "User account is not active"
+            } else {
+                flash.error = "User account is not active"
                 render flash.error
             }
-        }
-        else{
+        } else {
             flash.error = "User not found"
             render flash.error
         }
     }
 
-    def register()
-    {
-        User newUser = new User('userName': 'normal', emailID: 'newUser@mail.com', password: "newUserPassword", confirmPassword: "newUserPassword", firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
+    def register(User user) {
 
-        if(newUser.saveInstance())
-        {
+        //User user = User.list()
+       render(view: 'register', model: [user : user])
+
+
+        /*User newUser = new User('userName': 'normal', emailID: 'newUser@mail.com', password: "newUserPassword", confirmPassword: "newUserPassword", firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
+
+        if (newUser.saveInstance()) {
             render "New user added. ~SUCCESS~"
-        }
-        else
-        {
+        } else {
             flash.message = "${newUser} could not be added, ${newUser.errors.allErrors}"
             render "${newUser.errors.allErrors.collect { message(error: it) }}"
-        }
+        }*/
     }
 
     def logout() {
