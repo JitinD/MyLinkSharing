@@ -83,7 +83,7 @@ abstract class Resource {
                 property('resource.id')
             }
 
-            groupProperty('resource')
+            groupProperty('resource.id')
             count('id', 'totalVotes')
             order('totalVotes', 'desc')
         }

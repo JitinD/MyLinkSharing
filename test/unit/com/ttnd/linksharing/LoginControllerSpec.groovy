@@ -1,11 +1,13 @@
 package com.ttnd.linksharing
 
+import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
+@Mock([User])
 @TestFor(LoginController)
 class LoginControllerSpec extends Specification {
 
@@ -28,11 +30,14 @@ class LoginControllerSpec extends Specification {
     }
 
     def "testing login/index when session.user exists"() {
+        setup:
+        User user = new User()
+        session.user = user
+
         when:
         controller.index()
 
         then:
-        session.user != null
         response.forwardedUrl == "/user/index"
     }
 
@@ -42,7 +47,7 @@ class LoginControllerSpec extends Specification {
 
         then:
         session.user == null
-        response.forwardedUrl == "login/index"
+        response.forwardedUrl == "/login/index"
     }
 
     def "testing login/loginHandler when user is not found"() {
@@ -65,6 +70,9 @@ class LoginControllerSpec extends Specification {
 
     def "testing login/loginHandler when user found is inactive"() {
 
+        setup:
+        //User user = new User(userName: userName, password: password, isActive: isActive)
+
         when:
         controller.loginHandler(userName, password)
 
@@ -75,6 +83,7 @@ class LoginControllerSpec extends Specification {
         where:
         userName | password
         "normal" | "defaultPassword"
+
     }
 
     def "testing login/loginHandler when user found is active"() {
@@ -84,7 +93,7 @@ class LoginControllerSpec extends Specification {
 
         then:
         session.user != null
-        response.redirectedUrl = "login/index"
+        response.redirectedUrl == "login/index"
 
         where:
         userName | password
