@@ -8,11 +8,8 @@ class LoginController {
         if (session.user) {
             forward(controller: "user", action: "index")
         } else {
-            render "You must login. ~Failure~"
-
+            //render "something"
             def result = Resource.getTopPosts()
-            render result
-
         }
     }
 
@@ -27,19 +24,18 @@ class LoginController {
                 redirect(action: "index")
             } else {
                 flash.error = "User account is not active"
-                render flash.error
+                //render flash.error
             }
         } else {
             flash.error = "User not found"
-            render flash.error
+            //render flash.error
         }
     }
 
     def register(User user) {
 
         //User user = User.list()
-       render(view: 'register', model: [user : user])
-
+        render(view: 'register', model: [user: user])
 
         /*User newUser = new User('userName': 'normal', emailID: 'newUser@mail.com', password: "newUserPassword", confirmPassword: "newUserPassword", firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
 
@@ -53,6 +49,7 @@ class LoginController {
 
     def logout() {
         session.invalidate()
-        forward(action: "index")
+        //forward(action: "index")
+        redirect(action:'index')
     }
 }

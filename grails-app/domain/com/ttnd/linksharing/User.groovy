@@ -34,7 +34,7 @@ class User {
 
     }
 
-    static transients = ['confirmPassword'];
+    static transients = ['confirmPassword', 'subscribedTopics'];
 
     String getName() {
         return [firstName, lastName].findAll { it }.join(' ');
@@ -68,6 +68,7 @@ class User {
         return result
     }
 
+
     String getConfirmPassword()
     {
         return confirmPassword
@@ -76,6 +77,19 @@ class User {
 
     String toString() {
         return userName ?: ""
+    }
+
+
+    public List<Topic> getSubscribedTopics()
+    {
+        List<Topic> topicList = Subscription.createCriteria().list{
+            projections {
+                property('topic')
+            }
+            eq('user.id', id)
+        }
+
+        return  topicList
     }
 
     public User saveInstance() {
@@ -95,4 +109,5 @@ class User {
             return user
         }
     }
+
 }

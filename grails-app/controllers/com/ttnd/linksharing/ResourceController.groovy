@@ -28,8 +28,7 @@ class ResourceController {
 
             List<Resource> resources = Resource.search(resourceSearchCO).list()
             render "${resources}"
-        }
-        else
+        } else
             render "q variable missing"
 
     }
@@ -53,4 +52,37 @@ class ResourceController {
         render "${result}"
     }
 
+
+    def saveLinkResource(LinkResource linkResource) {
+        linkResource.createdBy = session.user
+
+        if (linkResource.saveInstance()) {
+
+            flash.message = "Link resource successfully added. ~SUCCESS~"
+
+            //render flash.message
+        } else {
+            flash.error = linkResource.errors.allErrors.collect{message(error:it)}  //"Link resource could not be added. ~FAILURE~"
+
+            //redirect(controller: 'user', action: 'index')
+        }
+        redirect uri: "/"
+    }
+
+
+    def saveDocResource(String filePath, String description, String topicName) {
+        User user = session.user
+        Topic topic = Topic.findByNameAndCreatedBy(topicName, user)
+
+        Resource docResource = new DocumentResource(description: description, topic: topic, createdBy: user, filePath: filePath)
+
+        if (docResource.saveInstance()) {
+
+            flash.message = "Doc resource successfully added. ~SUCCESS~"
+            render flash.message
+        } else {
+            flash.error = "Doc resource could not be added. ~FAILURE~"
+            redirect(controller: 'user', action: 'index')
+        }
+    }
 }

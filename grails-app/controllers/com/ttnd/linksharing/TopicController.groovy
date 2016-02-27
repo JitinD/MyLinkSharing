@@ -47,14 +47,16 @@ class TopicController {
         if(topic.saveInstance())
         {
             flash.message = "Topic saved successfully"
-            render "Topic saved. ~SUCCESS~"
+            //render "Topic saved. ~SUCCESS~"
         }
         else
         {
             flash.error = "Topic could not be saved"
-            render "Topic could not be saved. ~FAILURE~"
-            render "${topic.errors.allErrors.collect { message(error: it) }}"
+            //render "Topic could not be saved. ~FAILURE~"
+            //render "${topic.errors.allErrors.collect { message(error: it) }}"
 
         }
+
+        redirect(uri: "/")
     }
 }

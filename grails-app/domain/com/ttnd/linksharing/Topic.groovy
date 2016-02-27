@@ -48,13 +48,11 @@ class Topic {
     }
 
 
-    public static def getTrendingTopics() {
+    public static List<TopicVo> getTrendingTopics() {
 
         List<TopicVo> topicVoList = []
 
-        LogSql.executeWithBindings
-                {
-                    Resource.createCriteria().list(max: 5) {
+        List result = Resource.createCriteria().list(max: 5) {
 
                         projections {
                             createAlias('topic', 't')
@@ -72,13 +70,13 @@ class Topic {
 
                     }
 
-                }
 
-//        result.each {
-//            record -> topicVoList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
-//        }
 
-        //return topicVoList
+       result.each {
+            record -> topicVoList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
+        }
+
+        return topicVoList
     }
 
     def afterInsert() {
