@@ -19,6 +19,8 @@ class Topic {
         createdBy(nullable: false)
     }
 
+    static transients = ['subscribedUsers']
+
     static mapping = {
         sort name: 'asc'
     }
@@ -77,6 +79,18 @@ class Topic {
         }
 
         return topicVoList
+    }
+
+    public List<User> getSubscribedUsers()
+    {
+        List<User> userList = Subscription.createCriteria().list{
+            projections {
+                property('user')
+            }
+            eq('topic.id', id)
+        }
+
+        return  userList
     }
 
     def afterInsert() {

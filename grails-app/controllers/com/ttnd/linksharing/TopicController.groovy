@@ -7,15 +7,16 @@ class TopicController {
 
     def index() { }
 
-    def show(ResourceSearchCO resourceSearchCO)
+    def show(Long id)
     {
-        Topic topic = Topic.get(resourceSearchCO.topicId)
+        Topic topic = Topic.get(id)
 
         if(topic)
         {
             if(topic.visibility == Visibility.PUBLIC)
             {
-                render "Topic found and its public. ~SUCCESS~"
+                //render "Topic found and its public. ~SUCCESS~"
+                render (view: "show", model: [topic: topic, subscribedUsers : topic.subscribedUsers])
             }
             else if(topic.visibility == Visibility.PRIVATE)
             {
@@ -23,7 +24,8 @@ class TopicController {
 
                 if(Subscription.findByUserAndTopic(user, topic))
                 {
-                    render "User is subscribed to the topic. ~SUCCESS~"
+                    //render "User is subscribed to the topic. ~SUCCESS~"
+                    render (view: "show", model: [subscribedUsers : topic.subscribedUsers])
                 }
                 else
                 {
