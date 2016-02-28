@@ -7,7 +7,7 @@ class TopicController {
 
     def index() { }
 
-    def show(ResourceSearchCO resourceSearchCO)
+    def show(Long id)
     {
         Topic topic = Topic.get(resourceSearchCO.topicId)
 
