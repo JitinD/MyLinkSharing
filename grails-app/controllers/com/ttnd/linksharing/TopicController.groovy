@@ -33,7 +33,7 @@ class TopicController {
         }
         else
         {
-            flash.error = "User is not subscribed to the topic."
+            flash.error = "Not a valid topic id."
             redirect(controller: "login", action: "index")
         }
     }

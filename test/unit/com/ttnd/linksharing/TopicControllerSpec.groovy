@@ -28,7 +28,7 @@ class TopicControllerSpec extends Specification {
         controller.show(id)
 
         then:
-        flash.error == "User is not subscribed to the topic."
+        flash.error == "Not a valid topic id."
         response.redirectedUrl == "/"
 
         where:
