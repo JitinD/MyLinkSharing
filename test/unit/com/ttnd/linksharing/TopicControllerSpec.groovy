@@ -28,7 +28,7 @@ class TopicControllerSpec extends Specification {
         controller.show(id)
 
         then:
-        flash.error == "User is not subscribed to the topic."
+        flash.error == "Not a valid topic."
         response.redirectedUrl == "/"
 
         where:
@@ -80,5 +80,45 @@ class TopicControllerSpec extends Specification {
         then:
         flash.error == "User is not subscribed to the topic."
         response.redirectedUrl == "/"
+    }
+
+
+    def "testing topic/save when topic gets saved successfully"() {
+
+        setup:
+        User user = new User()
+        session.user = user
+
+        when:
+        controller.save(topicName, visibility)
+        Topic topic = Topic.findByName(topicName)
+
+        then:
+        topic != null
+        flash.message == "Topic saved successfully"
+        response.contentAsString == "Topic saved. ~SUCCESS~"
+
+        where:
+        topicName   | visibility
+        "testTopic" | "public"
+        "testTopic" | "private"
+
+    }
+
+    def "testing topic/save when topic could not be saved successfully"() {
+
+        when:
+        controller.save(topicName, visibility)
+        Topic topic = Topic.findByName(topicName)
+
+        then:
+        topic == null
+        flash.error == "Topic could not be saved"
+        response.contentAsString == "Topic could not be saved. ~FAILURE~"
+
+        where:
+        topicName   | visibility
+        "testTopic" | "public"
+        "testTopic" | "private"
     }
 }
