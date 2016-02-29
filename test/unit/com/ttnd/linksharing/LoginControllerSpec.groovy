@@ -32,12 +32,14 @@ class LoginControllerSpec extends Specification {
     def "testing login/index when session.user exists"() {
         setup:
         User user = new User()
+        user.save(validate: false)
         session.user = user
 
         when:
         controller.index()
 
         then:
+        session.user != null
         response.forwardedUrl == "/user/index"
     }
 
@@ -71,7 +73,9 @@ class LoginControllerSpec extends Specification {
     def "testing login/loginHandler when user found is inactive"() {
 
         setup:
-        //User user = new User(userName: userName, password: password, isActive: isActive)
+        User user = new User(userName:userName, password: password, isActive: false)
+        user.save(validate: false)
+        session.user = user
 
         when:
         controller.loginHandler(userName, password)
@@ -88,12 +92,17 @@ class LoginControllerSpec extends Specification {
 
     def "testing login/loginHandler when user found is active"() {
 
+        setup:
+        User user = new User(userName:userName, password: password, isActive: true)
+        user.save(validate: false)
+        session.user = user
+
         when:
         controller.loginHandler(userName, password)
 
         then:
         session.user != null
-        response.redirectedUrl == "login/index"
+        response.redirectedUrl == "/"
 
         where:
         userName | password
