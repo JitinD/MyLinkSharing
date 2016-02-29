@@ -1,11 +1,16 @@
 package com.ttnd.linksharing
 
+import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import spock.lang.Specification
+
+import javax.print.Doc
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
+
+@Mock([Resource, DocumentResource])
 @TestFor(ResourceController)
 class ResourceControllerSpec extends Specification {
 
@@ -21,35 +26,25 @@ class ResourceControllerSpec extends Specification {
     def "testing resource/delete when id is valid"() {
 
         setup:
-        Resource resource = Resource.load(id)
+        Resource resource = new DocumentResource(id: 100)
+        resource.save(validate: false)
 
         when:
-        controller.delete(id)
+        controller.delete(resource.id)
 
         then:
         noExceptionThrown()
-        response.contentAsString == "${resource} deleted successfully.".toString()
-
-        where:
-        id << [1, 2, 3]
-
+        response.contentAsString == "Resource deleted successfully."
     }
 
     def "testing resource/delete when id is invalid"() {
 
-        setup:
-        Resource resource = Resource.load(id)
-
         when:
-        controller.delete(id)
+        controller.delete(100)
 
         then:
-        Exception e = thrown(Exception)
+        Exception e = thrown()
         flash.message == "Resource could not be deleted"
         response.contentAsString == e.message
-
-        where:
-        id << [1, 2, 3]
-
     }
 }

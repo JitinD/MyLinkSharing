@@ -82,43 +82,43 @@ class TopicControllerSpec extends Specification {
         response.redirectedUrl == "/"
     }
 
-    def "testing topic/save when topic name and visibility are valid"() {
+
+    def "testing topic/save when topic gets saved successfully"() {
 
         setup:
+        User user = new User()
         session.user = user
 
         when:
         controller.save(topicName, visibility)
+        Topic topic = Topic.findByName(topicName)
 
         then:
+        topic != null
         flash.message == "Topic saved successfully"
         response.contentAsString == "Topic saved. ~SUCCESS~"
 
         where:
-        topicName  | visibility
-        "newTopic" | "public"
+        topicName   | visibility
+        "testTopic" | "public"
+        "testTopic" | "private"
+
     }
 
-
-    def "testing topic/save when topic name or visibility are invalid"() {
-
-        setup:
-        session.user = user
+    def "testing topic/save when topic could not be saved successfully"() {
 
         when:
         controller.save(topicName, visibility)
+        Topic topic = Topic.findByName(topicName)
 
         then:
+        topic == null
         flash.error == "Topic could not be saved"
         response.contentAsString == "Topic could not be saved. ~FAILURE~"
 
         where:
-        topicName  | visibility
-        "newTopic" | ""
-        "newTopic" | null
-        ""         | "public"
-        null       | "public"
-        "newTopic" | "abcd"
-
+        topicName   | visibility
+        "testTopic" | "public"
+        "testTopic" | "private"
     }
 }

@@ -53,7 +53,7 @@ class TopicController {
         {
             flash.error = "Topic could not be saved"
             render "Topic could not be saved. ~FAILURE~"
-            render "${topic.errors.allErrors.collect { message(error: it) }}"
+            //render "${topic.errors.allErrors.collect { message(error: it) }}"
 
         }
     }

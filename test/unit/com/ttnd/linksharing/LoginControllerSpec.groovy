@@ -39,6 +39,7 @@ class LoginControllerSpec extends Specification {
         controller.index()
 
         then:
+        session.user != null
         response.forwardedUrl == "/user/index"
     }
 
