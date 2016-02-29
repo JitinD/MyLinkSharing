@@ -40,7 +40,8 @@ class ResourceController {
 
         if (resource) {
             RatingInfoVo ratingInfoVo = resource.getRatingInfo()
-            render "${ratingInfoVo}"
+            return ${ratingInfoVo}
+            //render "${ratingInfoVo}"
         } else {
             render "Resource could not be found"
 
@@ -49,8 +50,8 @@ class ResourceController {
 
     def showTrendingTopics() {
         List result = Topic.getTrendingTopics()
-
-        render "${result}"
+        return result
+        //render "${result}"
     }
 
 }

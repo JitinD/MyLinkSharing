@@ -11,7 +11,7 @@ class LoginController {
             render "You must login. ~Failure~"
 
             def result = Resource.getTopPosts()
-            render result
+            return result
 
         }
     }

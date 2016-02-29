@@ -117,12 +117,4 @@ class LoginControllerSpec extends Specification {
         response.contentAsString == "New user added. ~SUCCESS~"
     }
 
-    def "checking Top posts"()
-    {
-        when:
-        List result = controller.getTopPosts()
-
-        then:
-        !result.isEmpty()
-    }
 }
