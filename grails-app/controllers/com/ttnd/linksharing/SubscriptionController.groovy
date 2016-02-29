@@ -14,11 +14,11 @@ class SubscriptionController {
 
         if(subscription.saveInstance())
         {
-            render "${subscription} saved successfully"
+            render "Subscription saved successfully"
         }
         else
         {
-            render "${subscription} could not be saved"
+            render "Subscription could not be saved"
         }
     }
 
@@ -33,9 +33,9 @@ class SubscriptionController {
             subscription.seriousness = seriousness
 
             if(subscription.saveInstance())
-                render "Subscription ${subscription} saved successfully"
+                render "Subscription updated successfully"
             else
-                render "Subscription ${subscription} could not be saved"
+                render "Subscription could not be updated"
         }
         else
         {
@@ -50,7 +50,7 @@ class SubscriptionController {
         try
         {
             subscription.delete(flush: true)
-            render "${subscription} deleted successfully."
+            render "Subscription deleted successfully."
         }catch (Exception e)
         {
             flash.message = "Subscription could not be deleted"

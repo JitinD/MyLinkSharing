@@ -10,12 +10,11 @@ class ResourceController {
 
         try {
             resource.delete(flush: true)
-            render "${resource} deleted successfully."
+            render "Resource deleted successfully."
         }catch (Exception e)
         {
             flash.message = "Resource could not be deleted"
             render e.message
         }
-
     }
 }
