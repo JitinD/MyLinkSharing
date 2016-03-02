@@ -4,8 +4,8 @@
     </div>
 
     <div class="col-md-8">
-        <span class="text-primary">${session.user.name}</span><br/>
-        <small>${session.user.userName}</small>
+        <span class="text-primary">${user.name}</span><br/>
+        <small>${user.userName}</small>
 
         <div class="row">
             <div class="col-md-6">

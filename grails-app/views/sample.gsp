@@ -16,9 +16,9 @@
 
 --%>
 
-<ls:showAdmin isAdmin = 'true'>
+<g:showAdmin isAdmin = 'true'>
     Is Admin. So you are able to see
-</ls:showAdmin>
+</g:showAdmin>
 
 <ls:showAdmin isAdmin = 'false'>
     Is User. So you are able to see

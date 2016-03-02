@@ -77,6 +77,7 @@ abstract class Resource {
     public static List<Resource> getTopPosts() {
 
         List<Resource> resources = []
+        List<Resource> topPosts = []
 
         def result = ResourceRating.createCriteria().list(max: 5) {
             projections {
@@ -91,7 +92,29 @@ abstract class Resource {
         List list = result.collect { it[0] }
         resources = Resource.getAll(list)
 
-        return resources
+        resources.each {
+            resource ->
+                if (resource) {
+                    if (resource.topic.visibility == Visibility.PUBLIC)
+                        topPosts.add(resource)
+                }
+        }
+
+        return topPosts
+    }
+
+
+    public static List<Resource> getRecentPosts() {
+
+        List<Resource> recentPosts = createCriteria().list(max: 5) {
+
+            order('lastUpdated', 'desc')
+            createAlias('topic', 't')
+            eq('t.visibility', Visibility.PUBLIC)
+
+        }
+
+        return recentPosts
     }
 
 }

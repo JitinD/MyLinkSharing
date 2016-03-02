@@ -4,6 +4,6 @@ class UserController {
 
     def index()
     {
-        render (view: 'index' , model: [topicNames : session.user.subscribedTopics, topicVoList : Topic.getTrendingTopics()])
+        render (view: 'index' , model: [user : session.user, subscribedTopics : session.user.subscribedTopics, trendingTopics : Topic.getTrendingTopics()])
     }
 }

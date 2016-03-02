@@ -8,8 +8,10 @@ class LoginController {
         if (session.user) {
             forward(controller: "user", action: "index")
         } else {
-            //render "something"
-            def result = Resource.getTopPosts()
+
+            List<Resource>topPosts = Resource.getTopPosts()
+            List<Resource>recentPosts = Resource.getRecentPosts()
+            render (view: "index", model: [topPosts : topPosts, recentPosts: recentPosts])
         }
     }
 

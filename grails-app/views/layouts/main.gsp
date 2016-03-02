@@ -114,7 +114,8 @@
     ${flash.error}
 </g:if>
 
-<g:layoutBody/>
-
+<div class = "container">
+    <g:layoutBody/>
+</div>
 </body>
 </html>

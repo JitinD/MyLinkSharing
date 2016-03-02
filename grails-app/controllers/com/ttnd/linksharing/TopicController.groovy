@@ -13,10 +13,14 @@ class TopicController {
 
         if(topic)
         {
+
+            List<Resource> topicPosts = topic.getTopicPosts()
+
             if(topic.visibility == Visibility.PUBLIC)
             {
                 //render "Topic found and its public. ~SUCCESS~"
-                render (view: "show", model: [topic: topic, subscribedUsers : topic.subscribedUsers])
+
+                render (view: "show", model: [topic: topic, subscribedUsers : topic.subscribedUsers, topicPosts : topicPosts])
             }
             else if(topic.visibility == Visibility.PRIVATE)
             {
@@ -25,7 +29,7 @@ class TopicController {
                 if(Subscription.findByUserAndTopic(user, topic))
                 {
                     //render "User is subscribed to the topic. ~SUCCESS~"
-                    render (view: "show", model: [subscribedUsers : topic.subscribedUsers])
+                    render (view: "show", model: [subscribedUsers : topic.subscribedUsers, topicPosts : topicPosts])
                 }
                 else
                 {

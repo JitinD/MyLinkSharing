@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import VO.TopicVo
+
 class User {
 
     String userName;
@@ -80,16 +82,22 @@ class User {
     }
 
 
-    public List<Topic> getSubscribedTopics()
+    public List<TopicVo> getSubscribedTopics()
     {
-        List<Topic> topicList = Subscription.createCriteria().list{
+        List<TopicVo> subscribedTopicsList = []
+
+        List<Topic> topicList = Subscription.createCriteria().list(max:5){
             projections {
                 property('topic')
             }
             eq('user.id', id)
         }
 
-        return  topicList
+        topicList.each {
+            topic -> subscribedTopicsList.add(new TopicVo(id: topic.id, name: topic.name, visibility: topic.visibility, createdBy: topic.createdBy))
+        }
+
+        return  subscribedTopicsList
     }
 
     public User saveInstance() {

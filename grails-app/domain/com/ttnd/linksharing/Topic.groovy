@@ -52,7 +52,7 @@ class Topic {
 
     public static List<TopicVo> getTrendingTopics() {
 
-        List<TopicVo> topicVoList = []
+        List<TopicVo> trendingTopicsList = []
 
         List result = Resource.createCriteria().list(max: 5) {
 
@@ -75,10 +75,10 @@ class Topic {
 
 
        result.each {
-            record -> topicVoList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
+            record -> trendingTopicsList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
         }
 
-        return topicVoList
+        return trendingTopicsList
     }
 
     public List<User> getSubscribedUsers()
@@ -91,6 +91,19 @@ class Topic {
         }
 
         return  userList
+    }
+
+    public List<Resource> getTopicPosts() {
+
+        List<Resource> topicPosts = Resource.createCriteria().list(max: 5) {
+
+            order('lastUpdated', 'desc')
+            createAlias('topic', 't')
+            eq('t.visibility', Visibility.PUBLIC)
+            eq('t.id', id)
+        }
+
+        return topicPosts
     }
 
     def afterInsert() {
