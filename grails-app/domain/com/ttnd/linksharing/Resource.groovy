@@ -76,29 +76,25 @@ abstract class Resource {
 
     public static List<Resource> getTopPosts() {
 
-        List<Resource> resources = []
         List<Resource> topPosts = []
+        def topicIds = []
 
         def result = ResourceRating.createCriteria().list(max: 5) {
-            projections {
-                property('resource.id')
-            }
 
-            groupProperty('resource.id')
-            count('id', 'totalVotes')
-            order('totalVotes', 'desc')
+            createAlias('resource', 'r')
+            createAlias('r.topic', 't')
+            groupProperty('r.id')
+            avg('score', 'rating')
+            order('rating', 'desc')
+            eq('t.visibility', Visibility.PUBLIC)
+
         }
 
-        List list = result.collect { it[0] }
-        resources = Resource.getAll(list)
-
-        resources.each {
-            resource ->
-                if (resource) {
-                    if (resource.topic.visibility == Visibility.PUBLIC)
-                        topPosts.add(resource)
-                }
+        topicIds = result.collect{
+            it[0]
         }
+
+        topPosts = Resource.getAll(topicIds)
 
         return topPosts
     }

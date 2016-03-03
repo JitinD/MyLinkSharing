@@ -4,7 +4,9 @@
     </div>
 
     <div class="col-xs-10">
-        <h6>${post.createdBy} <small>@${post.createdBy.userName} ${post.dateCreated}</small></h6>
+
+       <span>${post.createdBy} <small>@${post.createdBy.userName} ${post.dateCreated}</small></span>
+        <span class="pull-right"><a href="/topic/show?id=${post.topic.id}"><ins>${post.topic}</ins></a></span>
 
         <div class="text-justify">${post.description}</div>
 
