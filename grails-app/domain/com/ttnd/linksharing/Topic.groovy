@@ -19,6 +19,8 @@ class Topic {
         createdBy(nullable: false)
     }
 
+    static transients = ['subscribedUsers']
+
     static mapping = {
         sort name: 'asc'
     }
@@ -48,13 +50,11 @@ class Topic {
     }
 
 
-    public static def getTrendingTopics() {
+    public static List<TopicVo> getTrendingTopics() {
 
-        List<TopicVo> topicVoList = []
+        List<TopicVo> trendingTopicsList = []
 
-        LogSql.executeWithBindings
-                {
-                    Resource.createCriteria().list(max: 5) {
+        List result = Resource.createCriteria().list(max: 5) {
 
                         projections {
                             createAlias('topic', 't')
@@ -72,13 +72,38 @@ class Topic {
 
                     }
 
-                }
 
-//        result.each {
-//            record -> topicVoList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
-//        }
 
-        //return topicVoList
+       result.each {
+            record -> trendingTopicsList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
+        }
+
+        return trendingTopicsList
+    }
+
+    public List<User> getSubscribedUsers()
+    {
+        List<User> userList = Subscription.createCriteria().list{
+            projections {
+                property('user')
+            }
+            eq('topic.id', id)
+        }
+
+        return  userList
+    }
+
+    public List<Resource> getTopicPosts() {
+
+        List<Resource> topicPosts = Resource.createCriteria().list(max: 5) {
+
+            order('lastUpdated', 'desc')
+            createAlias('topic', 't')
+            eq('t.visibility', Visibility.PUBLIC)
+            eq('t.id', id)
+        }
+
+        return topicPosts
     }
 
     def afterInsert() {

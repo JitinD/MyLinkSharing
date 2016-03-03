@@ -5,7 +5,7 @@ class SampleTagLib {
     static namespace = "ls"
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
-    def showAdmin = {
+    def each = {
         attribute, body ->
             Boolean isAdmin = Boolean.valueOf(attribute.isAdmin)
 

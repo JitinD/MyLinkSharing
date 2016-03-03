@@ -9,13 +9,18 @@ class TopicController {
 
     def show(Long id)
     {
-        Topic topic = Topic.get(resourceSearchCO.topicId)
+        Topic topic = Topic.get(id)
 
         if(topic)
         {
+
+            List<Resource> topicPosts = topic.getTopicPosts()
+
             if(topic.visibility == Visibility.PUBLIC)
             {
-                render "Topic found and its public. ~SUCCESS~"
+                //render "Topic found and its public. ~SUCCESS~"
+
+                render (view: "show", model: [topic: topic, subscribedUsers : topic.subscribedUsers, topicPosts : topicPosts])
             }
             else if(topic.visibility == Visibility.PRIVATE)
             {
@@ -23,7 +28,8 @@ class TopicController {
 
                 if(Subscription.findByUserAndTopic(user, topic))
                 {
-                    render "User is subscribed to the topic. ~SUCCESS~"
+                    //render "User is subscribed to the topic. ~SUCCESS~"
+                    render (view: "show", model: [subscribedUsers : topic.subscribedUsers, topicPosts : topicPosts])
                 }
                 else
                 {
@@ -47,14 +53,17 @@ class TopicController {
         if(topic.saveInstance())
         {
             flash.message = "Topic saved successfully"
-            render "Topic saved. ~SUCCESS~"
+            //render "Topic saved. ~SUCCESS~"
         }
         else
         {
             flash.error = "Topic could not be saved"
             render "Topic could not be saved. ~FAILURE~"
+
             //render "${topic.errors.allErrors.collect { message(error: it) }}"
 
         }
+
+        redirect(uri: "/")
     }
 }

@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import VO.TopicVo
+
 class User {
 
     String userName;
@@ -34,7 +36,7 @@ class User {
 
     }
 
-    static transients = ['confirmPassword'];
+    static transients = ['confirmPassword', 'subscribedTopics'];
 
     String getName() {
         return [firstName, lastName].findAll { it }.join(' ');
@@ -68,6 +70,7 @@ class User {
         return result
     }
 
+
     String getConfirmPassword()
     {
         return confirmPassword
@@ -76,6 +79,25 @@ class User {
 
     String toString() {
         return userName ?: ""
+    }
+
+
+    public List<TopicVo> getSubscribedTopics()
+    {
+        List<TopicVo> subscribedTopicsList = []
+
+        List<Topic> topicList = Subscription.createCriteria().list(max:5){
+            projections {
+                property('topic')
+            }
+            eq('user.id', id)
+        }
+
+        topicList.each {
+            topic -> subscribedTopicsList.add(new TopicVo(id: topic.id, name: topic.name, visibility: topic.visibility, createdBy: topic.createdBy))
+        }
+
+        return  subscribedTopicsList
     }
 
     public User saveInstance() {
@@ -95,4 +117,5 @@ class User {
             return user
         }
     }
+
 }
