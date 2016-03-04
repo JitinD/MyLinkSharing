@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import VO.PostVO
 import com.ttnd.linksharing.constants.Constants
 
 class LoginController {
@@ -9,8 +10,8 @@ class LoginController {
             forward(controller: "user", action: "index")
         } else {
 
-            List<Resource>topPosts = Resource.getTopPosts()
-            List<Resource>recentPosts = Resource.getRecentPosts()
+            List<PostVO> topPosts = Resource.getTopPosts()
+            List<PostVO>recentPosts = Resource.getRecentPosts()
             render (view: "index", model: [topPosts : topPosts, recentPosts: recentPosts])
         }
     }

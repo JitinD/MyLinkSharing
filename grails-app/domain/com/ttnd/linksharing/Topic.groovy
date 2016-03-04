@@ -1,9 +1,11 @@
 package com.ttnd.linksharing
 
+import VO.PostVO
 import VO.TopicVo
 import enums.Seriousness
 import enums.Visibility
 import Logging.LogSql
+import org.apache.xpath.operations.Bool
 
 class Topic {
 
@@ -56,44 +58,45 @@ class Topic {
 
         List result = Resource.createCriteria().list(max: 5) {
 
-                        projections {
-                            createAlias('topic', 't')
-                            property('t.id', 'topicId')
-                            property('t.name', 'topicName')
-                            property('t.visibility', 'topicVisibility')
-                            count('id', 'resource_count')
-                            property('t.createdBy')
-                        }
+            projections {
+                createAlias('topic', 't')
+                property('t.id', 'topicId')
+                property('t.name', 'topicName')
+                property('t.visibility', 'topicVisibility')
+                count('id', 'resource_count')
+                property('t.createdBy')
+            }
 
-                        groupProperty('t.id')
-                        eq('t.visibility', Visibility.PUBLIC)
-                        order('t.name', 'desc')
-                        order('resource_count', 'desc')
+            groupProperty('t.id')
+            eq('t.visibility', Visibility.PUBLIC)
+            order('t.name', 'desc')
+            order('resource_count', 'desc')
 
-                    }
+        }
 
 
 
-       result.each {
+        result.each {
             record -> trendingTopicsList.add(new TopicVo(id: record[0], name: record[1], visibility: record[2], count: record[3], createdBy: record[4]))
         }
 
         return trendingTopicsList
     }
 
-    public List<User> getSubscribedUsers()
-    {
-        List<User> userList = Subscription.createCriteria().list{
+    public List<User> getSubscribedUsers() {
+        List<User> userList = Subscription.createCriteria().list {
             projections {
                 property('user')
             }
             eq('topic.id', id)
         }
 
-        return  userList
+        return userList
     }
 
-    public List<Resource> getTopicPosts() {
+    public List<PostVO> getTopicPosts() {
+
+        List<PostVO> topicPostVOs = []
 
         List<Resource> topicPosts = Resource.createCriteria().list(max: 5) {
 
@@ -103,7 +106,28 @@ class Topic {
             eq('t.id', id)
         }
 
-        return topicPosts
+        topicPosts.each {
+            post ->
+                topicPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
+                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
+                        description: post.description, url: post instanceof LinkResource ? post.url : null,
+                        filePath: post instanceof DocumentResource ? post.filePath : null, createdDate: post.dateCreated))
+        }
+
+        return topicPostVOs
+    }
+
+    Boolean isPublic() {
+        return this.visibility == Visibility.PUBLIC
+    }
+
+    Boolean canViewedBy(User user) {
+        if (this.isPublic() || user.isAdmin || Subscription.findByUserAndTopic(user, this)) {
+            return  true
+        }
+
+        return false
+
     }
 
     def afterInsert() {

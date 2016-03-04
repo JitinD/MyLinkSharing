@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
+import VO.PostVO
 import VO.RatingInfoVo
 import VO.TopicVo
 import enums.Visibility
@@ -74,10 +75,12 @@ abstract class Resource {
         new RatingInfoVo(totalVotes: result[0], totalScore: result[1], averageScore: result[2])
     }
 
-    public static List<Resource> getTopPosts() {
+    public static List<PostVO> getTopPosts() {
+
+        List<PostVO> topPostVOs = []
 
         List<Resource> topPosts = []
-        def topicIds = []
+        List topicIds = []
 
         def result = ResourceRating.createCriteria().list(max: 5) {
 
@@ -90,17 +93,27 @@ abstract class Resource {
 
         }
 
-        topicIds = result.collect{
+        topicIds = result.collect {
             it[0]
         }
 
         topPosts = Resource.getAll(topicIds)
 
-        return topPosts
+        topPosts.each {
+            post ->
+                topPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
+                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
+                        description: post.description, url: post.class.equals(LinkResource) ? post.url : null,
+                        filePath: post.class.equals(DocumentResource) ? post.filePath : null, createdDate: post.dateCreated))
+        }
+
+        return topPostVOs
     }
 
 
-    public static List<Resource> getRecentPosts() {
+    public static List<PostVO> getRecentPosts() {
+
+        List<PostVO> recentPostVOs = []
 
         List<Resource> recentPosts = createCriteria().list(max: 5) {
 
@@ -110,7 +123,39 @@ abstract class Resource {
 
         }
 
-        return recentPosts
+        recentPosts.each {
+            post ->
+                recentPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
+                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
+                        description: post.description, url: post.class.equals(LinkResource) ? post.url : null,
+                        filePath: post.class.equals(DocumentResource) ? post.filePath : null, createdDate: post.dateCreated))
+        }
+
+        return recentPostVOs
+    }
+
+
+    public static Boolean isLinkResource(Long id) {
+        Resource resource = Resource.get(id)
+
+        return resource.class.equals(LinkResource) ? true : false
+
+    }
+
+    public static PostVO getPostInfo(Long id) {
+
+        Resource resource = Resource.get(id)
+        return new PostVO(userId: resource.createdBy.id, topicId: resource.topic.id, resourceId: resource.id, user: resource.createdBy.name,
+                userName: resource.createdBy.userName, topicName: resource.topic.name, description: resource.description,
+                url: resource.class.equals(LinkResource) ? resource.url : null, filePath: resource.class.equals(DocumentResource) ? resource.filePath : null,
+                createdDate: resource.dateCreated)
+    }
+
+    public Boolean canViewBy(User user) {
+        if(this.topic.canViewedBy(user))
+            return true
+
+        return false
     }
 
 }

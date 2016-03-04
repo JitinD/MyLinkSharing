@@ -1,6 +1,8 @@
 package com.ttnd.linksharing
 
+import VO.PostVO
 import VO.TopicVo
+import VO.UserVO
 
 class User {
 
@@ -21,7 +23,7 @@ class User {
         emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
 
-        confirmPassword(bindable:true, nullable: true, blank: true, validator:{
+        confirmPassword(bindable: true, nullable: true, blank: true, validator: {
             value, user ->
                 if (!user.id) {
                     return value && value == user.password
@@ -44,7 +46,7 @@ class User {
 
     static mapping = {
         photo sqlType: 'longblob'
-        sort id : 'desc'
+        sort id: 'desc'
     }
 
     static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource, resourceRatings: ResourceRating]
@@ -71,8 +73,7 @@ class User {
     }
 
 
-    String getConfirmPassword()
-    {
+    String getConfirmPassword() {
         return confirmPassword
     }
 
@@ -82,11 +83,10 @@ class User {
     }
 
 
-    public List<TopicVo> getSubscribedTopics()
-    {
+    public List<TopicVo> getSubscribedTopics() {
         List<TopicVo> subscribedTopicsList = []
 
-        List<Topic> topicList = Subscription.createCriteria().list(max:5){
+        List<Topic> topicList = Subscription.createCriteria().list(max: 5) {
             projections {
                 property('topic')
             }
@@ -97,7 +97,7 @@ class User {
             topic -> subscribedTopicsList.add(new TopicVo(id: topic.id, name: topic.name, visibility: topic.visibility, createdBy: topic.createdBy))
         }
 
-        return  subscribedTopicsList
+        return subscribedTopicsList
     }
 
     public User saveInstance() {
@@ -116,6 +116,48 @@ class User {
 
             return user
         }
+    }
+
+    public List<PostVO> getInboxPosts() {
+        List<PostVO> inboxPostVOs = []
+
+        def inboxPosts = ReadingItem.createCriteria().list {
+            projections
+                    {
+                        property('resource')
+                        property('isRead')
+                    }
+
+            eq('isRead', false)
+            eq('user', this)
+            createAlias('resource', 'r')
+        }
+
+        inboxPosts.each {
+            post ->
+                inboxPostVOs.add(new PostVO(userId: post[0].createdBy.id, topicId: post[0].topic.id, resourceId: post[0].id,
+                        isRead: post[1], user: post[0].createdBy.name, userName: post[0].createdBy.userName,
+                        topicName: post[0].topic.name, description: post[0].description, url: post[0].class.equals(LinkResource) ? post[0].url : null,
+                        filePath: post[0].class.equals(DocumentResource) ? post[0].filePath : null, createdDate: post[0].dateCreated))
+        }
+
+        return inboxPostVOs
+    }
+
+    public UserVO getInfo() {
+        UserVO userVO = new UserVO(userId: this.id, name: this.name, userName: this.userName, emailID: this.emailID, photo: this.photo)
+
+        return userVO
+    }
+
+    public Boolean canDeleteResource(Long resourceId)
+    {
+        Resource resource = Resource.read(resourceId)
+
+        if(this.isAdmin || (resource.createdBy.id == this.id) )
+            return true
+
+        return false
     }
 
 }

@@ -10,14 +10,20 @@ class ResourceController {
     def index() {}
 
     def delete(Long id) {
-        Resource resource = Resource.load(id)
 
-        try {
-            resource.delete(flush: true)
-            render "${resource} deleted successfully."
-        } catch (Exception e) {
-            flash.message = "Resource could not be deleted"
-            render e.message
+        if (session.user.canDeleteResource(id)) {
+
+            Resource resource = Resource.load(id)
+
+            try {
+                resource.delete(flush: true)
+                flash.message = "${resource} deleted successfully."
+            } catch (Exception e) {
+                flash.error = "Resource could not be deleted"
+                //render e.message
+            }
+
+            redirect(controller: "user", action: "index")
         }
 
     }
@@ -38,12 +44,20 @@ class ResourceController {
         Resource resource = Resource.get(id)
 
         if (resource) {
-            RatingInfoVo ratingInfoVo = resource.getRatingInfo()
-            return ${ratingInfoVo}
+            //RatingInfoVo ratingInfoVo = resource.getRatingInfo()
+            //return ${ratingInfoVo}
             //render "${ratingInfoVo}"
-        } else {
-            render "Resource could not be found"
+            User user = session.user
 
+            if (resource.canViewBy(user))
+                render(view: '/resource/show', model: [post: Resource.getPostInfo(id)])
+            else {
+                flash.error = "User doesn't have valid permissions to access the resource"
+                redirect(controller: "user", action: "index")
+            }
+        } else {
+            flash.error = "Resource could not be found"
+            redirect(controller: "user", action: "index")
         }
     }
 
@@ -63,7 +77,8 @@ class ResourceController {
 
             //render flash.message
         } else {
-            flash.error = linkResource.errors.allErrors.collect{message(error:it)}  //"Link resource could not be added. ~FAILURE~"
+            flash.error = linkResource.errors.allErrors.collect { message(error: it) }
+            //"Link resource could not be added. ~FAILURE~"
 
             //redirect(controller: 'user', action: 'index')
         }

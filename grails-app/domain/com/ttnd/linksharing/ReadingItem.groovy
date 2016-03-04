@@ -1,7 +1,7 @@
 package com.ttnd.linksharing
 
 class ReadingItem {
-    Boolean isRead;
+    Boolean isRead = false;
     Date dateCreated;
     Date lastUpdated;
 

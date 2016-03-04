@@ -4,14 +4,16 @@ class ReadingItemController {
 
     def index() {}
 
-    def changeIsRead(Long id, Boolean isRead) {
-        ReadingItem readingItem = ReadingItem.get(id)
+    def changeIsRead(Long resourceId, Boolean isRead) {
 
-        if (ReadingItem.executeUpdate("update ReadingItem as r set r.isRead=:isRead where r.id=:id", [id: id, isRead: isRead])) {
-            readingItem.refresh()
-            render "Reading Item isRead successfully changed. ~SUCCESS~"
+        User user = session.user
+
+        if (ReadingItem.executeUpdate("update ReadingItem set isRead =:isRead where user.id =:userId and resource.id =:resourceId", [userId: user.id, resourceId: resourceId, isRead: isRead])) {
+            flash.message = "Reading Item isRead successfully changed. ~SUCCESS~"
         } else {
-            render "Reading Item isRead could not be changed. ~FAILURE~"
+            flash.error = "Reading Item isRead could not be changed. ~FAILURE~"
         }
+
+        redirect(controller: 'user', action: 'index')
     }
 }
