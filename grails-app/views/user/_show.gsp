@@ -1,6 +1,6 @@
 <div class="row panel panel-default">
     <div class="col-md-4">
-        <img src="" class="img img-thumbnail img-responsive" style="width:75px;height:75px">
+        <img src="" class="img img-thumbnail img-responsive" style="width:80px;height:70px">
     </div>
 
     <div class="col-md-8">

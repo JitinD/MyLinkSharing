@@ -37,7 +37,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#" style = "color: #4ba2f7;font-size: x-large;"><ins>Link Sharing</ins></a>
+                    <g:link controller = "login" action = "index" class = "navbar-brand" style = "color: #4ba2f7;font-size: x-large; font-weight: bolder">Link Sharing</g:link>
                 </div>
 
                 <div id="navBar">

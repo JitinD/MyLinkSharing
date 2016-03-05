@@ -1,7 +1,7 @@
 <div class="row">
     <div class="panel panel-default">
-        <div class="panel-heading" style = "background-color:#cfd7ff;">
-            <span  style = "color: #4ba2f7; font-weight: bold">Register</span>
+        <div class="panel-heading" style="background-color:#cfd7ff;">
+            <span style="color: #4ba2f7; font-weight: bold">Register</span>
         </div>
 
         <div class="panel-body">
@@ -63,13 +63,14 @@
                     </div>
 
                     <div class="col-xs-3">
-                        <input type="button" class = "btn btn-primary" value="Browse"/>
+                        <input type="button" value="Browse" class="btn btn-primary" style="background-color:#4ba2f7;"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-xs-offset-4">
-                        <input type="button" class = "btn btn-primary" value="Register"/>
+                        <input type="button" class="btn btn-primary" value="Register"
+                               style="background-color:#4ba2f7;"/>
                     </div>
                 </div>
             </form>

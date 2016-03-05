@@ -1,7 +1,7 @@
 <div class="row">
     <div class="panel panel-default">
-        <div class="panel-heading" style = "background-color:#cfd7ff;">
-            <span  style = "color: #4ba2f7; font-weight: bold">Login</span>
+        <div class="panel-heading" style="background-color:#cfd7ff;">
+            <span style="color: #4ba2f7; font-weight: bold">Login</span>
         </div>
 
         <div class="panel-body">
@@ -28,7 +28,7 @@
 
                     <div class="col-sm-6">
                         <g:submitButton class="btn btn-primary" formaction="/login/loginHandler"
-                                        type="submit" name="submit" value="Submit"/>
+                                        type="submit" name="submit" value="Submit" style="background-color:#4ba2f7;"/>
                     </div>
                 </div>
             </g:form>

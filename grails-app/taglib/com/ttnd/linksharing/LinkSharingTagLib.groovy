@@ -23,9 +23,9 @@ class LinkSharingTagLib {
 
         attributes ->
             if (Resource.isLinkResource(attributes.id))
-                out << "<a href = ${attributes.url} class = 'pull-right' target = '_blank'> View Full Site </a>&nbsp;"
+                out << "<a href = ${attributes.url} class = 'pull-right' target = '_blank'><ins>View Full Site</ins></a>&nbsp;"
             else
-                out << "<a href = ${attributes.filePath} class = 'pull-right'>Download</a> &nbsp;"
+                out << "<a href = ${attributes.filePath} class = 'pull-right'><ins>Download</ins></a> &nbsp;"
 
     }
 
@@ -39,6 +39,6 @@ class LinkSharingTagLib {
             String href = "${createLink(controller: 'resource', action: 'delete', params: [id: attributes.id])}"
 
             if(user.canDeleteResource(attributes.id))
-                out << "<a href = ${href}>Delete</a>"
+                out << "<a href = ${href}><ins>Delete</ins></a>"
     }
 }

@@ -60,20 +60,14 @@
 
                             <div class = "col-xs-10">
                                 <div class = "row">
-                                    <div class = "col-xs-3">
+                                    <div class = "col-xs-offset-6 col-xs-2">
                                         <ls:canDeleteResoure id = "${post.resourceId}"/>
                                     </div>
-
-                                    <div class = "col-xs-3">
+                                    <div class = "col-xs-2">
                                         <a href="#"><ins>Edit</ins></a>&nbsp;
                                     </div>
-
-                                    <div class = "col-xs-3">
-                                        <a href="#"><ins>Download</ins></a>&nbsp;
-                                    </div>
-
-                                    <div class = "col-xs-3">
-                                        <a href="#"><ins>View Full Site</ins></a>
+                                    <div class = "col-xs-2">
+                                        <ls:showResource id = "${post.resourceId}" url = "${post.url}" filePath = "${post.filePath}" />
                                     </div>
                                 </div>
                             </div>
