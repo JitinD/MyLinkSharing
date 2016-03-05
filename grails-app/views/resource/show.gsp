@@ -10,7 +10,7 @@
         <div class = "row">
             <div class = "col-xs-7">
                 <div class = "panel panel-default">
-                    <div class = "panel-heading">
+                    <div class = "panel-body">
                         <div class = "row">
                             <div class = "col-xs-2">
                                 <img src = "" class = "img img-thumbnail img-responsive" style = "width:80px; height:70px;"/>
@@ -22,31 +22,61 @@
                                     <div class = "col-xs-2"><a href = "/topic/show?id=${post.topicId}"><ins>${post.topicName}</ins></a></div>
                                 </div>
                                 <div class = "row">
-                                    <div class = "col-xs-7 text-muted"><small>@${post.userName}</small></div>
-                                    <div class = "col-xs-5">${post.createdDate} </div>
+                                    <div class = "col-xs-8 text-muted"><small>(@${post.userName})</small></div>
+                                    <div class = "col-xs-4">${post.createdDate} </div>
                                 </div>
                                 <div class = "row">
-                                    <div class = "col-xs-7"></div>
-                                    <div class = "col-xs-5">Ratings</div>
+                                    <div class = "col-xs-8"></div>
+                                    <div class = "col-xs-4">Ratings</div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class = "row">
+                            <div class = "col-xs-12">
+                                ${post.description}
                             </div>
                         </div>
                     </div>
 
-                    <div class = "panel-body">
-                        ${post.description}
-                    </div>
-
                     <div class = "panel-footer">
-                        <a href="#"><span class="fa fa-facebook-official"></span></a>&nbsp;
-                        <a href="#"><span class="fa fa-twitter-square"></span> </a>&nbsp;
-                        <a href="#"><span class="fa fa-google-plus"></span> </a>&nbsp;
-                        <div class = "pull-right">
+                        <div class = "row">
 
-                            <ls:canDeleteResoure id = "${post.resourceId}"/>
-                            <a href="#"><ins>Edit</ins></a>&nbsp;
-                            <a href="#"><ins>Download</ins></a>&nbsp;
-                            <a href="#"><ins>View Full Site</ins></a>
+                            <div class = "col-xs-2">
+                                <div class = "row">
+                                    <div class = "col-xs-1">
+                                        <a href="#"><span class="fa fa-facebook-official"></span></a>
+                                    </div>
+
+                                    <div class = "col-xs-1">
+                                        <a href="#"><span class="fa fa-twitter-square"></span></a>
+                                    </div>
+
+                                    <div class = "col-xs-1">
+                                        <a href="#"><span class="fa fa-google-plus"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class = "col-xs-10">
+                                <div class = "row">
+                                    <div class = "col-xs-3">
+                                        <ls:canDeleteResoure id = "${post.resourceId}"/>
+                                    </div>
+
+                                    <div class = "col-xs-3">
+                                        <a href="#"><ins>Edit</ins></a>&nbsp;
+                                    </div>
+
+                                    <div class = "col-xs-3">
+                                        <a href="#"><ins>Download</ins></a>&nbsp;
+                                    </div>
+
+                                    <div class = "col-xs-3">
+                                        <a href="#"><ins>View Full Site</ins></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
