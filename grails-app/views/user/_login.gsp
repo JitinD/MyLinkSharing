@@ -24,7 +24,11 @@
                 </div>
 
                 <div class="form-group row">
-                    <a href="#" class="control-label col-sm-6"><ins>Forgot Password</ins></a>
+                    <a href = "" class="control-label col-sm-6" data-toggle="modal" data-target="#forgotPasswordModal">
+                        <ins>Forgot Password</ins>
+                    </a>
+
+                    <g:render template = "/user/forgotPassword" />
 
                     <div class="col-sm-6">
                         <g:submitButton class="btn btn-primary submitButtons" formaction="/login/loginHandler"
