@@ -1,5 +1,44 @@
-.navBarElements
+.modalIcons
 {
-    color: #9F81F7;
-    font-size: x-large;
+    color: #4ba2f7!important;
+    font-size: x-large!important;
+}
+
+.navBarHeader
+{
+    background-color: #cfd7ff!important;
+    height: 70px!important;
+}
+
+.navBarHeaderBrand
+{
+    color: #4ba2f7!important;
+    font-size: x-large!important;
+    font-weight: bolder!important;
+}
+
+.searchButtons
+{
+    background-color:#4ba2f7!important;
+}
+
+.panelHeaders
+{
+    background-color: #cfd7ff!important;
+}
+
+.panelHeadersText
+{
+    color: #4ba2f7;
+    font-weight: bold;
+}
+
+.submitButtons
+{
+    background-color:#4ba2f7!important;
+}
+
+.image{
+    width:80px!important;
+    height:70px!important;
 }

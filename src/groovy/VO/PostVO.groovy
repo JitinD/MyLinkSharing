@@ -9,6 +9,7 @@ class PostVO {
     Long topicId
     Long resourceId
     Boolean isRead
+    Integer score
     String user
     String userName
     String topicName

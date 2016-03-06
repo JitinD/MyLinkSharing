@@ -160,4 +160,32 @@ class User {
         return false
     }
 
+    public Integer getScore(Long resourceId)
+    {
+        Resource resource = Resource.get(resourceId)
+        User user = this
+
+        ResourceRating resourceRating = ResourceRating.findByUserAndResource(user, resource)
+
+        if(resourceRating)
+            return resourceRating.score
+        else
+            return null
+    }
+
+    public Boolean isSubscribed(Long topicId)
+    {
+        Topic topic = Topic.get(topicId)
+        User user = this
+
+        Subscription subscription = Subscription.createCriteria().get {
+            eq('user', user)
+            eq('topic', topic)
+        }
+
+        if(subscription)
+            return true
+
+        return  false
+    }
 }

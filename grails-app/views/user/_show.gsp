@@ -1,22 +1,32 @@
-<div class="row panel panel-default">
-    <div class="col-md-4">
-        <img src="" class="img img-thumbnail img-responsive" style="width:80px;height:70px">
+<div class="row">
+    <div class="col-xs-3">
+        <img src="" class="img img-thumbnail img-responsive image" />
     </div>
 
-    <div class="col-md-8">
-        <span class="text-primary">${user.name}</span><br/>
-        <small>${user.userName}</small>
-
+    <div class="col-xs-9">
         <div class="row">
-            <div class="col-md-6">
-                <span class="text-muted">Subscriptions</span><br/>
-                <span class="text-primary">50</span>
-            </div>
-
-            <div class="col-md-6">
-                <span class="text-muted">Topics</span><br/>
-                <span class="text-primary">30</span>
+            <div class="col-xs-12 text-primary">
+                ${user.name}
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-xs-12 text-primary">
+                <small>(@${user.name})</small>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 text-muted">Subscriptions</div>
+
+            <div class="col-xs-6 text-muted">Topics</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 text-primary"><ls:subscriptionCount userId="${user.userId}"/></div>
+
+            <div class="col-xs-6 text-primary"><ls:topicCount userId="${user.userId}"/></div>
+        </div>
+
     </div>
 </div>

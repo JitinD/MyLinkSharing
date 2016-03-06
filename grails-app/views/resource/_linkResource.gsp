@@ -1,8 +1,8 @@
 <div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="sharelinkModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header" style="background-color:#cfd7ff;">
-                <h4 class="modal-title" id="sharelinkModalLabel" style="color: #4ba2f7; font-weight: bold">
+            <div class="modal-header panelHeaders">
+                <h4 class="modal-title panelHeadersText" id="sharelinkModalLabel">
                     Share Link
                 </h4>
             </div>
@@ -42,13 +42,13 @@
 
                     <div class="form-group row">
                         <div class="col-xs-offset-4 col-xs-4">
-                            <g:submitButton class="btn btn-primary" formaction="#" type="submit" name="submit"
-                                            value="Share" style="background-color:#4ba2f7;"/>
+                            <g:submitButton class="btn btn-primary submitButtons" formaction="#" type="submit"
+                                            name="submit" value="Share"/>
                         </div>
 
                         <div class="col-xs-4">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                    style="background-color:#4ba2f7;">Close</button>
+                            <button type="button" class="btn btn-primary submitButtons"
+                                    data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -56,4 +56,3 @@
         </div>
     </div>
 </div>
-

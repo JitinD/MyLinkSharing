@@ -14,7 +14,7 @@ class LinkSharingTagLib {
                 String href = "${createLink(controller: 'readingItem', action: 'changeIsRead', params: [resourceId: attributes.id, isRead: !attributes.isRead])}"
 
                 if (!attributes.isRead)
-                    out << "<a href = ${href}>Mark as read</a>"
+                    out << "<a href = ${href}  class = 'text-danger'>Mark as read</a>"
             }
     }
 
@@ -40,5 +40,70 @@ class LinkSharingTagLib {
 
             if(user.canDeleteResource(attributes.id))
                 out << "<a href = ${href}><ins>Delete</ins></a>"
+    }
+
+
+    def showSubscribe = {
+        attributes ->
+
+            User user = session.user
+            Long topicId = attributes.id
+
+            String hrefSubscribe = "${createLink(controller: 'Subscription', action: 'save', params: [topicId : topicId])}"
+
+            String hrefUnsubscribe = "${createLink(controller: 'Subscription', action: 'delete', params: [topicId : topicId])}"
+
+            if(user && topicId)
+            {
+                if(user.isSubscribed(topicId))
+                    out << "<a class='col-xs-4' href = ${hrefUnsubscribe}><ins>Unsubscribe</ins></a>"
+                else
+                    out << "<a class='col-xs-4' href = ${hrefSubscribe}><ins>Subscribe</ins></a>"
+            }
+    }
+
+    def subscriptionCount = {
+        attributes ->
+
+            if(attributes.userId)
+            {
+                User user = User.get(attributes.userId)
+                Integer numTopicsSubscribed = Subscription.countByUser(user)
+
+                out << numTopicsSubscribed
+            }
+
+            if(attributes.topicId)
+            {
+                Topic topic = Topic.get(attributes.topicId)
+                Integer numUsersSubscribed = Subscription.countByTopic(topic)
+
+                out << numUsersSubscribed
+            }
+    }
+
+
+    def topicCount = {
+        attributes ->
+
+            if(attributes.userId)
+            {
+                User user = User.get(attributes.userId)
+                Integer numTopicsCreated = Topic.countByCreatedBy(user)
+
+                out << numTopicsCreated
+            }
+    }
+
+    def resourceCount = {
+        attributes ->
+
+            if(attributes.topicId)
+            {
+                Topic topic = Topic.get(attributes.topicId)
+                Integer numPosts = Resource.countByTopic(topic)
+
+                out << numPosts
+            }
     }
 }

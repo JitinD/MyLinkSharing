@@ -2,6 +2,7 @@ package com.ttnd.linksharing
 
 import VO.PostVO
 import VO.TopicVo
+import VO.UserVO
 import enums.Seriousness
 import enums.Visibility
 import Logging.LogSql
@@ -83,7 +84,10 @@ class Topic {
         return trendingTopicsList
     }
 
-    public List<User> getSubscribedUsers() {
+    public List<UserVO> getSubscribedUsers() {
+
+        List<UserVO> userVOList = []
+
         List<User> userList = Subscription.createCriteria().list {
             projections {
                 property('user')
@@ -91,7 +95,11 @@ class Topic {
             eq('topic.id', id)
         }
 
-        return userList
+        userList.each {
+            user -> userVOList.add(new UserVO(userId: user.id, name: user.name, userName: user.userName, emailID: user.emailID, photo: user.photo))
+        }
+
+        return userVOList
     }
 
     public List<PostVO> getTopicPosts() {
@@ -123,7 +131,7 @@ class Topic {
 
     Boolean canViewedBy(User user) {
         if (this.isPublic() || user.isAdmin || Subscription.findByUserAndTopic(user, this)) {
-            return  true
+            return true
         }
 
         return false

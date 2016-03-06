@@ -1,7 +1,7 @@
 <div class="panel-body">
     <div class="row">
         <div class="col-xs-3">
-            <img src="" class="img img-thumbnail img-responsive" style="width:80px; height:70px;"/>
+            <img src="" class="img img-thumbnail img-responsive image" />
         </div>
 
         <div class="col-xs-9">
@@ -17,9 +17,9 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-4"><a href="#"><ins>Subscribe</ins></a></div>
-                <div class="col-xs-4">50</div>
-                <div class="col-xs-4">30</div>
+                <ls:showSubscribe id = "${topic.id}" />
+                <div class="col-xs-4"><ls:subscriptionCount topicId = "${topic.id}" /></div>
+                <div class="col-xs-4"><ls:resourceCount topicId = "${topic.id}" /></div>
             </div>
         </div>
     </div>

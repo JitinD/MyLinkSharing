@@ -10,12 +10,14 @@
             <div class="row">
                 <div class="col-md-4">
 
-                    <g:render template = "/user/show" model = "[user : user]"/>
+                    <div class="row panel panel-default panel-body">
+                        <g:render template = "/user/show" model = "[user : user]"/>
+                    </div>
 
                     <div class="row">
                         <div class="panel panel-default">
-                            <div class="panel-heading" style = "background-color:#cfd7ff;">
-                                <span  style = "color: #4ba2f7; font-weight: bold">Subscriptions</span>
+                            <div class="panel-heading panelHeaders">
+                                <span class = "panelHeadersText">Subscriptions</span>
                                 <div class="pull-right">
                                     <a href="#">View All</a>
                                 </div>
@@ -31,8 +33,8 @@
                     <div class="row">
                         <div class="panel panel-default">
 
-                            <div class="panel-heading" style = "background-color:#cfd7ff;">
-                                <span  style = "color: #4ba2f7; font-weight: bold">Trending topics</span>
+                            <div class="panel-heading panelHeaders">
+                                <span class = "panelHeadersText">Trending topics</span>
                             </div>
 
                             <g:each in="${trendingTopics}" var="topic">
@@ -45,8 +47,8 @@
                 <div class="col-md-7 col-md-push-1">
                     <div class="row">
                         <div class="panel panel-default">
-                            <div class="panel-heading" style = "background-color:#cfd7ff;">
-                                <span  style = "color: #4ba2f7; font-weight: bold">Inbox</span>
+                            <div class="panel-heading panelHeaders">
+                                <span class = "panelHeadersText">Inbox</span>
                             </div>
 
                             <div class="panel-body">
@@ -60,4 +62,3 @@
             </div>
     </body>
 </html>
-

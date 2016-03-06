@@ -11,8 +11,8 @@
                 <div class="col-xs-6">
                     <div class="row">
                         <div class="panel panel-default">
-                            <div class="panel-heading" style = "background-color:#cfd7ff;">
-                                <span style = "color: #4ba2f7; font-weight: bold">Recent Shares</span>
+                            <div class="panel-heading panelHeaders">
+                                <span class = "panelHeadersText">Recent Shares</span>
                             </div>
 
                             <div class="panel-body">
@@ -25,8 +25,8 @@
 
                     <div class="row">
                         <div class="panel panel-default">
-                            <div class="panel-heading" style = "background-color:#cfd7ff;">
-                                <span style = "color: #4ba2f7; font-weight: bold">Top posts</span>
+                            <div class="panel-heading panelHeaders">
+                                <span class = "panelHeadersText">Top posts</span>
                             </div>
 
                             <div class="panel-body">

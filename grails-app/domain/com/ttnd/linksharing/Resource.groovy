@@ -144,15 +144,29 @@ abstract class Resource {
 
     public static PostVO getPostInfo(Long id) {
 
-        Resource resource = Resource.get(id)
-        return new PostVO(userId: resource.createdBy.id, topicId: resource.topic.id, resourceId: resource.id, user: resource.createdBy.name,
-                userName: resource.createdBy.userName, topicName: resource.topic.name, description: resource.description,
-                url: resource.class.equals(LinkResource) ? resource.url : null, filePath: resource.class.equals(DocumentResource) ? resource.filePath : null,
-                createdDate: resource.dateCreated)
+        PostVO postVO = null
+
+        def resource = ResourceRating.createCriteria().list {
+            projections {
+                property('resource')
+                property('score')
+            }
+            createAlias('resource', 'r')
+            eq('r.id', id)
+        }
+
+        resource.each {
+            resourceInfo -> postVO = new PostVO(userId: resourceInfo[0].createdBy.id, topicId: resourceInfo[0].topic.id, resourceId: resourceInfo[0].id, score: resourceInfo[1], user: resourceInfo[0].createdBy.name,
+                    userName: resourceInfo[0].createdBy.userName, topicName: resourceInfo[0].topic.name, description: resourceInfo[0].description,
+                    url: resourceInfo[0].class.equals(LinkResource) ? resourceInfo[0].url : null, filePath: resourceInfo[0].class.equals(DocumentResource) ? resourceInfo[0].filePath : null,
+                    createdDate: resourceInfo[0].dateCreated)
+        }
+
+        return postVO
     }
 
     public Boolean canViewBy(User user) {
-        if(this.topic.canViewedBy(user))
+        if (this.topic.canViewedBy(user))
             return true
 
         return false

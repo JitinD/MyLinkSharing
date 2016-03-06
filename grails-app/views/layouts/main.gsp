@@ -27,7 +27,7 @@
 
     <body>
 
-        <nav class = "navbar navbar-default navbar-static-top" style = "background-color:#cfd7ff; height : 70px">
+        <nav class = "navbar navbar-default navbar-static-top navBarHeader">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navBar"
@@ -37,7 +37,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <g:link controller = "login" action = "index" class = "navbar-brand" style = "color: #4ba2f7;font-size: x-large; font-weight: bolder">Link Sharing</g:link>
+                    <g:link controller = "login" action = "index" class = "navbar-brand navBarHeaderBrand">Link Sharing</g:link>
                 </div>
 
                 <div id="navBar">
@@ -46,14 +46,14 @@
                             <form class="form-inline navbar-form">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary glyphicon glyphicon-search" style = "background-color:#4ba2f7;">
+                                        <button class="btn btn-primary glyphicon glyphicon-search searchButtons">
                                         </button>
                                     </span>
 
                                     <input type="text" class="form-control input-group" placeholder="Search">
 
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary glyphicon-searchphicon glyphicon-remove" style = "background-color:#4ba2f7;">
+                                        <button class="btn btn-primary glyphicon-searchphicon glyphicon-remove searchButtons">
                                         </button>
                                     </span>
                                 </div>
@@ -62,23 +62,23 @@
                         <g:if test="${session.user}">
                             <li>
                                 <a class="btn" data-toggle="modal" data-target="#createTopicModal">
-                                    <span class="fa fa-weixin" style= "color: #4ba2f7; font-size: x-large"></span></a>
+                                    <span class="fa fa-weixin modalIcons"></span></a>
                             </li>
 
                             <li>
                                 <a class="btn" data-toggle="modal" data-target="#sendInviteModal">
-                                    <span class="glyphicon glyphicon-envelope"  style= "color: #4ba2f7; font-size: x-large"></span></a>
+                                    <span class="glyphicon glyphicon-envelope modalIcons"></span></a>
                             </li>
 
                             <li>
                                 <a class="btn" data-toggle="modal" data-target="#shareLinkModal">
-                                    <span class="fa fa-link"  style= "color: #4ba2f7; font-size: x-large"></span>
+                                    <span class="fa fa-link modalIcons"></span>
                                 </a>
                             </li>
 
                             <li>
                                 <a class="btn" data-toggle="modal" data-target="#shareDocModal">
-                                    <span class="fa fa-file-o"  style= "color: #4ba2f7; font-size: x-large"></span>
+                                    <span class="fa fa-file-o modalIcons"></span>
                                 </a>
                             </li>
 
@@ -86,8 +86,8 @@
                                 <div class="dropdown">
                                     <a class="btn dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-user"  style= "color: #4ba2f7; font-size: xx-large"></span>
-                                        <span  style= "color: #4ba2f7; font-size: large">${session.user}</span>
-                                        <span class="caret" style= "color: #4ba2f7; font-size: large"></span>
+                                        <span  class = "modalIcons">${session.user}</span>
+                                        <span class="caret modalIcons"></span>
                                     </a>
 
                                     <ul class="dropdown-menu">

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-2">
-        <img src="" class="img img-thumbnail img-responsive" style="width:80px;height:70px">
+        <img src="" class="img img-thumbnail img-responsive image" />
     </div>
 
     <div class="col-xs-10">
@@ -24,7 +24,7 @@
             <div class = "col-xs-6">
                 <ls:markAsRead id = "${post.resourceId}" isRead = "${post.isRead}"> </ls:markAsRead>
                 <ls:showResource id = "${post.resourceId}" url = "${post.url}" filePath = "${post.filePath}"></ls:showResource>
-                <g:link controller = "resource" action = "show" params = "[id: post.resourceId]">View post</g:link>
+                <g:link controller = "resource" action = "show" params = "[id: post.resourceId]"><ins>View post</ins></g:link>
             </div>
         </div>
     </div>
