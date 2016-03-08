@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-xs-3">
-        <img src="" class="img img-thumbnail img-responsive image" />
+        <ls:userImage id = "${user.userId}" />
+        %{--<img src="" class="img img-thumbnail img-responsive image" />--}%
     </div>
 
     <div class="col-xs-9">

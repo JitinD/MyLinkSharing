@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel-body">
-            <g:form class="form-horizontal" controller = "login" action = "register">
+            <g:uploadForm class="form-horizontal" controller = "login" action = "register">
                 <div class="form-group row">
                     <label class="form-control-label col-xs-4">First name*</label>
 
@@ -59,7 +59,7 @@
                     <label class="form-control-label col-xs-4">Photo</label>
 
                     <div class="col-xs-5">
-                        <input type="text" class="form-control">
+                        <input type="file" id = "pic" name = "pic" class="form-control">
                     </div>
 
                     <div class="col-xs-3">
@@ -72,7 +72,7 @@
                         <input type="submit" class="btn btn-primary submitButtons" value="Register" />
                     </div>
                 </div>
-            </g:form>
+            </g:uploadForm>
         </div>
     </div>
 </div>

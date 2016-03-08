@@ -15,6 +15,7 @@ grails.project.groupId = 'com.ttnd.linksharing' // change this to alter the defa
 grails.sampleVariable = "someValue"
 grails.config.locations = ["file:${userHome}/.grails/config.groovy"]
 grails.documentsPath = "${userHome}/var/www/linksharing"
+grails.dummyImagePath = ["file:grails-app/assets/images/dummy.jpeg"]
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
 grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
@@ -88,6 +89,24 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+
+grails {
+    mail {
+        host = "smtp.gmail.com"
+        port = 465
+        username = "staging.mycroft@gmail.com"
+        password = "igdefault"
+/*
+        username = "jitin.dominic01@gmail.com"
+        password = "vshpalrangnucrva"*/
+
+        props = ["mail.smtp.auth":"true",
+                 "mail.smtp.socketFactory.port":"465",
+                 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                 "mail.smtp.socketFactory.fallback":"false"]
+    }
+}
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -119,6 +138,8 @@ log4j.main = {
            'net.sf.ehcache.hibernate'
 
     info    'grails.app'
+
+
 
 
 }

@@ -6,6 +6,7 @@ import com.ttnd.linksharing.constants.Constants
 
 class LoginController {
 
+    def mailService
     def index() {
         if (session.user) {
             forward(controller: "user", action: "index")
@@ -52,6 +53,9 @@ class LoginController {
             User newUser = user.properties
             newUser.isActive = true
 
+            if(!params.pic.empty)
+                newUser.photo = params.pic.bytes
+
             if(newUser.saveInstance())
             {
                 flash.message = "User saved successfully"
@@ -68,4 +72,17 @@ class LoginController {
         //forward(action: "index")
         redirect(action:'index')
     }
+
+    def testMail()
+    {
+        mailService.sendMail {
+            to "jitin.dominic@tothenew.com"
+            subject "Hello Jitin"
+            body 'this is some text'
+        }
+
+        render "Mail sent"
+
+    }
+
 }

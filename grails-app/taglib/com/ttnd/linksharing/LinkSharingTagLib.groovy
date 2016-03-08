@@ -37,6 +37,7 @@ class LinkSharingTagLib {
         attributes ->
 
             User user = session.user
+
             if (user) {
                 String href = "${createLink(controller: 'resource', action: 'delete', params: [id: attributes.id])}"
 
@@ -50,12 +51,13 @@ class LinkSharingTagLib {
 
         attributes ->
 
-            Long userId = attributes.userId
+            Long userId = attributes.id
 
             if (userId) {
 
                 String src = "/user/image/${userId}"
-                out << "<img src = ${src} class='img img-thumbnail img-responsive image' width = '64' height = '64'/>"
+
+                out << "<img src = ${src} class='img img-thumbnail img-responsive image' />"
 
             }
     }
