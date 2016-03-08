@@ -11,5 +11,7 @@ class UrlMappings {
 
         //"/"(view:"/sample")
         "500"(view:'/error')
+        //"404"(view: 'error404')
+        //"500"(view: "error500")
 	}
 }

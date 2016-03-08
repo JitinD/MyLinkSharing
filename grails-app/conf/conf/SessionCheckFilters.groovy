@@ -8,7 +8,6 @@ class SessionCheckFilters {
 
                 if(!session.user)
                     redirect(controller: "login", action: "index")
-
             }
             after = { Map model ->
 

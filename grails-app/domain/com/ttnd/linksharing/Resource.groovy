@@ -146,21 +146,16 @@ abstract class Resource {
 
         PostVO postVO = null
 
-        def resource = ResourceRating.createCriteria().list {
-            projections {
-                property('resource')
-                property('score')
-            }
-            createAlias('resource', 'r')
-            eq('r.id', id)
-        }
-
-        resource.each {
-            resourceInfo -> postVO = new PostVO(userId: resourceInfo[0].createdBy.id, topicId: resourceInfo[0].topic.id, resourceId: resourceInfo[0].id, score: resourceInfo[1], user: resourceInfo[0].createdBy.name,
-                    userName: resourceInfo[0].createdBy.userName, topicName: resourceInfo[0].topic.name, description: resourceInfo[0].description,
-                    url: resourceInfo[0].class.equals(LinkResource) ? resourceInfo[0].url : null, filePath: resourceInfo[0].class.equals(DocumentResource) ? resourceInfo[0].filePath : null,
-                    createdDate: resourceInfo[0].dateCreated)
-        }
+        createCriteria().get {
+            eq('id', id)
+        }.each
+                {
+                    resourceInfo ->
+                        postVO = new PostVO(userId: resourceInfo.createdBy.id, topicId: resourceInfo.topic.id, resourceId: resourceInfo.id, user: resourceInfo.createdBy.name,
+                                userName: resourceInfo.createdBy.userName, topicName: resourceInfo.topic.name, description: resourceInfo.description,
+                                url: resourceInfo.class.equals(LinkResource) ? resourceInfo.url : null, filePath: resourceInfo.class.equals(DocumentResource) ? resourceInfo.filePath : null,
+                                createdDate: resourceInfo.dateCreated)
+                }
 
         return postVO
     }
@@ -170,6 +165,11 @@ abstract class Resource {
             return true
 
         return false
+    }
+
+
+    public Boolean deleteFile() {
+        log.info "Implemented in sub-classes"
     }
 
 }

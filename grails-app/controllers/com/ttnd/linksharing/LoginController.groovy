@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import CO.UserCO
 import VO.PostVO
 import com.ttnd.linksharing.constants.Constants
 
@@ -35,19 +36,31 @@ class LoginController {
         }
     }
 
-    def register(User user) {
+    def register(UserCO user) {
 
-        //User user = User.list()
-        render(view: 'register', model: [user: user])
+        List<PostVO> topPosts = Resource.getTopPosts()
+        List<PostVO>recentPosts = Resource.getRecentPosts()
 
-        /*User newUser = new User('userName': 'normal', emailID: 'newUser@mail.com', password: "newUserPassword", confirmPassword: "newUserPassword", firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
+        if(user.hasErrors())
+        {
+            flash.error = "User data invalid."
 
-        if (newUser.saveInstance()) {
-            render "New user added. ~SUCCESS~"
-        } else {
-            flash.message = "${newUser} could not be added, ${newUser.errors.allErrors}"
-            render "${newUser.errors.allErrors.collect { message(error: it) }}"
-        }*/
+            render (view: "index", model: [topPosts : topPosts, recentPosts: recentPosts, user: user])
+        }
+        else
+        {
+            User newUser = user.properties
+            newUser.isActive = true
+
+            if(newUser.saveInstance())
+            {
+                flash.message = "User saved successfully"
+                session.user = newUser
+                redirect(controller: "user", action: "index")
+            }
+            else
+                flash.error = "User could not be saved."
+        }
     }
 
     def logout() {

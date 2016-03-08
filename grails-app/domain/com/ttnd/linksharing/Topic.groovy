@@ -102,6 +102,19 @@ class Topic {
         return userVOList
     }
 
+    public List<User> getSubscribedUsersList()
+    {
+        List<User> userList = Subscription.createCriteria().list {
+            projections {
+                property('user')
+            }
+            eq('topic.id', id)
+        }
+
+
+        return userList
+    }
+
     public List<PostVO> getTopicPosts() {
 
         List<PostVO> topicPostVOs = []

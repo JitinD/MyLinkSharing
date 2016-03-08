@@ -13,7 +13,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-2">
-                        <img src="" class="img img-thumbnail img-responsive image" />
+                        <img src="" class="img img-thumbnail img-responsive image"/>
                     </div>
 
                     <div class="col-xs-10">
@@ -34,14 +34,19 @@
                             <div class="col-xs-8"></div>
 
                             <div class="col-xs-4">
-                                <g:form controller="resourceRating" action="save" params="['resourceId': post.resourceId]">
 
-                                    <g:select name="score" from="${[1, 2, 3, 4, 5]}" optionKey="${it}" value = "${post.score}"
-                                              class="btn btn-default btn-sm dropdown-toggle"/>
-                                    &nbsp;
-                                    <g:submitButton class="btn btn-primary submitButtons" type="submit" name="submit"
-                                                    value="Vote" />
-                                </g:form>
+                                <ls:canRate score="${post.score}">
+                                    <g:form controller="resourceRating" action="save"
+                                            params="['resourceId': post.resourceId]">
+
+                                        <g:select name="score" from="${[1, 2, 3, 4, 5]}" optionKey="${it}"
+                                                  value="${post.score}" class="btn btn-default btn-sm dropdown-toggle"/>
+                                        &nbsp;
+                                        <g:submitButton class="btn btn-primary submitButtons" type="submit"
+                                                        name="submit" value="Vote"/>
+                                    </g:form>
+                                </ls:canRate>
+
                             </div>
                         </div>
                     </div>
@@ -80,7 +85,7 @@
                             </div>
 
                             <div class="col-xs-2">
-                                <a href="#"><ins>Edit</ins></a>&nbsp;
+                                <ls:showEdit/>
                             </div>
 
                             <div class="col-xs-2">

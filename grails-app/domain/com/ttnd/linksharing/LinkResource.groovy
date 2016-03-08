@@ -13,4 +13,10 @@ class LinkResource extends Resource{
     {
         return url?:""
     }
+
+    public Boolean deleteFile(){
+
+            this.delete(flush: true)
+            return true
+    }
 }

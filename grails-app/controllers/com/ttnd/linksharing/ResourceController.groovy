@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
+import VO.PostVO
 import VO.RatingInfoVo
 import VO.TopicVo
 import enums.Visibility
@@ -9,22 +10,39 @@ class ResourceController {
 
     def index() {}
 
+
+    private addToReadingItems(Resource resource) {
+
+        Topic topic = resource.topic
+
+        List<User> subscribedUsers = topic.getSubscribedUsersList()
+
+        subscribedUsers.each {
+            user ->
+                if (resource.createdBy != user)
+                    user.addToReadingItems([user: user, resource: resource, isRead: false])
+        }
+    }
+
+
     def delete(Long id) {
+        Resource resource = Resource.load(id)
+        User user = session.user
 
-        if (session.user.canDeleteResource(id)) {
-
-            Resource resource = Resource.load(id)
+        if (user.canDeleteResource(id)) {
 
             try {
-                resource.delete(flush: true)
-                flash.message = "${resource} deleted successfully."
+                resource.deleteFile()
+                flash.message = "Resource deleted successfully"
             } catch (Exception e) {
-                flash.error = "Resource could not be deleted"
-                //render e.message
+                flash.error = "Resource not available"
             }
-
-            redirect(controller: "user", action: "index")
         }
+        else
+            flash.error = "User doesn't have valid permissions to delete the resource"
+
+
+        redirect(controller: "user", action: "index")
 
     }
 
@@ -44,13 +62,13 @@ class ResourceController {
         Resource resource = Resource.get(id)
 
         if (resource) {
-            //RatingInfoVo ratingInfoVo = resource.getRatingInfo()
-            //return ${ratingInfoVo}
-            //render "${ratingInfoVo}"
+
             User user = session.user
+            PostVO postVO = Resource.getPostInfo(id)
+            postVO.score = user?.getScore(id)
 
             if (resource.canViewBy(user))
-                render(view: '/resource/show', model: [post: Resource.getPostInfo(id)])
+                render(view: '/resource/show', model: [post: postVO])
             else {
                 flash.error = "User doesn't have valid permissions to access the resource"
                 redirect(controller: "user", action: "index")

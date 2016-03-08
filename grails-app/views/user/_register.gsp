@@ -5,12 +5,12 @@
         </div>
 
         <div class="panel-body">
-            <form class="form-horizontal" role="form">
+            <g:form class="form-horizontal" controller = "login" action = "register">
                 <div class="form-group row">
                     <label class="form-control-label col-xs-4">First name*</label>
 
                     <div class="col-xs-8">
-                        <input type="text" class="form-control">
+                        <input name = "firstName" id = "firstName" type="text"  value = "${user?.firstName}" class="form-control">
                     </div>
                 </div>
 
@@ -18,7 +18,7 @@
                     <label class="form-control-label col-xs-4">Last name*</label>
 
                     <div class="col-xs-8">
-                        <input type="text" class="form-control">
+                        <input name = "lastName" id = "lastName" type="text" value = "${user?.lastName}" class="form-control">
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@
                     <label class="form-control-label col-xs-4">Email*</label>
 
                     <div class="col-xs-8">
-                        <input type="text" class="form-control">
+                        <input name = "emailID" id = "emailID" type="text" value = "${user?.emailID}" class="form-control">
                     </div>
                 </div>
 
@@ -34,16 +34,16 @@
                     <label class="form-control-label col-xs-4">Username*</label>
 
                     <div class="col-xs-8">
-                        <input type="text" class="form-control">
+                        <input name = "userName" id = "userName" type="text" value = "${user?.userName}" class="form-control">
                     </div>
                 </div>
 
 
                 <div class="form-group row">
-                    <label class="form-control-label col-xs-4">Password*</label>
+                    <label name class="form-control-label col-xs-4">Password*</label>
 
                     <div class="col-xs-8">
-                        <input type="text" class="form-control">
+                        <g:field type = "password" name = "password" id = "password" class="form-control" />
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
                     <label class="form-control-label col-xs-4">Confirm Password*</label>
 
                     <div class="col-xs-8">
-                        <input type="text" class="form-control">
+                        <g:field type = "password" name = "confirmPassword" id = "confirmPassword" class="form-control" />
                     </div>
                 </div>
 
@@ -69,11 +69,10 @@
 
                 <div class="form-group row">
                     <div class="col-xs-offset-4">
-                        <input type="button" class="btn btn-primary submitButtons" value="Register" />
+                        <input type="submit" class="btn btn-primary submitButtons" value="Register" />
                     </div>
                 </div>
-            </form>
+            </g:form>
         </div>
     </div>
-
 </div>

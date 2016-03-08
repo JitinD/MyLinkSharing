@@ -1,5 +1,7 @@
+
 <div class="row">
     <div class="col-xs-2">
+        %{--<ls:userImage id = "${post.userId}" />--}%
         <img src="" class="img img-thumbnail img-responsive image" />
     </div>
 

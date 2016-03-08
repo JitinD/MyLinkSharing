@@ -38,7 +38,7 @@ class User {
 
     }
 
-    static transients = ['confirmPassword', 'subscribedTopics'];
+    static transients = ['confirmPassword', 'subscribedTopics', 'subscribedTopicsList'];
 
     String getName() {
         return [firstName, lastName].findAll { it }.join(' ');
@@ -87,6 +87,24 @@ class User {
         List<TopicVo> subscribedTopicsList = []
 
         List<Topic> topicList = Subscription.createCriteria().list(max: 5) {
+            projections {
+                property('topic')
+            }
+            eq('user.id', id)
+        }
+
+        topicList.each {
+            topic -> subscribedTopicsList.add(new TopicVo(id: topic.id, name: topic.name, visibility: topic.visibility, createdBy: topic.createdBy))
+        }
+
+        return subscribedTopicsList
+    }
+
+
+    public List<TopicVo> getSubscribedTopicsList() {
+        List<TopicVo> subscribedTopicsList = []
+
+        List<Topic> topicList = Subscription.createCriteria().list{
             projections {
                 property('topic')
             }
@@ -162,7 +180,7 @@ class User {
 
     public Integer getScore(Long resourceId)
     {
-        Resource resource = Resource.get(resourceId)
+        Resource resource = Resource.load(resourceId)
         User user = this
 
         ResourceRating resourceRating = ResourceRating.findByUserAndResource(user, resource)
@@ -170,7 +188,7 @@ class User {
         if(resourceRating)
             return resourceRating.score
         else
-            return null
+            return 1 //Temporary
     }
 
     public Boolean isSubscribed(Long topicId)

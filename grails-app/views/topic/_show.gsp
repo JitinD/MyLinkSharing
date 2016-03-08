@@ -7,7 +7,7 @@
         <div class="col-xs-9">
             <div class="row">
                 <div class="col-xs-8"><a href = "#">${topic.createdBy.name}</a></div>
-                <div class="col-xs-4"><a href="#">${topic.name}</a></div>
+                <div class="col-xs-4"><a href="/topic/show?id=${topic.id}">${topic.name}</a></div>
             </div>
 
             <div class="row">
@@ -25,41 +25,45 @@
     </div>
 </div>
 
-<div class="panel panel-footer">
-    <div class="row">
-        <div class="col-xs-4">
-            <div class="dropdown">
-                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                    Serious
-                    <span class = "caret"></span>
-                </button>
+<g:if test = "${session.user}">
 
-                <ul class="dropdown-menu">
-                    <li><a href="#">Serious</a></li>
-                    <li><a href="#">Casual</a></li>
-                </ul>
+    <div class="panel panel-footer">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="dropdown">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        Serious
+                        <span class = "caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Serious</a></li>
+                        <li><a href="#">Casual</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="col-xs-4">
-            <div class="dropdown">
-                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                    Public
-                    <span class = "caret"></span>
-                </button>
+            <div class="col-xs-4">
+                <div class="dropdown">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                        Public
+                        <span class = "caret"></span>
+                    </button>
 
-                <ul class="dropdown-menu">
-                    <li><a href="#">Public</a></li>
-                    <li><a href="#">Private</a></li>
-                </ul>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Public</a></li>
+                        <li><a href="#">Private</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="col-xs-4">
-            <div class = "row">
-                <div class = "col-xs-4"><a href="#"><ins>Edit</ins></a></div>
-                <div class = "col-xs-8"><a href="#"><ins>Delete</ins></a></div>
+            <div class="col-xs-4">
+                <div class = "row">
+                    <div class = "col-xs-4"><a href="#"><ins>Edit</ins></a></div>
+                    <div class = "col-xs-8"><a href="#"><ins>Delete</ins></a></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+</g:if>

@@ -7,20 +7,20 @@
                 </h4>
             </div>
 
-            <g:uploadForm class="form">
+            <g:uploadForm class="form" controller = "documentResource" action = "save">
                 <div class="modal-body table-responsive">
 
                     <div class="form-group row">
                         <label class="form-control-label col-xs-4">Document*</label>
 
                         <div class="col-xs-4">
-                            <input type="text" class="form-control">
+                            <input type="file" name = "file" class="form-control">
                         </div>
 
-                        <div class="col-xs-2">
-                            <input type="button" id="filePath" name="filePath" class="btn btn-primary submitButtons"
+                        %{--<div class="col-xs-2">
+                            <input type="button" class="btn btn-primary submitButtons"
                                    value="Browse"/>
-                        </div>
+                        </div>--}%
                     </div>
 
                     <div class="form-group row">
@@ -39,7 +39,7 @@
 
                         <div class="col-xs-8">
                             <div class="dropdown">
-                                <g:select name="topic" from="${topicNames}" optionKey="id"
+                                <g:select name="topic" from="${subscribedTopicsList}" optionKey="id" optionValue = "name"
                                           class="btn btn-default btn-sm dropdown-toggle"/>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
 
                     <div class="form-group row">
                         <div class="col-xs-offset-4 col-xs-4">
-                            <g:submitButton class="btn btn-primary submitButtons" formaction="#" type="submit"
+                            <g:submitButton class="btn btn-primary submitButtons" type="submit"
                                             name="submit" value="Share"/>
                         </div>
 

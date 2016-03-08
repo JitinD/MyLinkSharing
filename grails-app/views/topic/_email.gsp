@@ -24,7 +24,7 @@
 
                         <div class="col-xs-8">
                             <div class="dropdown">
-                                <g:select name="topic" from="${topicNames}" optionKey="id"
+                                <g:select name="topic" from="${subscribedTopicsList}" optionKey="id" optionValue = "name"
                                           class="btn btn-default btn-sm dropdown-toggle"/>
                             </div>
                         </div>

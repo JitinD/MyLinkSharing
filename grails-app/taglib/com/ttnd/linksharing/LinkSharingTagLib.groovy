@@ -22,10 +22,12 @@ class LinkSharingTagLib {
     def showResource = {
 
         attributes ->
-            if (Resource.isLinkResource(attributes.id))
-                out << "<a href = ${attributes.url} class = 'pull-right' target = '_blank'><ins>View Full Site</ins></a>&nbsp;"
+
+            Long resourceId = attributes.id
+            if (Resource.isLinkResource(resourceId))
+                out << "<a href = ${attributes.url} class = 'pull-right' target = '_blank'><ins>View Site</ins></a>&nbsp;"
             else
-                out << "<a href = ${attributes.filePath} class = 'pull-right'><ins>Download</ins></a> &nbsp;"
+                out << "<a href = ${createLink([controller: 'documentResource', action: 'download', params: [id: resourceId]])} class = 'pull-right'><ins>Download</ins></a> &nbsp;"
 
     }
 
@@ -35,13 +37,28 @@ class LinkSharingTagLib {
         attributes ->
 
             User user = session.user
+            if (user) {
+                String href = "${createLink(controller: 'resource', action: 'delete', params: [id: attributes.id])}"
 
-            String href = "${createLink(controller: 'resource', action: 'delete', params: [id: attributes.id])}"
+                if (user.canDeleteResource(attributes.id))
+                    out << "<a href = ${href}><ins>Delete</ins></a>"
 
-            if(user.canDeleteResource(attributes.id))
-                out << "<a href = ${href}><ins>Delete</ins></a>"
+            }
     }
 
+    def userImage = {
+
+        attributes ->
+
+            Long userId = attributes.userId
+
+            if (userId) {
+
+                String src = "/user/image/${userId}"
+                out << "<img src = ${src} class='img img-thumbnail img-responsive image' width = '64' height = '64'/>"
+
+            }
+    }
 
     def showSubscribe = {
         attributes ->
@@ -49,13 +66,12 @@ class LinkSharingTagLib {
             User user = session.user
             Long topicId = attributes.id
 
-            String hrefSubscribe = "${createLink(controller: 'Subscription', action: 'save', params: [topicId : topicId])}"
+            String hrefSubscribe = "${createLink(controller: 'Subscription', action: 'save', params: [topicId: topicId])}"
 
-            String hrefUnsubscribe = "${createLink(controller: 'Subscription', action: 'delete', params: [topicId : topicId])}"
+            String hrefUnsubscribe = "${createLink(controller: 'Subscription', action: 'delete', params: [topicId: topicId])}"
 
-            if(user && topicId)
-            {
-                if(user.isSubscribed(topicId))
+            if (user && topicId) {
+                if (user.isSubscribed(topicId))
                     out << "<a class='col-xs-4' href = ${hrefUnsubscribe}><ins>Unsubscribe</ins></a>"
                 else
                     out << "<a class='col-xs-4' href = ${hrefSubscribe}><ins>Subscribe</ins></a>"
@@ -65,16 +81,14 @@ class LinkSharingTagLib {
     def subscriptionCount = {
         attributes ->
 
-            if(attributes.userId)
-            {
+            if (attributes.userId) {
                 User user = User.get(attributes.userId)
                 Integer numTopicsSubscribed = Subscription.countByUser(user)
 
                 out << numTopicsSubscribed
             }
 
-            if(attributes.topicId)
-            {
+            if (attributes.topicId) {
                 Topic topic = Topic.get(attributes.topicId)
                 Integer numUsersSubscribed = Subscription.countByTopic(topic)
 
@@ -86,8 +100,7 @@ class LinkSharingTagLib {
     def topicCount = {
         attributes ->
 
-            if(attributes.userId)
-            {
+            if (attributes.userId) {
                 User user = User.get(attributes.userId)
                 Integer numTopicsCreated = Topic.countByCreatedBy(user)
 
@@ -98,12 +111,24 @@ class LinkSharingTagLib {
     def resourceCount = {
         attributes ->
 
-            if(attributes.topicId)
-            {
+            if (attributes.topicId) {
                 Topic topic = Topic.get(attributes.topicId)
                 Integer numPosts = Resource.countByTopic(topic)
 
                 out << numPosts
             }
+    }
+
+
+    def showEdit = {
+        if (session.user)
+            out << "<a href=''><ins>Edit</ins></a>"
+    }
+
+    def canRate = {
+        attributes, body ->
+
+            if (attributes.score)
+                out << body()
     }
 }
