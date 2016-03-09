@@ -2,10 +2,6 @@ package CO
 
 import grails.validation.Validateable
 
-/**
- * Created by jitin on 7/3/16.
- */
-
 @Validateable
 class UserCO {
 

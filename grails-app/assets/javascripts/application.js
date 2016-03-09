@@ -57,5 +57,46 @@
         });
 
 
+        $(function (){
+            $("#registerForm").validate({
+                rules: {
+                    'emailID': {
+                        required: true,
+                        remote:{
+                            url: "/login/validateEmail",
+                            type: "post",
+                            data: {
+                                email: function(){
+                                    return $('#emailID').val();
+                                }
+                            }
+                        }
+                    },
+                    'userName': {
+                        required: true,
+                        remote:{
+                            url: "/login/validateUserName",
+                            type: "post",
+                            data: {
+                                email: function(){
+                                    return $('#userName').val();
+                                }
+                            }
+                        }
+                    }
+                },
+                messages: {
+                    'emailID': {
+                        required: "Please enter a valid email id.",
+                        remote: "Email Id already registered."
+                    },
+                    'userName': {
+                        required: "Please enter a UserName.",
+                        remote: "This username already exists."
+                    }
+                }
+            });
+        });
+
     });
 

@@ -3,6 +3,7 @@ package com.ttnd.linksharing
 import CO.UserCO
 import VO.PostVO
 import com.ttnd.linksharing.constants.Constants
+import grails.converters.JSON
 
 class LoginController {
 
@@ -62,8 +63,11 @@ class LoginController {
                 session.user = newUser
                 redirect(controller: "user", action: "index")
             }
-            else
+            else{
                 flash.error = "User could not be saved."
+                render (view: "index", model: [topPosts : topPosts, recentPosts: recentPosts, user: newUser])
+            }
+
         }
     }
 
@@ -82,6 +86,27 @@ class LoginController {
         }
 
         render "Mail sent"
+
+    }
+
+    def validateEmail(){
+
+        Integer numUser = User.countByEmailID(params.email)
+
+        String result = numUser ? "false" : "true"
+
+        response.setContentType("text/json")
+        render result
+    }
+
+    def validateUserName(){
+
+        Integer numUser = User.countByUserName(params.userName)
+
+        String result = numUser ? "false" : "true"
+
+        response.setContentType("text/json")
+        render result
 
     }
 

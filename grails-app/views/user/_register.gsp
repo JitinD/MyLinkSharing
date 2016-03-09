@@ -5,14 +5,17 @@
         </div>
 
         <div class="panel-body">
-            <g:uploadForm class="form-horizontal" controller = "login" action = "register">
+            <g:uploadForm class="form-horizontal" name = "registerForm" controller = "login" action = "register">
                 <div class="form-group row">
                     <label class="form-control-label col-xs-4">First name*</label>
 
                     <div class="col-xs-8">
                         <input name = "firstName" id = "firstName" type="text"  value = "${user?.firstName}" class="form-control">
                     </div>
+
+                    <div class="alert-danger"> <g:fieldError field="firstName" bean="${user}"/></div>
                 </div>
+
 
                 <div class="form-group row">
                     <label class="form-control-label col-xs-4">Last name*</label>
@@ -20,6 +23,8 @@
                     <div class="col-xs-8">
                         <input name = "lastName" id = "lastName" type="text" value = "${user?.lastName}" class="form-control">
                     </div>
+
+                    <div class="alert-danger"> <g:fieldError field="lastName" bean="${user}"/></div>
                 </div>
 
                 <div class="form-group row">
@@ -28,6 +33,8 @@
                     <div class="col-xs-8">
                         <input name = "emailID" id = "emailID" type="text" value = "${user?.emailID}" class="form-control">
                     </div>
+
+                    <div class="alert-danger"> <g:fieldError field="emailID" bean="${user}"/></div>
                 </div>
 
                 <div class="form-group row">
@@ -36,6 +43,8 @@
                     <div class="col-xs-8">
                         <input name = "userName" id = "userName" type="text" value = "${user?.userName}" class="form-control">
                     </div>
+
+                    <div class="alert-danger"> <g:fieldError field="userName" bean="${user}"/></div>
                 </div>
 
 
@@ -45,6 +54,8 @@
                     <div class="col-xs-8">
                         <g:field type = "password" name = "password" id = "password" class="form-control" />
                     </div>
+
+                    <div class="alert-danger"> <g:fieldError field="password" bean="${user}"/></div>
                 </div>
 
                 <div class="form-group row">
@@ -53,6 +64,8 @@
                     <div class="col-xs-8">
                         <g:field type = "password" name = "confirmPassword" id = "confirmPassword" class="form-control" />
                     </div>
+
+                    <div class="alert-danger"> <g:fieldError field="confirmPassword" bean="${user}"/></div>
                 </div>
 
                 <div class="form-group row">
@@ -62,9 +75,6 @@
                         <input type="file" id = "pic" name = "pic" class="form-control">
                     </div>
 
-                    <div class="col-xs-3">
-                        <input type="button" value="Browse" class="btn btn-primary submitButtons"/>
-                    </div>
                 </div>
 
                 <div class="form-group row">
