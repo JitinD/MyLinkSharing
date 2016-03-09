@@ -17,6 +17,6 @@ class TopicVo {
     @Override
     String toString()
     {
-     return "$id , $name, $visibility, $count, $createdBy"
+     return "$name"
     }
 }

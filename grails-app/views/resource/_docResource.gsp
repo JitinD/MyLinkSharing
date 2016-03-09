@@ -38,10 +38,7 @@
                         </label>
 
                         <div class="col-xs-8">
-                            <div class="dropdown">
-                                <g:select name="topic" from="${subscribedTopicsList}" optionKey="id" optionValue = "name"
-                                          class="btn btn-default btn-sm dropdown-toggle"/>
-                            </div>
+                                <ls:showSubscribedTopics />
                         </div>
                     </div>
 

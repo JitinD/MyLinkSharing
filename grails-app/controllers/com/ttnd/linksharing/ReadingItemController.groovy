@@ -21,6 +21,6 @@ class ReadingItemController {
 
         JSON jsonResponseObject = jsonResponseMap as JSON
 
-        redirect(controller: 'user', action: 'index', params: [jsonResponse: jsonResponseObject])
+        redirect(controller: 'user', action: 'index')
     }
 }

@@ -14,13 +14,6 @@
         <asset:stylesheet src="font-awesome.min.css"/>
         <asset:stylesheet src="bootstrap.min.css"/>
 
-        %{--<asset:javascript src="application.js"/>--}%
-        <asset:javascript src="jquery-2.2.1.min.js"/>
-        <asset:javascript src="bootstrap.min.js"/>
-
-        <style>
-
-        </style>
         <g:layoutHead/>
 
     </head>
@@ -122,8 +115,15 @@
         --}%
 
         <div class = "container">
+
+            <div class = "jsonResponse" style = "display:none"></div>
+
             <g:layoutBody/>
         </div>
+
+        <asset:javascript src="jquery-2.2.1.min.js"/>
+        <asset:javascript src="bootstrap.min.js"/>
+        <asset:javascript src="application.js"/>
 
     </body>
 </html>

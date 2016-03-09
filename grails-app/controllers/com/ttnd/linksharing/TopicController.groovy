@@ -2,6 +2,7 @@ package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
 import enums.Visibility
+import grails.converters.JSON
 
 class TopicController {
 
@@ -48,21 +49,47 @@ class TopicController {
     def save(String topicName, String visibility)
     {
         User user = session.user
-        Topic topic = new Topic(createdBy: user, name: topicName, visibility: Visibility.getVisibility(visibility))
+        Topic topic = Topic.findOrCreateByCreatedByAndName(user, topicName)
+        Map jsonResponseMap = [:]
+
+        topic.visibility = visibility
 
         if(topic.saveInstance())
         {
             flash.message = "Topic saved successfully"
+            jsonResponseMap.message = "Topic saved successfully"
+
             //render "Topic saved. ~SUCCESS~"
         }
         else
         {
             flash.error = "Topic could not be saved"
-            render "Topic could not be saved. ~FAILURE~"
+            jsonResponseMap.error = "Topic could not be saved"
+            //render "Topic could not be saved. ~FAILURE~"
             //render "${topic.errors.allErrors.collect { message(error: it) }}"
 
         }
 
-        redirect(uri: "/")
+        JSON jsonResponse = jsonResponseMap as JSON
+        render jsonResponse
+    }
+
+
+    def delete(Long id){
+
+        Topic topic  = Topic.get(id)
+        User user = session.user
+
+        if(topic)
+        {
+            if(user.isAdmin || (topic.createdBy == user))
+                topic.delete(flush: true)
+
+        }
+        else
+            flash.error = "Topic unavailable."
+
+        redirect(controller: 'login', action: 'index')
+
     }
 }

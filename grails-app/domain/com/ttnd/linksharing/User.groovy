@@ -19,7 +19,7 @@ class User {
     Date lastUpdated;
 
     static constraints = {
-        userName(blank: false)
+        userName(blank: false, unique: true)
         emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
 
@@ -50,27 +50,6 @@ class User {
     }
 
     static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource, resourceRatings: ResourceRating]
-
-    boolean equals(o) {
-        if (this.is(o)) return true
-        if (getClass() != o.class) return false
-
-        User user = (User) o
-
-        if (emailID != user.emailID) return false
-        if (id != user.id) return false
-        if (userName != user.userName) return false
-
-        return true
-    }
-
-    int hashCode() {
-        int result
-        result = userName.hashCode()
-        result = 31 * result + emailID.hashCode()
-        result = 31 * result + (id != null ? id.hashCode() : 0)
-        return result
-    }
 
 
     String getConfirmPassword() {
@@ -104,7 +83,7 @@ class User {
     public List<TopicVo> getSubscribedTopicsList() {
         List<TopicVo> subscribedTopicsList = []
 
-        List<Topic> topicList = Subscription.createCriteria().list{
+        List<Topic> topicList = Subscription.createCriteria().list {
             projections {
                 property('topic')
             }
@@ -116,6 +95,23 @@ class User {
         }
 
         return subscribedTopicsList
+    }
+
+    public getSubscription(Long topicId) {
+
+        Topic topic = Topic.get(topicId)
+
+        Subscription subscription = Subscription.findByUserAndTopic(this, topic)
+
+        return subscription
+    }
+
+    Boolean equals(User user){
+
+        if(this.id == user.id)
+            return true
+
+        return false
     }
 
     public User saveInstance() {
@@ -168,31 +164,28 @@ class User {
         return userVO
     }
 
-    public Boolean canDeleteResource(Long resourceId)
-    {
+    public Boolean canDeleteResource(Long resourceId) {
         Resource resource = Resource.read(resourceId)
 
-        if(this.isAdmin || (resource.createdBy.id == this.id) )
+        if (this.isAdmin || (resource.createdBy.id == this.id))
             return true
 
         return false
     }
 
-    public Integer getScore(Long resourceId)
-    {
+    public Integer getScore(Long resourceId) {
         Resource resource = Resource.load(resourceId)
         User user = this
 
         ResourceRating resourceRating = ResourceRating.findByUserAndResource(user, resource)
 
-        if(resourceRating)
+        if (resourceRating)
             return resourceRating.score
         else
             return 1 //Temporary
     }
 
-    public Boolean isSubscribed(Long topicId)
-    {
+    public Boolean isSubscribed(Long topicId) {
         Topic topic = Topic.get(topicId)
         User user = this
 
@@ -201,9 +194,9 @@ class User {
             eq('topic', topic)
         }
 
-        if(subscription)
+        if (subscription)
             return true
 
-        return  false
+        return false
     }
 }

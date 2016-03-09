@@ -17,22 +17,20 @@
                     </div>
 
                     <div class="form-group row">
-                        <label name="visibility" id="visibility" class="form-control-label col-xs-4">
+                        <label for = "visibility" class="form-control-label col-xs-4">
                             Visibility *
                         </label>
 
                         <div class="col-xs-8">
-                            <div class="dropdown">
-                                <g:select name="visibility" from="${enums.Visibility.values()}"
+                                <g:select id = "visibility" name="visibility" from="${enums.Visibility.values()}"
                                           class="btn btn-default btn-sm dropdown-toggle"/>
-                            </div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-xs-offset-4 col-xs-4">
-                            <g:submitButton class="btn btn-primary submitButtons" formaction="/topic/save" type="submit"
-                                            name="submit" value="Save"/>
+                            <g:submitButton id = "saveTopicButton" name = "saveTopicButton" class="btn btn-primary submitButtons" type="button"
+                                             value="Save"/>
                         </div>
 
                         <div class="col-xs-4">

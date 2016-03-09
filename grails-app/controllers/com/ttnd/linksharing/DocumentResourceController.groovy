@@ -17,12 +17,12 @@ class DocumentResourceController extends ResourceController {
             flash.error = "Invalid file"
         } else {
             String filePath = "${grailsApplication.config.grails.documentsPath}/${UUID.randomUUID()}.pdf"
-            documentResource.contentType = params.file.contentType
+            documentResource.contentType = file.contentType
             documentResource.filePath = filePath
 
             if (documentResource.saveInstance()) {
                 File savedFile = new File(filePath)
-                params.file.transferTo(savedFile)
+                file.transferTo(savedFile)
                 addToReadingItems(documentResource)
 
                 flash.message = "File saved successfully"

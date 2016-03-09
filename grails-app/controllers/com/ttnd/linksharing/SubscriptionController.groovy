@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import enums.Seriousness
+import grails.converters.JSON
 
 class SubscriptionController {
 
@@ -21,20 +22,31 @@ class SubscriptionController {
     }
 
     def update(Long topicId, String serious) {
-        Subscription subscription = Subscription.get(topicId)
+        Topic topic = Topic.get(topicId)
+        User user = session.user
+        Map jsonResponseMap = [:]
 
+        Subscription subscription = Subscription.findByUserAndTopic(user, topic)
         Seriousness seriousness = Seriousness.getSeriousness(serious)
 
         if (subscription && seriousness) {
             subscription.seriousness = seriousness
 
-            if (subscription.saveInstance())
-                render "Subscription updated successfully"
-            else
-                render "Subscription could not be updated"
+            if (subscription.saveInstance()){
+                flash.message = "Subscription updated successfully"
+                jsonResponseMap.message = "Subscription updated successfully"
+            }
+            else{
+                flash.error = "Subscription could not be updated"
+                jsonResponseMap.error = "Subscription could not be updated"
+            }
         } else {
-            render "Subscription with id ${id} could not be found."
+            flash.error =  "Subscription could not be found."
+            jsonResponseMap.error =  "Subscription could not be found."
         }
+
+        JSON jsonResponse = jsonResponseMap as JSON
+        render jsonResponse
     }
 
     def delete(Long topicId) {
@@ -43,16 +55,22 @@ class SubscriptionController {
         Subscription subscription = null
 
         if (user && topic) {
-            subscription = Subscription.findByUserAndTopic(user, topic)
 
-            if (subscription) {
-                if (subscription.delete(flush: true))
-                    flash.message = "Subscription deleted successfully."
-                else
-                    flash.error = "Subscription could not be deleted"
-            } else {
-                flash.error = "Subscription not found."
+            if (!user.equals(topic.createdBy)) {
+
+                subscription = Subscription.findByUserAndTopic(user, topic)
+
+                if (subscription) {
+                    if (subscription.delete(flush: true))
+                        flash.message = "Subscription deleted successfully."
+                    else
+                        flash.error = "Subscription could not be deleted"
+                } else {
+                    flash.error = "Subscription not found."
+                }
             }
+            else
+                flash.error = "Creator of topic can't unsubscribe from the topic"
 
         } else {
             flash.error = "Either user or topic is not valid."
