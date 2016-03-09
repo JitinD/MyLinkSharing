@@ -8,6 +8,11 @@
     <body>
 
             <div class="row">
+                <div>
+                    <g:if test = "${jsonResponse}">
+                        ${jsonResponse}
+                    </g:if>
+                </div>
                 <div class="col-md-4">
 
                     <div class="row panel panel-default panel-body">

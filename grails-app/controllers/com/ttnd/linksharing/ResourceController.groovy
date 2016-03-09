@@ -86,23 +86,6 @@ class ResourceController {
     }
 
 
-    def saveLinkResource(LinkResource linkResource) {
-        linkResource.createdBy = session.user
-
-        if (linkResource.saveInstance()) {
-
-            flash.message = "Link resource successfully added. ~SUCCESS~"
-
-            //render flash.message
-        } else {
-            flash.error = linkResource.errors.allErrors.collect { message(error: it) }
-            //"Link resource could not be added. ~FAILURE~"
-
-            //redirect(controller: 'user', action: 'index')
-        }
-        redirect uri: "/"
-    }
-
 
     def saveDocResource(String filePath, String description, String topicName) {
         User user = session.user

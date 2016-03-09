@@ -7,7 +7,7 @@
                 </h4>
             </div>
 
-            <g:form class="form">
+            <g:form class="form" controller="linkResource" action="save">
                 <div class="modal-body table-responsive">
 
                     <div class="form-group row">
@@ -42,7 +42,7 @@
 
                     <div class="form-group row">
                         <div class="col-xs-offset-4 col-xs-4">
-                            <g:submitButton class="btn btn-primary submitButtons" formaction="#" type="submit"
+                            <g:submitButton class="btn btn-primary submitButtons" type="submit"
                                             name="submit" value="Share"/>
                         </div>
 

@@ -5,7 +5,7 @@ class UserController {
     def assetResourceLocator
 
     def index() {
-        render(view: 'index', model: [user: session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics, trendingTopics: Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(), subscribedTopicsList: session.user?.getSubscribedTopicsList()])
+        render(view: 'index', model: [user: session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics, trendingTopics: Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(), subscribedTopicsList: session.user?.getSubscribedTopicsList(), jsonResponse: params.jsonResponse?:null])
     }
 
     def image(Long id) {
