@@ -2,34 +2,26 @@ package conf
 
 class SessionCheckFilters {
 
-    def filters = {
-        loginCheck(controller: 'login|console', invert: true) {
-            before = {
+    /*def restrictAccess(User use) {
+        if (user)
+            redirect(controller: "login", action: "index")
+    }*/
 
-                if(!session.user)
+    def filters = {
+        loginCheck(controller: '*', action: 'save|delete|update|changeIsRead') {
+            before = {
+                if (!session.user)
                     redirect(controller: "login", action: "index")
             }
-            after = { Map model ->
 
-            }
-            afterView = { Exception e ->
-
-            }
         }
 
-
-        /*loginCheck(controller: '*', action: 'save|delete|update|changeIsRead') {
+        userIndexcheck(controller: 'user', action: 'index') {
             before = {
 
-                if(!session.user)
+                if (!session.user)
                     redirect(controller: "login", action: "index")
             }
-            after = { Map model ->
-
-            }
-            afterView = { Exception e ->
-
-            }
-        }*/
+        }
     }
 }

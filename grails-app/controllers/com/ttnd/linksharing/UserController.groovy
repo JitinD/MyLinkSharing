@@ -10,13 +10,13 @@ class UserController {
 
     def image(Long id) {
         User user = User.get(id)
-        def photo
+        byte[] photo
 
         if (user.photo)
             photo = user.photo
         else {
 
-            photo = assetResourceLocator.findAssetForURI('dummy.jpeg').getInputStream().getBytes()
+            photo = assetResourceLocator.findAssetForURI('dummy.jpeg').byteArray
         }
         response.outputStream << photo
         response.outputStream.flush()
