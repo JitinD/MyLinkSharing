@@ -60,4 +60,4 @@
             </g:uploadForm>
         </div>
     </div>
-</div>]
+</div>
