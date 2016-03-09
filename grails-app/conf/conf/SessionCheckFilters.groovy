@@ -2,11 +2,6 @@ package conf
 
 class SessionCheckFilters {
 
-    /*def restrictAccess(User use) {
-        if (user)
-            redirect(controller: "login", action: "index")
-    }*/
-
     def filters = {
         loginCheck(controller: '*', action: 'save|delete|update|changeIsRead') {
             before = {
