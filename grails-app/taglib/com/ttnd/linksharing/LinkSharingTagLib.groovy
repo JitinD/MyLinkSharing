@@ -13,10 +13,14 @@ class LinkSharingTagLib {
 
         attributes ->
             if (session.user) {
-                String href = "${createLink(controller: 'readingItem', action: 'changeIsRead', params: [resourceId: attributes.id, isRead: !attributes.isRead])}"
+                Long resourceId = attributes.id
+                Boolean isRead = !attributes.isRead
 
-                if (!attributes.isRead)
-                    out << "<a href = ${href}  class = 'text-danger'>Mark as read</a>"
+                if (attributes.isRead)
+                    out << "<a class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>"
+                else
+                    out << "<a class = 'markReadStatus text-danger' resourceId = ${resourceId} isRead = ${isRead}>Mark as read</a>"
+
             }
     }
 

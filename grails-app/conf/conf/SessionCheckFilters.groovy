@@ -2,6 +2,7 @@ package conf
 
 class SessionCheckFilters {
 
+
     def filters = {
         loginCheck(controller: '*', action: 'save|delete|update|changeIsRead') {
             before = {
@@ -19,4 +20,5 @@ class SessionCheckFilters {
             }
         }
     }
+
 }

@@ -10,8 +10,10 @@
                     <label class="form-control-label col-sm-4">Username:</label>
 
                     <div class="col-sm-8">
-                        <g:textField name="userName" class="form-control"/>
+                        <g:textField id = "userName" name="userName" class="form-control" required = "required"/>
                     </div>
+
+                    <div class="alert-danger">${flash.error}</div>
                 </div>
 
 
@@ -19,8 +21,10 @@
                     <label class="form-control-label col-sm-4">Password:</label>
 
                     <div class="col-sm-8">
-                        <g:passwordField name="password" class="form-control"/>
+                        <g:passwordField id = "password" name="password" class="form-control" required = "required" />
                     </div>
+
+                    <div class="alert-danger"> <g:fieldError field="password" bean="${user}"/></div>
                 </div>
 
                 <div class="form-group row">

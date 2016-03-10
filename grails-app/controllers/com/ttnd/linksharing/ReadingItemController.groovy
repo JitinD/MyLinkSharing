@@ -13,14 +13,15 @@ class ReadingItemController {
 
         if (ReadingItem.executeUpdate("update ReadingItem set isRead =:isRead where user.id =:userId and resource.id =:resourceId", [userId: user.id, resourceId: resourceId, isRead: isRead])) {
             flash.message = "Reading Item isRead successfully changed. ~SUCCESS~"
-            jsonResponseMap.message = "Success"
+            jsonResponseMap.message = "Reading status changed."
         } else {
             flash.error = "Reading Item isRead could not be changed. ~FAILURE~"
-            jsonResponseMap.error = "Failure"
+            jsonResponseMap.error = "Reading status could not be changed."
         }
 
         JSON jsonResponseObject = jsonResponseMap as JSON
 
-        redirect(controller: 'user', action: 'index')
+        render jsonResponseObject
+        //redirect(controller: 'user', action: 'index')
     }
 }

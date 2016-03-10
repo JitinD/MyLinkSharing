@@ -42,3 +42,7 @@
     width:80px!important;
     height:70px!important;
 }
+
+.error{
+    color: red;
+}

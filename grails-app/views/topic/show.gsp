@@ -36,12 +36,29 @@
                     <div class="panel panel-default">
                         <div class="panel-heading panelHeaders">
                             <span class = "panelHeadersText">Posts:>Posts: ${topic.name}</span>
+
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button id = "findSearchPostBox" topicId = "${topic.id}" class="btn btn-primary glyphicon glyphicon-search searchButtons">
+                                    </button>
+                                </span>
+
+                                <input type="text" id = "searchPostBox" class="form-control input-group" placeholder="Search">
+
+                                <span class="input-group-btn">
+                                    <button id = "clearSearchPostBox" class="btn btn-primary glyphicon-searchphicon glyphicon-remove searchButtons">
+                                    </button>
+                                </span>
+                            </div>
+
                         </div>
 
-                        <div class="panel-body">
+                        <div id = "topicPosts" class="panel-body">
                             <g:each in = "${topicPosts}" var = "post">
                                 <g:render template = "/resource/show" model = "[post : post]" />
                             </g:each>
+
+%{--                            <g:paginate total = "${topicPosts.size()}" controller = "user" action = "index" max = "${pagination.max}" offset = "${pagination.offset}" />--}%
                         </div>
                     </div>
                 </div>

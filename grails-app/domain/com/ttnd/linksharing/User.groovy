@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import CO.SearchCO
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
@@ -141,8 +142,6 @@ class User {
                         property('resource')
                         property('isRead')
                     }
-
-            eq('isRead', false)
             eq('user', this)
             createAlias('resource', 'r')
         }
@@ -198,5 +197,10 @@ class User {
             return true
 
         return false
+    }
+
+    public Integer getInboxPostsCount()
+    {
+
     }
 }
