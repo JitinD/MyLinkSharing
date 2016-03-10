@@ -100,7 +100,7 @@ class LoginController {
     }
 
     def validateUserName(){
-
+        System.err.println("................$params")
         Integer numUser = User.countByUserName(params.userName)
         log.info params.userName
         Boolean result = numUser ? false : true

@@ -77,24 +77,15 @@
                         required: true,
                         remote: {
                             url: "/login/validateUserName",
-                            type: "post",
-                            data: {
-                                userName: function () {
-                                    return $('#userName').val()
-                                }
-                            }
+                            type: "post"
                         }
                     },
                     'emailID': {
                         required: true,
+                        email:true,
                         remote: {
                             url: "/login/validateEmail",
-                            type: "post",
-                            data: {
-                                email: function () {
-                                    return $('#emailID').val()
-                                }
-                            }
+                            type: "post"
                         }
                     }
                 },
@@ -125,7 +116,7 @@
 
             jQuery.validator.addMethod("confirm", function (value, element) {
                 var result = false;
-                var password = $("#password").val();
+                var password = $('form#registrationForm input[id=password]').val();
 
                 if (password === value) {
                     result = true;
