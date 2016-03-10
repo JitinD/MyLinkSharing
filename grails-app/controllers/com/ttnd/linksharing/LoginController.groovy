@@ -91,21 +91,20 @@ class LoginController {
 
     def validateEmail(){
 
-        Integer numUser = User.countByEmailID(params.email)
+        Integer numUser = User.countByEmailID(params.emailID)
+        log.info params.emailID
 
-        String result = numUser ? "false" : "true"
+        Boolean result = numUser ? false : true
 
-        response.setContentType("text/json")
         render result
     }
 
     def validateUserName(){
 
         Integer numUser = User.countByUserName(params.userName)
+        log.info params.userName
+        Boolean result = numUser ? false : true
 
-        String result = numUser ? "false" : "true"
-
-        response.setContentType("text/json")
         render result
 
     }

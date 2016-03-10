@@ -56,47 +56,82 @@
             });
         });
 
-
-        $(function (){
-            $("#registerForm").validate({
+        $(function () {
+            $('#registrationForm').validate({
                 rules: {
-                    'emailID': {
+                    'firstName':{
+                        required: true
+                    },
+                    'lastName':{
+                        required: true
+                    },
+                    'password':{
                         required: true,
-                        remote:{
-                            url: "/login/validateEmail",
+                        minlength :5
+                    },
+                    'confirmPassword':{
+                        required: true,
+                        confirm:true
+                    },
+                    'userName': {
+                        required: true,
+                        remote: {
+                            url: "/login/validateUserName",
                             type: "post",
                             data: {
-                                email: function(){
-                                    return $('#emailID').val();
+                                userName: function () {
+                                    return $('#userName').val()
                                 }
                             }
                         }
                     },
-                    'userName': {
+                    'emailID': {
                         required: true,
-                        remote:{
-                            url: "/login/validateUserName",
+                        remote: {
+                            url: "/login/validateEmail",
                             type: "post",
                             data: {
-                                email: function(){
-                                    return $('#userName').val();
+                                email: function () {
+                                    return $('#emailID').val()
                                 }
                             }
                         }
                     }
                 },
                 messages: {
+                    'firstName':{
+                        required: "First name can't be blank",
+                    },
+                    'lastName':{
+                        required: "Last name can't be blank",
+                    },
+                    'password':{
+                        required: "Password can't be blank",
+                        minlength: "Password should be atleast 5 character long"
+                    },
+                    'confirmPassword':{
+                        required: "Confirm password can't be blank"
+                    },
                     'emailID': {
-                        required: "Please enter a valid email id.",
-                        remote: "Email Id already registered."
+                        required: "Email address can't be blank",
+                        remote: "Email address entered is already used"
                     },
                     'userName': {
-                        required: "Please enter a UserName.",
-                        remote: "This username already exists."
+                        required: "User name can't be blank",
+                        remote: "User name entered already exist"
                     }
                 }
             });
-        });
 
+            jQuery.validator.addMethod("confirm", function (value, element) {
+                var result = false;
+                var password = $("#password").val();
+
+                if (password === value) {
+                    result = true;
+                }
+                return result;
+            }, "Confirm password not matched with password");
+        });
     });
 

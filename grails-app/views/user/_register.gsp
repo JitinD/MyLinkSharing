@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel-body">
-            <g:uploadForm class="form-horizontal" name = "registerForm" controller = "login" action = "register">
+            <g:uploadForm class="form-horizontal" id = "registrationForm" name = "registrationForm" controller = "login" action = "register">
                 <div class="form-group row">
                     <label class="form-control-label col-xs-4">First name*</label>
 
