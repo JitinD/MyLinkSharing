@@ -40,8 +40,11 @@ abstract class Resource {
                 if(resourceSearchCO.id)
                     eq('createdBy.id', resourceSearchCO.id)
 
-                if(resourceSearchCO.visibility)
-                    eq('topic.visibility', resourceSearchCO.visibility)
+                if(resourceSearchCO.visibility){
+                    createAlias('topic','t')
+                    eq('t.visibility', resourceSearchCO.visibility)
+                }
+
 
         }
     }

@@ -31,7 +31,8 @@ class UserController {
         }else
             resourceSearchCO.visibility = Visibility.PUBLIC
 
-        List<PostVO> createdPosts = user.getCreatedPosts()
+        List<Resource> resources = Resource.search(resourceSearchCO).list()
+        List<PostVO> createdPosts = resources?.collect{ Resource.getPostInfo(it.id) }
 
         render (view: 'profile', model: [createdPosts: createdPosts, user: user.getInfo()])
     }
