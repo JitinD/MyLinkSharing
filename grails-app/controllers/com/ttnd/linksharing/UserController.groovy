@@ -12,6 +12,12 @@ class UserController {
                                       trendingTopics: Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(), subscribedTopicsList: session.user?.getSubscribedTopicsList()])
     }
 
+    def profile(){
+
+        render(view: 'profile', model: [user: session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics, createdTopics: session.user?.createdTopics,
+                                        createdPosts: session.user?.createdPosts])
+    }
+
     def image(Long id) {
         User user = User.get(id)
         byte[] photo

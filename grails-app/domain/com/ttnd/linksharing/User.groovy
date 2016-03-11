@@ -199,8 +199,35 @@ class User {
         return false
     }
 
-    public Integer getInboxPostsCount()
-    {
+    public List<TopicVo> getCreatedTopics() {
+        List<TopicVo> createdTopicsList = []
 
+        List<Topic> topicList = Topic.createCriteria().list(max: 5) {
+            eq('createdBy.id', id)
+        }
+
+        topicList.each {
+            topic -> createdTopicsList.add(new TopicVo(id: topic.id, name: topic.name, visibility: topic.visibility, createdBy: topic.createdBy))
+        }
+
+        return createdTopicsList
+    }
+
+    public List<PostVO> getCreatedPosts(){
+        List<PostVO> createdPostVOs = []
+
+        def createdPosts = Resource.createCriteria().list {
+            eq('createdBy.id', id)
+        }
+
+        createdPosts.each {
+            post ->
+                createdPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
+                        user: post.createdBy.name, userName: post.createdBy.userName,topicName: post.topic.name,
+                        description: post.description, url: post.class.equals(LinkResource) ? post.url : null,
+                        filePath: post.class.equals(DocumentResource) ? post.filePath : null, createdDate: post.dateCreated))
+        }
+
+        return createdPostVOs
     }
 }

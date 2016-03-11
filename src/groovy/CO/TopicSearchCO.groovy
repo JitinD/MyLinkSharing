@@ -3,9 +3,11 @@ package CO
 import com.ttnd.linksharing.User
 import enums.Visibility
 
-class ResourceSearchCO extends SearchCO{
+/**
+ * Created by jitin on 11/3/16.
+ */
+class TopicSearchCO extends SearchCO {
     Long id
-    Long topicId
     Visibility visibility
 
     public User getUser(){
