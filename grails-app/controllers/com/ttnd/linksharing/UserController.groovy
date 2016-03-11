@@ -3,8 +3,10 @@ package com.ttnd.linksharing
 import CO.ResourceSearchCO
 import CO.SearchCO
 import CO.TopicSearchCO
+import CO.UserSearchCO
 import VO.PostVO
 import VO.TopicVo
+import VO.UserVO
 import enums.Visibility
 
 class UserController {
@@ -87,4 +89,59 @@ class UserController {
         render(template:'/topic/list', model: [topics: subscribedTopics])
 
     }
+
+    def list(UserSearchCO userSearchCO){
+
+        if(session.user){
+            if(session.user.isAdmin){
+
+                List<User> users = User.search(userSearchCO).list(max: userSearchCO.max, sort: userSearchCO.sort, order: userSearchCO.order)
+
+                List<UserVO> usersList = users?.collect{
+                    user -> new UserVO(userId: user.id, userName: user.userName, emailID: user.emailID, firstName: user.firstName,
+                            lastName: user.lastName, isActive: user.isActive)
+                }
+
+                render (view: "/user/list", model: [usersList: usersList])
+            }
+            else
+                redirect(controller: "login", action: "index")
+        }
+        else
+            redirect(controller: "login", action: "index")
+
+    }
+
+    def toggleActive(Long id)
+    {
+        if(session.user){
+
+            if(session.user.isAdmin) {
+
+                User user = User.get(id)
+
+                if(user){
+                    if (user.isAdmin) {
+                        flash.error = "Admin active status cannot be changed."
+                    } else
+                        user.isActive = !(user.isActive)
+
+                    if(user.saveInstance()){
+                        flash.message = "User active status changed"
+                    }
+                    else
+                        flash.error = "User active status could not be changed"
+                }
+                else
+                    flash.error = "User not found."
+
+                redirect(controller: "user", action: "list")
+            }
+            else
+                redirect(controller: "login", action: "index")
+        }else {
+            redirect(controller: "login", action: "index")
+        }
+    }
+
 }

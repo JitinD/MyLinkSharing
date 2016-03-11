@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import CO.SearchCO
+import CO.UserSearchCO
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
@@ -52,6 +53,30 @@ class User {
 
     static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource, resourceRatings: ResourceRating]
 
+    static namedQueries = {
+        search {
+            UserSearchCO userSearchCO ->
+
+                if (userSearchCO.q) {
+
+                    or
+                    {
+                        ilike('firstName', "%${userSearchCO.q}%")
+                        ilike('lastName', "%${userSearchCO.q}%")
+                        ilike('emailID', "%${userSearchCO.q}%")
+                        ilike('userName', "%${userSearchCO.q}%")
+
+                    }
+                }
+
+                if (userSearchCO.isActive != null) {
+                    eq('isActive', userSearchCO.isActive)
+                }
+
+                eq('isAdmin', false)
+        }
+
+    }
 
     String getConfirmPassword() {
         return confirmPassword
@@ -107,9 +132,9 @@ class User {
         return subscription
     }
 
-    Boolean equals(User user){
+    Boolean equals(User user) {
 
-        if(this.id == user.id)
+        if (this.id == user.id)
             return true
 
         return false
@@ -199,7 +224,7 @@ class User {
         return false
     }
 
-    public List<PostVO> getCreatedPosts(){
+    public List<PostVO> getCreatedPosts() {
         List<PostVO> createdPostVOs = []
 
         def createdPosts = Resource.createCriteria().list {
@@ -209,11 +234,12 @@ class User {
         createdPosts.each {
             post ->
                 createdPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
-                        user: post.createdBy.name, userName: post.createdBy.userName,topicName: post.topic.name,
+                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
                         description: post.description, url: post.class.equals(LinkResource) ? post.url : null,
                         filePath: post.class.equals(DocumentResource) ? post.filePath : null, createdDate: post.dateCreated))
         }
 
         return createdPostVOs
     }
+
 }

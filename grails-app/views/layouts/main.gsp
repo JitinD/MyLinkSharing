@@ -84,8 +84,25 @@
                                     </a>
 
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Profile</a></li>
-                                        <li><a href="/login/logout">Logout</a></li>
+                                        <li>
+                                            <g:link controller = "user" action = "profile" params = "[id: session.user.id]">
+                                                Profile
+                                            </g:link>
+                                        </li>
+
+                                        <li>
+                                            <g:if test = "${session.user.isAdmin}">
+                                                <g:link controller = "user" action = "list">
+                                                    Users
+                                                </g:link>
+                                            </g:if>
+                                        </li>
+
+                                        <li>
+                                            <g:link controller = "login" action = "logout">
+                                                Logout
+                                            </g:link>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
