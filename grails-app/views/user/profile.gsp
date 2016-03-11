@@ -11,6 +11,7 @@
 
                 <div class="row panel panel-default panel-body">
                     <g:render template = "/user/show" model = "[user : user]"/>
+                    <g:hiddenField name="id" id = "id" value = "${user.userId}"/>
                 </div>
 
                 <div class = "row">
@@ -19,10 +20,9 @@
                             <span class = "panelHeadersText">Topics</span>
                         </div>
 
-                        <g:each in="${createdTopics}" var="topic">
-                            <g:render template="/topic/show" model="[topic: topic]"/>
-                        </g:each>
+                        <div id = "createdTopics">
 
+                        </div>
                     </div>
                 </div>
 
@@ -32,9 +32,9 @@
                             <span class = "panelHeadersText">Subscriptions</span>
                         </div>
 
-                        <g:each in="${subscribedTopics}" var="topic">
-                            <g:render template="/topic/show" model="[topic: topic]"/>
-                        </g:each>
+                        <div id = "subscribedTopics">
+
+                        </div>
 
                     </div>
                 </div>
@@ -56,6 +56,28 @@
                 </div>
             </div>
         </div>
+
+        <g:javascript>
+            $(document).ready(function(){
+                $.ajax({
+                    url: "/user/topics",
+                    data:{id: $("#id").val()},
+                    success: function(result){
+                        $("#createdTopics").html(result)
+                    }
+
+                });
+
+                $.ajax({
+                    url: "/user/subscriptions",
+                    data:{id: $("#id").val()},
+                    success: function(result){
+                        $("#subscribedTopics").html(result)
+                    }
+
+                });
+            });
+        </g:javascript>
     </body>
 
 </html>

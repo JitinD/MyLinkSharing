@@ -31,10 +31,18 @@ abstract class Resource {
     static namedQueries = {
         search {
             ResourceSearchCO resourceSearchCO ->
-                if (resourceSearchCO.topicId && resourceSearchCO.q) {
+                if (resourceSearchCO.topicId)
                     eq('topic.id', resourceSearchCO.topicId)
+
+                if(resourceSearchCO.q)
                     ilike('description',"%${resourceSearchCO.q}%")
-                }
+
+                if(resourceSearchCO.id)
+                    eq('createdBy.id', resourceSearchCO.id)
+
+                if(resourceSearchCO.visibility)
+                    eq('topic.visibility', resourceSearchCO.visibility)
+
         }
     }
 

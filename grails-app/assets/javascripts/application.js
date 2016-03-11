@@ -66,7 +66,7 @@
 
         $("#clearSearchPostBox").click(function () {
             $("#searchPostBox").val("")
-        })
+        });
 
         $("#findSearchPostBox").click(function(){
             topicId = $(this).attr('topicId')
@@ -75,12 +75,11 @@
                 url: "/resource/search",
                 data: {q: $('#searchPostBox').val(), topicId: topicId},
                 success: function(result){
-                    alert(result)
                     $("#topicPosts").html(result)
                 }
             });
 
-        })
+        });
 
         $(function () {
             $('#registrationForm').validate({
@@ -150,8 +149,6 @@
                 return result;
             }, "Confirm password not matched with password");
         });
-
-
 
     });
 

@@ -199,20 +199,6 @@ class User {
         return false
     }
 
-    public List<TopicVo> getCreatedTopics() {
-        List<TopicVo> createdTopicsList = []
-
-        List<Topic> topicList = Topic.createCriteria().list(max: 5) {
-            eq('createdBy.id', id)
-        }
-
-        topicList.each {
-            topic -> createdTopicsList.add(new TopicVo(id: topic.id, name: topic.name, visibility: topic.visibility, createdBy: topic.createdBy))
-        }
-
-        return createdTopicsList
-    }
-
     public List<PostVO> getCreatedPosts(){
         List<PostVO> createdPostVOs = []
 

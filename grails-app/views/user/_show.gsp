@@ -7,7 +7,7 @@
     <div class="col-xs-9">
         <div class="row">
             <div class="col-xs-12 text-primary">
-                <g:link controller = "user" action = "profile">${user.name}</g:link>
+                <g:link controller = "user" action = "profile" params = "[id: user.userId]">${user.name}</g:link>
             </div>
         </div>
 

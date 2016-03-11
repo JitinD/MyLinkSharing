@@ -1,21 +1,39 @@
 package com.ttnd.linksharing
 
+import CO.ResourceSearchCO
 import CO.SearchCO
+import CO.TopicSearchCO
+import VO.PostVO
+import VO.TopicVo
+import enums.Visibility
 
 class UserController {
 
     def assetResourceLocator
+    def topicService
+    def subscriptionService
 
     def index() {
 
         render(view: 'index', model: [user: session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics,
-                                      trendingTopics: Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(), subscribedTopicsList: session.user?.getSubscribedTopicsList()])
+                                      trendingTopics: Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(),
+                                      subscribedTopicsList: session.user?.getSubscribedTopicsList()])
     }
 
-    def profile(){
+    def profile(ResourceSearchCO resourceSearchCO){
 
-        render(view: 'profile', model: [user: session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics, createdTopics: session.user?.createdTopics,
-                                        createdPosts: session.user?.createdPosts])
+        User user = User.get(resourceSearchCO.id)
+
+        if(session.user){
+            if(!(session.user.isAdmin || session.user.equals(user))){
+                resourceSearchCO.visibility = Visibility.PUBLIC
+            }
+        }else
+            resourceSearchCO.visibility = Visibility.PUBLIC
+
+        List<PostVO> createdPosts = user.getCreatedPosts()
+
+        render (view: 'profile', model: [createdPosts: createdPosts, user: user.getInfo()])
     }
 
     def image(Long id) {
@@ -30,5 +48,42 @@ class UserController {
         }
         response.outputStream << photo
         response.outputStream.flush()
+    }
+
+    def topics(Long id){
+
+        TopicSearchCO topicSearchCO = new TopicSearchCO(id: id)
+
+        if(session.user)
+        {
+            if(!(session.user.isAdmin || session.user.equals(User.load(id)))){
+                topicSearchCO.visibility = Visibility.PUBLIC
+            }
+        }
+        else
+            topicSearchCO.visibility = Visibility.PUBLIC
+
+        List<TopicVo> createdTopics = topicService.search(topicSearchCO)
+
+        render(template:'/topic/list', model: [topics: createdTopics])
+    }
+
+    def subscriptions(Long id){
+
+        TopicSearchCO topicSearchCO = new TopicSearchCO(id: id)
+
+        if(session.user)
+        {
+            if(!(session.user.isAdmin || session.user.equals(User.load(id)))){
+                topicSearchCO.visibility = Visibility.PUBLIC
+            }
+        }
+        else
+            topicSearchCO.visibility = Visibility.PUBLIC
+
+        List<TopicVo> subscribedTopics = subscriptionService.search(topicSearchCO)
+
+        render(template:'/topic/list', model: [topics: subscribedTopics])
+
     }
 }

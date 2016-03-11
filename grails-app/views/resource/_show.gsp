@@ -7,7 +7,10 @@
 
     <div class="col-xs-10">
         <div class = "row">
-            <div class = "col-xs-10"><a href = "#">${post.user}</a><small> (@${post.userName}) on ${post.createdDate}</small></div>
+            <div class = "col-xs-10">
+                <g:link controller = "user" action = "profile" params = "[id: post.userId]">${post.user}</g:link>
+                <small> (@${post.userName}) on ${post.createdDate}</small>
+            </div>
             <div class = "col-xs-2"><a href="/topic/show?id=${post.topicId}">${post.topicName}</a></div>
         </div>
 

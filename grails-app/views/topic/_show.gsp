@@ -7,7 +7,9 @@
 
         <div class="col-xs-9">
             <div class="row">
-                <div class="col-xs-8"><a href="#">${topic.createdBy.name}</a></div>
+                <div class="col-xs-8">
+                    <g:link controller = "user" action = "profile" params = "[id: topic.createdBy.id]">${topic.createdBy.name}</g:link>
+                </div>
 
                 <div class="col-xs-4"><a href="/topic/show?id=${topic.id}">${topic.name}</a></div>
             </div>
