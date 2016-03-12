@@ -74,7 +74,6 @@ class LoginController {
 
     def logout() {
         session.invalidate()
-        //forward(action: "index")
         redirect(action:'index')
     }
 

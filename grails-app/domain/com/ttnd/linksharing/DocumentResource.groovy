@@ -1,6 +1,6 @@
 package com.ttnd.linksharing
 
-import Constants.AppConstants
+import com.ttnd.linksharing.constants.Constants
 
 class DocumentResource extends Resource {
 
@@ -13,7 +13,7 @@ class DocumentResource extends Resource {
     static constraints = {
         filePath(blank: false, nullable: true)
         contentType(bindable: true, validator: {
-            value -> return value.equals(AppConstants.DOCUMENT_CONTENT_TYPE)
+            value -> return value.equals(Constants.DOCUMENT_CONTENT_TYPE)
         })
     }
 

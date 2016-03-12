@@ -6,7 +6,7 @@
                     Create Topic
                 </h4>
             </div>
-            <g:form class="form form-horizontal">
+            <g:form class="form form-horizontal" controller="topic" action="save">
                 <div class="modal-body table-responsive">
                     <div class="form-group row">
                         <label class="form-control-label col-xs-4">Name*</label>

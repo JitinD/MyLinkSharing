@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel-body">
-            <g:form class="form-horizontal" role="form">
+            <g:form class="form-horizontal" role="form" controller = "login" action="loginHandler">
                 <div class="form-group row">
                     <label class="form-control-label col-sm-4">Username:</label>
 
@@ -28,15 +28,14 @@
                 </div>
 
                 <div class="form-group row">
-                    <a href = "" class="control-label col-sm-6" data-toggle="modal" data-target="#forgotPasswordModal">
+                    <a class="control-label col-sm-6" data-toggle="modal" data-target="#forgotPasswordModal">
                         <ins>Forgot Password</ins>
                     </a>
 
                     <g:render template = "/user/forgotPassword" />
 
                     <div class="col-sm-6">
-                        <g:submitButton class="btn btn-primary submitButtons" formaction="/login/loginHandler"
-                                        type="submit" name="submit" value="Submit" />
+                        <g:submitButton class="btn btn-primary submitButtons" type="submit" name="submit" value="Submit" />
                     </div>
                 </div>
             </g:form>

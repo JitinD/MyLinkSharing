@@ -16,6 +16,7 @@ grails.sampleVariable = "someValue"
 grails.config.locations = ["file:${userHome}/.grails/config.groovy"]
 grails.documentsPath = "${userHome}/var/www/linksharing"
 grails.dummyImagePath = ["file:grails-app/assets/images/dummy.jpeg"]
+grails.serverURL = "http://localhost:8080"
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
 grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
@@ -94,11 +95,8 @@ grails {
     mail {
         host = "smtp.gmail.com"
         port = 465
-        username = "staging.mycroft@gmail.com"
-        password = "igdefault"
-/*
         username = "jitin.dominic01@gmail.com"
-        password = "vshpalrangnucrva"*/
+        password = "vshpalrangnucrva"
 
         props = ["mail.smtp.auth":"true",
                  "mail.smtp.socketFactory.port":"465",

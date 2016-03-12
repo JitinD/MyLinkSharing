@@ -6,7 +6,7 @@
                     Forgot Password
                 </h4>
             </div>
-            <g:form class="form form-horizontal">
+            <g:form class="form form-horizontal" controller = "user" action = "forgotPassword">
                 <div class="modal-body table-responsive">
                     <div class="form-group row">
                         <label class="form-control-label col-xs-4">Registered Email ID</label>
@@ -19,7 +19,7 @@
                     <div class="form-group row">
                         <div class="col-xs-offset-4 col-xs-4">
                             <g:submitButton class="btn btn-primary submitButtons" type="submit"
-                                            name="submit" value="Submit"/>
+                                            name="submit" value="Send"/>
                         </div>
 
                         <div class="col-xs-4">

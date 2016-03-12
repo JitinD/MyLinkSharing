@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import com.ttnd.linksharing.constants.Constants
 import grails.transaction.Transactional
 
 class DocumentResourceController extends ResourceController {
@@ -42,7 +43,7 @@ class DocumentResourceController extends ResourceController {
             def file = new File(documentResource.filePath)
 
             if(file.exists()){
-                response.setContentType(Constants.AppConstants.DOCUMENT_CONTENT_TYPE)
+                response.setContentType(Constants.DOCUMENT_CONTENT_TYPE)
                 response.setHeader("Content-disposition", "attachment;filename=${documentResource.fileName}")
                 response.outputStream << file.bytes
             }

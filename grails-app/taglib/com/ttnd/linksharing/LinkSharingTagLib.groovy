@@ -58,7 +58,7 @@ class LinkSharingTagLib {
 
         List<TopicVo> subscribedTopicsList = user.getSubscribedTopicsList()
 
-        out << "${g.select(name: 'topic', from: subscribedTopicsList, optionKey: 'id', class: 'btn btn-default btn-sm dropdown-toggle')}"
+        out << "${g.select(name: 'topic', id:'topic', from: subscribedTopicsList, optionKey: 'id', class: 'btn btn-default btn-sm dropdown-toggle')}"
     }
 
     def canDeleteTopic = {

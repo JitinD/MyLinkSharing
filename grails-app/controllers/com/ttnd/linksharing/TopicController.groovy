@@ -1,10 +1,14 @@
 package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
+import DTO.EmailDTO
 import enums.Visibility
 import grails.converters.JSON
 
 class TopicController {
+
+    def emailService
+    def messageSource
 
     def index() { }
 
@@ -91,5 +95,43 @@ class TopicController {
 
         redirect(controller: 'login', action: 'index')
 
+    }
+
+    def invite(Long topic, String emailID){
+
+        Topic topicInstance = Topic.get(topic)
+
+        String to = emailID
+        String subject = "Invitation for a new topic."
+        String hostURL = grailsApplication.config.grails.serverURL
+
+        EmailDTO emailDTO = new EmailDTO(to: to, subject: subject, model: [id: topic, hostURL: hostURL])
+
+        if(topicInstance == null)
+            flash.error = "Topic could not be found."
+        else
+        {
+            emailService.sendMail(emailDTO)
+            flash.message = "Email sent"
+        }
+
+        redirect(controller: "login", action: "index")
+    }
+
+    def join(Long id){
+
+        if(session.user){
+
+            User user = session.user
+            Topic topic = Topic.get(id)
+            Subscription subscription = new Subscription(user: user, topic: topic)
+
+            if(subscription.saveInstance())
+                flash.message = "You have subscribed to this topic successfully."
+            else
+                flash.error = "Failure. Could not subscribe to the topic."
+
+            redirect(controller: "login", action: "index")
+        }
     }
 }

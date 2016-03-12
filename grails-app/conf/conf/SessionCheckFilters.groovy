@@ -4,7 +4,7 @@ class SessionCheckFilters {
 
 
     def filters = {
-        loginCheck(controller: '*', action: 'save|delete|update|changeIsRead') {
+        loginCheck(controller: '*', action: 'save|delete|update|changeIsRead|join') {
             before = {
                 if (!session.user)
                     redirect(controller: "login", action: "index")
@@ -19,6 +19,7 @@ class SessionCheckFilters {
                     redirect(controller: "login", action: "index")
             }
         }
+
     }
 
 }
