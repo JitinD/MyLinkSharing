@@ -168,6 +168,9 @@ class UserController {
         } else {
             flash.error = "The email id doesn't belong to a registered user."
         }
+
+        redirect(controller: "login", action: "index")
     }
+
 
 }

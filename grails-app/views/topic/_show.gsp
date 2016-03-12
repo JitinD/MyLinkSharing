@@ -54,6 +54,11 @@
 
             </ls:canUpdateTopic>
 
+            <ls:canInviteToTopic id = "${topic.id}">
+                <a class="btn" data-toggle="modal" data-target="#sendInviteModal">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </a>
+            </ls:canInviteToTopic>
         %{--<ls:canDeleteTopic id="${topic.id}"/>--}%
             <div class="col-xs-3">
                 <ls:showSeriousness id="${topic.id}"/>

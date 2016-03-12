@@ -17,9 +17,9 @@ class LinkSharingTagLib {
                 Boolean isRead = !attributes.isRead
 
                 if (attributes.isRead)
-                    out << "<a class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>"
+                    out << "<a href = '' class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>"
                 else
-                    out << "<a class = 'markReadStatus text-danger' resourceId = ${resourceId} isRead = ${isRead}>Mark as read</a>"
+                    out << "<a href = '' class = 'markReadStatus text-danger' resourceId = ${resourceId} isRead = ${isRead}>Mark as read</a>"
 
             }
     }
@@ -92,6 +92,23 @@ class LinkSharingTagLib {
 
             if (user && topic) {
                 if (user.isAdmin || user.equals(topic.createdBy)) {
+                    out << body()
+                }
+            }
+            else
+                flash.error = "Either topic or user not available."
+    }
+
+    def canInviteToTopic = {
+        attributes, body ->
+
+            User user = session.user
+            Long topicId = attributes.id
+
+            Topic topic = Topic.get(id)
+
+            if(user && topic){
+                if(user.isAdmin || Subscription.findByUserAndTopic(user, topic)){
                     out << body()
                 }
             }

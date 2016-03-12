@@ -119,22 +119,27 @@
             <g:render template="/resource/linkResource"/>
         </g:if>
 
-        %{--
-
-        <g:if test = "${flash.message}">
-            ${flash.message}
+        <g:if test="${flash.message}">
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                ${flash.message}
+            </div>
         </g:if>
+
 
         <g:if test="${flash.error}">
-            ${flash.error}
+            <div class="alert alert-danger alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                ${flash.error}
+            </div>
         </g:if>
 
-        --}%
 
+    <div class = "container">
 
-        <div class = "container">
-
-            <div class = "jsonResponse" style = "display:none"></div>
+        <div class = "jsonResponse" style = "display:none"></div>
 
             <g:layoutBody/>
         </div>

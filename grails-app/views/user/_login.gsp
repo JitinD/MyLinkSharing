@@ -28,17 +28,16 @@
                 </div>
 
                 <div class="form-group row">
-                    <a class="control-label col-sm-6" data-toggle="modal" data-target="#forgotPasswordModal">
+                    <a href = "" class="control-label col-sm-6" data-toggle="modal" data-target="#forgotPasswordModal">
                         <ins>Forgot Password</ins>
                     </a>
-
-                    <g:render template = "/user/forgotPassword" />
 
                     <div class="col-sm-6">
                         <g:submitButton class="btn btn-primary submitButtons" type="submit" name="submit" value="Submit" />
                     </div>
                 </div>
             </g:form>
+            <g:render template = "/user/forgotPassword" />
         </div>
     </div>
 </div>
