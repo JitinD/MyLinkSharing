@@ -38,7 +38,7 @@ class BootStrap {
         User fourthUser = new User('userName': 'fourth', emailID: 'fourth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fourth', lastName: 'user', isAdmin: false, isActive: true)
         User fifthUser = new User('userName': 'fifth', emailID: 'fifth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fifth', lastName: 'user', isAdmin: false, isActive: true)
 
-        def list = [normalUser, adminUser, firstUser, secondUser]
+        def list = [normalUser, adminUser]
 
         if (User.count() == 0) {
             log.info "Initially, no users exist in the table"

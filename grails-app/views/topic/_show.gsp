@@ -55,9 +55,12 @@
             </ls:canUpdateTopic>
 
             <ls:canInviteToTopic id = "${topic.id}">
-                <a class="btn" data-toggle="modal" data-target="#sendInviteModal">
-                    <span class="glyphicon glyphicon-envelope"></span>
-                </a>
+
+                <div class="col-xs-3">
+                    <a href = "" class="btn invite" topicId = "${topic.id}" name = "invite" data-toggle="modal" data-target="#sendInviteModal">
+                        Invite
+                    </a>
+                </div>
             </ls:canInviteToTopic>
         %{--<ls:canDeleteTopic id="${topic.id}"/>--}%
             <div class="col-xs-3">
@@ -66,5 +69,18 @@
 
         </div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+
+           /*$(".invite").click(function(){
+
+               var topicId = $(this).attr('topicId');
+               $(".sendInviteModal #topic").val(topicId);
+               $(".sendInviteModal #topic").prop('disabled', 'disabled');
+           });*/
+
+        });
+    </script>
 
 </g:if>

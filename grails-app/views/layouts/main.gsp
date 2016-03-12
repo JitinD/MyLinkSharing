@@ -137,11 +137,10 @@
         </g:if>
 
 
-    <div class = "container">
-
-        <div class = "jsonResponse" style = "display:none"></div>
+        <div class = "container">
 
             <g:layoutBody/>
+
         </div>
 
         <asset:javascript src="bootstrap.min.js"/>

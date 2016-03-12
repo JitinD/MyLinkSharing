@@ -61,10 +61,8 @@ class SubscriptionController {
                 subscription = Subscription.findByUserAndTopic(user, topic)
 
                 if (subscription) {
-                    if (subscription.delete(flush: true))
-                        flash.message = "Subscription deleted successfully."
-                    else
-                        flash.error = "Subscription could not be deleted"
+                    subscription.delete(flush: true)
+                    flash.message = "Subscription deleted successfully."
                 } else {
                     flash.error = "Subscription not found."
                 }
@@ -75,13 +73,6 @@ class SubscriptionController {
         } else {
             flash.error = "Either user or topic is not valid."
         }
-
-        /* try {
-             subscription.delete(flush: true)
-
-         } catch (Exception e) {
-
-         }*/
 
         redirect(controller: "login", action: "index")
     }

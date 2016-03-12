@@ -105,7 +105,7 @@ class LinkSharingTagLib {
             User user = session.user
             Long topicId = attributes.id
 
-            Topic topic = Topic.get(id)
+            Topic topic = Topic.get(topicId)
 
             if(user && topic){
                 if(user.isAdmin || Subscription.findByUserAndTopic(user, topic)){

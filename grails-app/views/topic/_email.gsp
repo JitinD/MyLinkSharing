@@ -6,7 +6,7 @@
                     Send Invitation
                 </h4>
             </div>
-            <g:form class="form" controller = "topic" action = "invite">
+            <g:form class="form sendInviteModal" controller = "topic" action = "invite">
                 <div class="modal-body table-responsive">
 
                     <div class="form-group row">
@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label name="topic" id="topic" class="form-control-label col-xs-4">
+                        <label class="form-control-label col-xs-4">
                             Topic *
                         </label>
 

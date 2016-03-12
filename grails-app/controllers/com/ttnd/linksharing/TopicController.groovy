@@ -98,7 +98,7 @@ class TopicController {
     }
 
     def invite(Long topic, String emailID){
-
+        
         Topic topicInstance = Topic.get(topic)
 
         String to = emailID

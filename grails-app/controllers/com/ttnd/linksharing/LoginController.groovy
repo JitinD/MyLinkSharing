@@ -35,7 +35,6 @@ class LoginController {
         } else {
             flash.error = g.message(code: "not.found.user")
             redirect controller: "login"
-            //render flash.error
         }
     }
 
@@ -75,18 +74,6 @@ class LoginController {
     def logout() {
         session.invalidate()
         redirect(action:'index')
-    }
-
-    def testMail()
-    {
-        mailService.sendMail {
-            to "jitin.dominic@tothenew.com"
-            subject "Hello Jitin"
-            body 'this is some text'
-        }
-
-        render "Mail sent"
-
     }
 
     def validateEmail(){
