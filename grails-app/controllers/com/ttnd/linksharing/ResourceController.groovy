@@ -44,12 +44,11 @@ class ResourceController {
 
     def search(ResourceSearchCO resourceSearchCO) {
         List<PostVO> posts = []
-        //[max: resourceSearchCO.max,        offset: resourceSearchCO.offset, sort: resourceSearchCO.sort, order: resourceSearchCO.order]
 
         if (resourceSearchCO.q)
             resourceSearchCO.visibility = Visibility.PUBLIC
 
-        List<Resource> resources = Resource.search(resourceSearchCO).list()
+        List<Resource> resources = Resource.search(resourceSearchCO).list(max: resourceSearchCO.max, offset: resourceSearchCO.offset)
 
         posts = resources?.collect { Resource.getPostInfo(it.id) }
 

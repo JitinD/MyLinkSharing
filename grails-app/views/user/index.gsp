@@ -18,9 +18,6 @@
                         <div class="panel panel-default">
                             <div class="panel-heading panelHeaders">
                                 <span class = "panelHeadersText">Subscriptions</span>
-                                <div class="pull-right">
-                                    <a href="#">View All</a>
-                                </div>
                             </div>
 
                             <g:each in="${subscribedTopics}" var="topic">
@@ -55,6 +52,8 @@
                                 <g:each in = "${inboxPosts}" var = "post">
                                     <g:render template = "/resource/show" model = "[post: post]" />
                                 </g:each>
+
+                                <g:paginate class = "pagination" total = "${totalInboxPosts}" controller = "user" action = "index" max = "${searchCO.max}" offset = "${searchCO.offset}" />
                             </div>
                         </div>
                     </div>

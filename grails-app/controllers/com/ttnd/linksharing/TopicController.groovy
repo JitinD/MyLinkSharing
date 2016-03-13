@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import CO.SearchCO
 import DTO.EmailDTO
 import enums.Visibility
 import grails.converters.JSON
@@ -9,20 +10,25 @@ class TopicController {
     def emailService
     def messageSource
 
-    def show(Long id) {
+    def show(Long id, SearchCO searchCO) {
+
         Topic topic = Topic.get(id)
+
+        searchCO.max = searchCO.max ?: 5
+        searchCO.offset = searchCO.offset ?:0
+
 
         if (topic) {
 
-            List<Resource> topicPosts = topic.getTopicPosts()
+            List<Resource> topicPosts = topic.getTopicPosts(searchCO)
 
             if (topic.visibility == Visibility.PUBLIC) {
-                render(view: "show", model: [topic: topic, subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts])
+                render(view: "show", model: [topic: topic, subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts, searchCO: searchCO, topicPostsCount: topic.getTopicPostsCount()])
             } else if (topic.visibility == Visibility.PRIVATE) {
                 User user = session.user
 
                 if (Subscription.findByUserAndTopic(user, topic)) {
-                    render(view: "show", model: [subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts])
+                    render(view: "show", model: [subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts, searchCO: searchCO, topicPostsCount: topic.getTopicPostsCount()])
                 } else {
                     flash.error = g.message(code: "not.found.subscription")
                     redirect(controller: "login", action: "index")
@@ -41,16 +47,19 @@ class TopicController {
 
         if(topic){
             if(visibility)
-                topic.visibility = visibility
+                topic.visibility = Visibility.getVisibility(visibility)
 
             if(newTopicName)
                 topic.name = newTopicName
 
             if (topic.saveInstance()) {
-                jsonResponseMap.message = g.message(code: "is.saved.topic")
+                flash.message = g.message(code: "is.saved.topic")
+                jsonResponseMap.message = flash.message
 
             } else {
-                jsonResponseMap.error = g.message(code: "not.saved.topic")
+                flash.error = g.message(code: "not.saved.topic")
+                jsonResponseMap.error = flash.error
+
             }
         }else {
             jsonResponseMap.error = g.message(code: "not.found.topic")

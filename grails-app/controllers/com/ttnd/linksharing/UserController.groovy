@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
+import CO.SearchCO
 import CO.TopicSearchCO
 import CO.UpdatePasswordCO
 import CO.UserSearchCO
@@ -21,11 +22,14 @@ class UserController {
     def emailService
     def messageSource
 
-    def index() {
+    def index(SearchCO searchCO) {
+
+        searchCO.max = searchCO.max ?: 5
+        searchCO.offset = searchCO.offset ?:0
 
         render(view: 'index', model: [user                : session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics,
-                                      trendingTopics      : Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(),
-                                      subscribedTopicsList: session.user?.getSubscribedTopicsList()])
+                                      trendingTopics      : Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(searchCO),
+                                      subscribedTopicsList: session.user?.getSubscribedTopicsList(), searchCO: searchCO, totalInboxPosts: session.user.getInboxPostsCount()])
     }
 
     def profile(ResourceSearchCO resourceSearchCO) {

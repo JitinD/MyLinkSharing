@@ -35,7 +35,6 @@
                         <div id = "subscribedTopics">
 
                         </div>
-
                     </div>
                 </div>
             </div>

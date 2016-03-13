@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import CO.SearchCO
+import CO.TopicSearchCO
 import CO.UserSearchCO
 import VO.PostVO
 import VO.TopicVo
@@ -110,10 +111,10 @@ class User {
     }
 
 
-    public List<TopicVo> getSubscribedTopicsList() {
+    public List<TopicVo> getSubscribedTopicsList(TopicSearchCO topicSearchCO) {
         List<TopicVo> subscribedTopicsList = []
 
-        List<Topic> topicList = Subscription.createCriteria().list {
+        List<Topic> topicList = Subscription.createCriteria().list(){
             projections {
                 property('topic')
             }
@@ -162,10 +163,10 @@ class User {
         }
     }
 
-    public List<PostVO> getInboxPosts() {
+    public List<PostVO> getInboxPosts(SearchCO searchCO) {
         List<PostVO> inboxPostVOs = []
 
-        def inboxPosts = ReadingItem.createCriteria().list {
+        def inboxPosts = ReadingItem.createCriteria().list(max: searchCO.max, offset: searchCO.offset) {
             projections
                     {
                         property('resource')
@@ -245,6 +246,18 @@ class User {
         }
 
         return createdPostVOs
+    }
+
+    public Integer getInboxPostsCount(){
+        return ReadingItem.countByUser(this)
+    }
+
+    public Integer getCreatedTopicsCount(){
+        return Topic.countByCreatedBy(this)
+    }
+
+    public Integer getSubscribedTopicsCount(){
+        return Subscription.countByUser(this)
     }
 
 }

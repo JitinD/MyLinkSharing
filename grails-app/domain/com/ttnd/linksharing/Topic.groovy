@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import CO.SearchCO
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
@@ -112,11 +113,11 @@ class Topic {
         return userList
     }
 
-    public List<PostVO> getTopicPosts() {
+    public List<PostVO> getTopicPosts(SearchCO searchCO) {
 
         List<PostVO> topicPostVOs = []
 
-        List<Resource> topicPosts = Resource.createCriteria().list(max: 5) {
+        List<Resource> topicPosts = Resource.createCriteria().list(max: searchCO.max, offset: searchCO.offset) {
 
             order('lastUpdated', 'desc')
             createAlias('topic', 't')
@@ -161,4 +162,7 @@ class Topic {
                 }
     }
 
+    public Integer getTopicPostsCount(){
+        return Resource.countByTopic(this)
+    }
 }

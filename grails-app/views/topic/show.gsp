@@ -58,7 +58,7 @@
                                 <g:render template = "/resource/show" model = "[post : post]" />
                             </g:each>
 
-%{--                            <g:paginate total = "${topicPosts.size()}" controller = "user" action = "index" max = "${pagination.max}" offset = "${pagination.offset}" />--}%
+                            <g:paginate total = "${topicPostsCount}" controller = "topic" action = "show" max = "${searchCO.max}" offset = "${searchCO.offset}" />
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             });
 
             $("#findSearchPostBox").click(function(){
-                topicId = $(this).attr('topicId')
+                topicId = $(this).attr('topicId');
 
                 $.ajax({
                     url: "/resource/search",
