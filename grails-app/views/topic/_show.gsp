@@ -83,12 +83,12 @@
     <script>
         $(document).ready(function(){
 
-           /*$(".invite").click(function(){
+           $(".invite").click(function(){
 
                var topicId = $(this).attr('topicId');
                $(".sendInviteModal #topic").val(topicId);
                $(".sendInviteModal #topic").prop('disabled', 'disabled');
-           });*/
+           });
 
 
 

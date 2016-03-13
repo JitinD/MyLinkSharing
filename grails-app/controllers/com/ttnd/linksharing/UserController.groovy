@@ -213,26 +213,22 @@ class UserController {
 
     def updatePassword(UpdatePasswordCO updatePasswordCO) {
 
-        if (session.user) {
+        User user = session.user
 
-            if (updatePasswordCO.hasErrors()) {
-                flash.error = "User password details are invalid."
+        if (user) {
+
+            user.password = updatePasswordCO.password
+            user.confirmPassword = updatePasswordCO.password
+
+            if (user.saveInstance()) {
+                flash.message = "Password updated successfully."
+                session.user = user
             } else {
-                User user = updatePasswordCO.getUser()
-
-                if (user) {
-                    user.password = updatePasswordCO.password
-                    user.confirmPassword = updatePasswordCO.password
-
-                    if (user.saveInstance()) {
-                        flash.message = "Password updated successfully."
-                        session.user = user
-                    } else {
-                        flash.error = "Password could not be updated."
-                    }
-                }
+                flash.error = "Password could not be updated."
             }
 
+
+            flash.error = "user not found"
             redirect(controller: "user", action: "edit")
 
         } else

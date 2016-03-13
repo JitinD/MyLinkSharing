@@ -96,6 +96,19 @@
                         <div class="panel-body">
                             <g:form class="form-horizontal" role="form" controller = "user" action="updatePassword">
 
+
+                                <div class="form-group row">
+                                    <label name class="form-control-label col-xs-4">Old password*</label>
+
+                                    <div class="col-xs-8">
+                                        <g:field type = "password" name = "oldPassword" id = "oldPassword" class="form-control" />
+                                        <g:hiddenField name="id" id="id" value="${user.userId}"/>
+                                    </div>
+
+                                    <div class="alert-danger"> <g:fieldError field="password" bean="${user}"/></div>
+                                </div>
+
+
                                 <div class="form-group row">
                                     <label name class="form-control-label col-xs-4">Password*</label>
 
