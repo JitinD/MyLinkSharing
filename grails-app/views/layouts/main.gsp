@@ -36,21 +36,22 @@
                 <div id="navBar">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <form class="form-inline navbar-form">
+                            <g:form controller="resource" action="search" class="form-inline navbar-form">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary glyphicon glyphicon-search searchButtons">
+                                        <button id = "findGlobalSearchPostBox" class="btn btn-primary glyphicon glyphicon-search searchButtons">
                                         </button>
                                     </span>
 
-                                    <input type="text" class="form-control input-group" placeholder="Search">
+                                    <input id = "globalSearchPostBox" name = "q" type="text" class="form-control input-group" placeholder="Search">
+                                    <g:hiddenField name="global" value="true" />
 
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary glyphicon-searchphicon glyphicon-remove searchButtons">
+                                        <button id = "clearGlobalSearchPostBox" class="btn btn-primary glyphicon-searchphicon glyphicon-remove searchButtons">
                                         </button>
                                     </span>
                                 </div>
-                            </form>
+                            </g:form>
                         </li>
                         <g:if test="${session.user}">
                             <li>

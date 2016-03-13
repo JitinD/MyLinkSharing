@@ -35,7 +35,7 @@
                 <div class="col-xs-7">
                     <div class="panel panel-default">
                         <div class="panel-heading panelHeaders">
-                            <span class = "panelHeadersText">Posts:>Posts: ${topic.name}</span>
+                            <span class = "panelHeadersText">Posts:>: ${topic.name}</span>
 
                             <div class="input-group">
                                 <span class="input-group-btn">
@@ -63,5 +63,25 @@
                     </div>
                 </div>
             </div>
+
+        <script>
+
+            $("#clearSearchPostBox").click(function () {
+                $("#searchPostBox").val("")
+            });
+
+            $("#findSearchPostBox").click(function(){
+                topicId = $(this).attr('topicId')
+
+                $.ajax({
+                    url: "/resource/search",
+                    data: {q: $('#searchPostBox').val(), topicId: topicId},
+                    success: function(result){
+                        $("#topicPosts").html(result)
+                    }
+                });
+
+            });
+        </script>
     </body>
 </html>

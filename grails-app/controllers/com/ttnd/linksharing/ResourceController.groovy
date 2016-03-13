@@ -2,6 +2,8 @@ package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
 import VO.PostVO
+import VO.TopicVo
+import enums.Visibility
 
 class ResourceController {
 
@@ -32,8 +34,7 @@ class ResourceController {
             } catch (Exception e) {
                 flash.error = "Resource not available"
             }
-        }
-        else
+        } else
             flash.error = "User doesn't have valid permissions to delete the resource"
 
 
@@ -43,13 +44,22 @@ class ResourceController {
 
     def search(ResourceSearchCO resourceSearchCO) {
         List<PostVO> posts = []
-    //[max: resourceSearchCO.max,        offset: resourceSearchCO.offset, sort: resourceSearchCO.sort, order: resourceSearchCO.order]
+        //[max: resourceSearchCO.max,        offset: resourceSearchCO.offset, sort: resourceSearchCO.sort, order: resourceSearchCO.order]
 
-            List<Resource> resources = Resource.search(resourceSearchCO).list()
+        if (resourceSearchCO.q)
+            resourceSearchCO.visibility = Visibility.PUBLIC
 
-            posts = resources?.collect{ Resource.getPostInfo(it.id) }
+        List<Resource> resources = Resource.search(resourceSearchCO).list()
 
-            render(template:'/resource/searchedPosts', model: [topicPosts: posts])
+        posts = resources?.collect { Resource.getPostInfo(it.id) }
+
+        if (resourceSearchCO.global) {
+            List<PostVO> topPosts = Resource.getTopPosts()
+            List<TopicVo> trendingTopics = Topic.getTrendingTopics()
+
+            render(view: "/resource/search", model: [topPosts: topPosts, trendingTopics: trendingTopics, posts: posts])
+        } else
+            render(template: '/resource/searchedPosts', model: [topicPosts: posts])
 
     }
 
@@ -79,7 +89,6 @@ class ResourceController {
         List result = Topic.getTrendingTopics()
         return result
     }
-
 
 
     def saveDocResource(String filePath, String description, String topicName) {
