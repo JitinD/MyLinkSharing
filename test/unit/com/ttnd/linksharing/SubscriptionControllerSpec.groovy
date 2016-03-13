@@ -13,15 +13,6 @@ import spock.lang.Specification
 @TestFor(SubscriptionController)
 class SubscriptionControllerSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
-
     def "testing subscription/save when subscription gets saved successfully"() {
 
         setup:

@@ -3,10 +3,7 @@ package com.ttnd.linksharing
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
-import enums.Seriousness
 import enums.Visibility
-import Logging.LogSql
-import org.apache.xpath.operations.Bool
 
 class Topic {
 

@@ -7,15 +7,10 @@ import grails.transaction.Transactional
 @Transactional
 class TopicService {
 
-    def serviceMethod() {
-
-    }
-
     List<Topic> search(TopicSearchCO topicSearchCO) {
         List<TopicVo> createdTopicsList = []
 
         if (topicSearchCO.id) {
-            User user = topicSearchCO.getUser()
 
             List<Topic> topicList = Topic.createCriteria().list(max: topicSearchCO.max) {
                 eq('createdBy.id', topicSearchCO.id)

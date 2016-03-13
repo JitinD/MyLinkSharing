@@ -2,8 +2,6 @@ package com.ttnd.linksharing
 
 class LinkResourceController extends ResourceController {
 
-    def index() {}
-
     def save(LinkResource linkResource) {
 
         linkResource.createdBy = session.user

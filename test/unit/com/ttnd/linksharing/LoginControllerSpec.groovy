@@ -11,15 +11,6 @@ import spock.lang.Specification
 @TestFor(LoginController)
 class LoginControllerSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
-
     def "testing login/index when session.user doesn't exist"() {
         when:
         controller.index()

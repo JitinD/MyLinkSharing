@@ -1,6 +1,5 @@
 package com.ttnd.linksharing
 
-import enums.Visibility
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 import spock.lang.Unroll

@@ -4,8 +4,6 @@ import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-import javax.print.Doc
-
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
@@ -13,15 +11,6 @@ import javax.print.Doc
 @Mock([Resource, DocumentResource])
 @TestFor(ResourceController)
 class ResourceControllerSpec extends Specification {
-
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
 
     def "testing resource/delete when id is valid"() {
 

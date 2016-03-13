@@ -1,7 +1,6 @@
 package com.ttnd.linksharing
 
 import enums.Visibility
-import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -11,9 +10,6 @@ import spock.lang.Unroll
  */
 @TestFor(Topic)
 class TopicSpec extends Specification {
-
-    void "test something"() {
-    }
 
     def "validate topic name is unique per user"() {
         setup:

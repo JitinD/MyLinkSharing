@@ -13,15 +13,6 @@ import spock.lang.Specification
 @TestFor(TopicController)
 class TopicControllerSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
-
     def "testing topic/show when topic doesn't exist"() {
 
         when:

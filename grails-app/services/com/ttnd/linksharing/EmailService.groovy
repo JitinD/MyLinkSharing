@@ -9,10 +9,6 @@ class EmailService {
     def groovyPageRenderer
     def mailService
 
-    def serviceMethod() {
-
-    }
-
     void sendMail(EmailDTO emailDTO) {
 
         def content

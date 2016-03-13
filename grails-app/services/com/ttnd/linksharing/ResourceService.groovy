@@ -7,10 +7,6 @@ import grails.transaction.Transactional
 @Transactional
 class ResourceService {
 
-    def serviceMethod() {
-
-    }
-
     List<PostVO> search(ResourceSearchCO resourceSearchCO){
 
         List<PostVO> posts = []

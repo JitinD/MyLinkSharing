@@ -1,6 +1,5 @@
 package com.ttnd.linksharing
 
-import CO.ResourceSearchCO
 import DTO.EmailDTO
 import enums.Visibility
 import grails.converters.JSON
@@ -9,8 +8,6 @@ class TopicController {
 
     def emailService
     def messageSource
-
-    def index() { }
 
     def show(Long id)
     {

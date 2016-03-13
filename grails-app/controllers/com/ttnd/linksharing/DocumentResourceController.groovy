@@ -5,7 +5,6 @@ import grails.transaction.Transactional
 
 class DocumentResourceController extends ResourceController {
 
-    def index() {}
 
     @Transactional
     def save(DocumentResource documentResource) {

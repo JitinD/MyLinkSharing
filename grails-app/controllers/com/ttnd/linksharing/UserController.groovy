@@ -1,16 +1,17 @@
 package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
-import CO.SearchCO
 import CO.TopicSearchCO
+import CO.UpdatePasswordCO
 import CO.UserSearchCO
+import CO.UserUpdateCO
 import DTO.EmailDTO
 import Utility.Util
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
 import enums.Visibility
-import org.apache.bcel.verifier.exc.Utility
+
 
 class UserController {
 
@@ -172,5 +173,50 @@ class UserController {
         redirect(controller: "login", action: "index")
     }
 
+    def save(UserUpdateCO user) {
 
+        if (session.user) {
+
+            if(user.hasErrors()){
+                render user.errors
+                flash.error = "User details are invalid."
+            } else{
+
+                User sessionUser = session.user
+
+                sessionUser.properties = user.properties
+
+                if(!params.pic.empty)
+                    sessionUser.photo = params.pic.bytes
+
+                if(sessionUser.saveInstance())
+                {
+                    flash.message = "User saved successfully"
+                    session.user = sessionUser
+                }
+                else{
+                    flash.error = "User could not be saved."
+                }
+            }
+
+            redirect(controller: "user", action: "edit")
+        } else
+            redirect(controller: "login", action: "index")
+    }
+
+    def edit() {
+        if(session.user){
+            UserVO user = session.user.getInfo()
+
+            render(view: "edit", model: [user: user])
+        }else
+            redirect(controller: "login", action: "index")
+    }
+
+    def updatePassword(UpdatePasswordCO updatePasswordCO){
+
+        if(session.user){
+
+        }
+    }
 }

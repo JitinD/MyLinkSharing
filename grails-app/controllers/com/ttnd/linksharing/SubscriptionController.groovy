@@ -5,8 +5,6 @@ import grails.converters.JSON
 
 class SubscriptionController {
 
-    def index() {}
-
     def save(Long topicId) {
         Topic topic = Topic.get(topicId)
 

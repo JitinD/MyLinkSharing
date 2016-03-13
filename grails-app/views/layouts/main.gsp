@@ -85,7 +85,7 @@
 
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <g:link controller = "user" action = "profile" params = "[id: session.user.id]">
+                                            <g:link controller = "user" action = "edit">
                                                 Profile
                                             </g:link>
                                         </li>

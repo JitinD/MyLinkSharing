@@ -1,10 +1,6 @@
 package com.ttnd.linksharing
 
-import grails.converters.JSON
-
 class ReadingItemController {
-
-    def index() {}
 
     def changeIsRead(Long resourceId, Boolean isRead) {
 

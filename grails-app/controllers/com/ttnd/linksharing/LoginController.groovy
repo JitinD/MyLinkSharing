@@ -2,8 +2,6 @@ package com.ttnd.linksharing
 
 import CO.UserCO
 import VO.PostVO
-import com.ttnd.linksharing.constants.Constants
-import grails.converters.JSON
 
 class LoginController {
 

@@ -2,13 +2,8 @@ package com.ttnd.linksharing
 
 import CO.ResourceSearchCO
 import VO.PostVO
-import VO.RatingInfoVo
-import VO.TopicVo
-import enums.Visibility
 
 class ResourceController {
-
-    def index() {}
 
 
     private addToReadingItems(Resource resource) {
@@ -50,8 +45,6 @@ class ResourceController {
         List<PostVO> posts = []
     //[max: resourceSearchCO.max,        offset: resourceSearchCO.offset, sort: resourceSearchCO.sort, order: resourceSearchCO.order]
         if (resourceSearchCO.q) {
-
-            String html = ""
 
             List<Resource> resources = Resource.search(resourceSearchCO).list()
 

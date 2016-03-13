@@ -183,7 +183,8 @@ class User {
     }
 
     public UserVO getInfo() {
-        UserVO userVO = new UserVO(userId: this.id, name: this.name, userName: this.userName, emailID: this.emailID, photo: this.photo)
+        UserVO userVO = new UserVO(userId: this.id, name: this.name, userName: this.userName, emailID: this.emailID,
+                firstName: this.firstName, lastName: this.lastName, photo: this.photo)
 
         return userVO
     }

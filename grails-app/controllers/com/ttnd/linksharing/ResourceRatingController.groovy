@@ -2,8 +2,6 @@ package com.ttnd.linksharing
 
 class ResourceRatingController {
 
-    def index() {}
-
     def save(Long resourceId, Integer score)
     {
         Resource resource = Resource.get(resourceId)
