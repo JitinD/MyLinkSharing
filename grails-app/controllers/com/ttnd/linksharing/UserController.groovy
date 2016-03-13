@@ -127,9 +127,9 @@ class UserController {
                         user.isActive = !(user.isActive)
 
                     if (user.saveInstance()) {
-                        flash.message = "User active status changed"
+                        flash.message = g.message(code: "is.changed.activeStatus")
                     } else
-                        flash.error = "User active status could not be changed"
+                        flash.error = g.message(code: "not.changed.activeStatus")
                 } else
                     flash.error = "User not found."
 
@@ -149,7 +149,7 @@ class UserController {
         if (user) {
             if (user.isActive) {
                 String to = emailID
-                String subject = "Forgot password request"
+                String subject = g.message(code: "forgot.password.request")
                 String newPassword = Util.randomPassword
 
                 EmailDTO emailDTO = new EmailDTO(to: to, subject: subject, model: [newPassword: newPassword])
@@ -159,12 +159,12 @@ class UserController {
                 if (user.saveInstance()) {
 
                     emailService.sendMail(emailDTO)
-                    flash.message = "Mail sent with new password."
+                    flash.message = g.message(code: "is.sent.email")
                 } else {
-                    flash.error = "Mail could not be sent."
+                    flash.error = g.message(code: "not.sent.email")
                 }
             } else {
-                flash.error = "The user account corresponding to the entered email address is inactive."
+                flash.error = g.message(code: "not.active.user")
             }
         } else {
             flash.error = "The email id doesn't belong to a registered user."
@@ -177,24 +177,22 @@ class UserController {
 
         if (session.user) {
 
-            if(user.hasErrors()){
+            if (user.hasErrors()) {
                 render user.errors
                 flash.error = "User details are invalid."
-            } else{
+            } else {
 
                 User sessionUser = session.user
 
                 sessionUser.properties = user.properties
 
-                if(!params.pic.empty)
+                if (!params.pic.empty)
                     sessionUser.photo = params.pic.bytes
 
-                if(sessionUser.saveInstance())
-                {
+                if (sessionUser.saveInstance()) {
                     flash.message = "User saved successfully"
                     session.user = sessionUser
-                }
-                else{
+                } else {
                     flash.error = "User could not be saved."
                 }
             }
@@ -205,18 +203,39 @@ class UserController {
     }
 
     def edit() {
-        if(session.user){
+        if (session.user) {
             UserVO user = session.user.getInfo()
 
             render(view: "edit", model: [user: user])
-        }else
+        } else
             redirect(controller: "login", action: "index")
     }
 
-    def updatePassword(UpdatePasswordCO updatePasswordCO){
+    def updatePassword(UpdatePasswordCO updatePasswordCO) {
 
-        if(session.user){
+        if (session.user) {
 
-        }
+            if (updatePasswordCO.hasErrors()) {
+                flash.error = "User password details are invalid."
+            } else {
+                User user = updatePasswordCO.getUser()
+
+                if (user) {
+                    user.password = updatePasswordCO.password
+                    user.confirmPassword = updatePasswordCO.password
+
+                    if (user.saveInstance()) {
+                        flash.message = "Password updated successfully."
+                        session.user = user
+                    } else {
+                        flash.error = "Password could not be updated."
+                    }
+                }
+            }
+
+            redirect(controller: "user", action: "edit")
+
+        } else
+            redirect(controller: "login", action: "index")
     }
 }

@@ -25,9 +25,9 @@ class DocumentResourceController extends ResourceController {
                 file.transferTo(savedFile)
                 addToReadingItems(documentResource)
 
-                flash.message = "File saved successfully"
+                flash.message = g.message(code: "is.saved.file")
             } else
-                flash.error = "File couldn't be saved"
+                flash.error = g.message("not.saved.file")
         }
 
         redirect(controller: "login", action: "index")
@@ -46,10 +46,10 @@ class DocumentResourceController extends ResourceController {
                 response.setHeader("Content-disposition", "attachment;filename=${documentResource.fileName}")
                 response.outputStream << file.bytes
             }
-            flash.error = "Desired resource doesn't exist."
+            flash.error = g.message(code: "not.found.file")
         }
         else{
-            flash.error = "Cannot access the desired resource. Permission denied."
+            flash.error = g.message(code: "not.accessible.file")
         }
 
         redirect(controller: "resource", action: "show", params: [id: id])

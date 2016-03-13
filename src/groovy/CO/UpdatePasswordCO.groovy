@@ -3,32 +3,21 @@ package CO
 import com.ttnd.linksharing.User
 import grails.validation.Validateable
 
-/**
- * Created by jitin on 12/3/16.
- */
-
 @Validateable
 class UpdatePasswordCO {
 
     Long id
     String oldPassword
     String password
-    String confirmPassword
 
     static constraints = {
-        importFrom User
+        importFrom(User, include: ['password'])
 
-        oldPassword(bindable: true, nullable: true, blank: true, validator: {
+        oldPassword(validator: {
             value, user ->
                 if (!user.id) {
-                    return value && value == user.password
-                }
-        })
-
-        confirmPassword(bindable: true, nullable: true, blank: true, validator: {
-            value, user ->
-                if (!user.id) {
-                    return value && value == user.password
+                    if(!user.id && value.equals(user.getUser()?.password))
+                        return "Doesn't match with current password."
                 }
         })
     }

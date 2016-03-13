@@ -8,9 +8,9 @@ class LinkResourceController extends ResourceController {
 
         if (linkResource.saveInstance()) {
             addToReadingItems(linkResource)
-            flash.message = "Link resource successfully added. ~SUCCESS~"
+            flash.message = g.message(code: "is.saved.link")
         } else {
-            flash.error = linkResource.errors.allErrors.collect { message(error: it) }
+            flash.error = g.message(code: "not.saved.link")
 
         }
         redirect uri: "/"

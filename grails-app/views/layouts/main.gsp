@@ -136,8 +136,9 @@
             </div>
         </g:if>
 
-
         <div class = "container">
+
+            <div class = "jsonResponse" style = "display:none"></div>
 
             <g:layoutBody/>
 

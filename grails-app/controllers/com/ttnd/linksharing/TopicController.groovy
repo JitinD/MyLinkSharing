@@ -9,66 +9,43 @@ class TopicController {
     def emailService
     def messageSource
 
-    def show(Long id)
-    {
+    def show(Long id) {
         Topic topic = Topic.get(id)
 
-        if(topic)
-        {
+        if (topic) {
 
             List<Resource> topicPosts = topic.getTopicPosts()
 
-            if(topic.visibility == Visibility.PUBLIC)
-            {
-                //render "Topic found and its public. ~SUCCESS~"
-
-                render (view: "show", model: [topic: topic, subscribedUsers : topic.subscribedUsers, topicPosts : topicPosts])
-            }
-            else if(topic.visibility == Visibility.PRIVATE)
-            {
+            if (topic.visibility == Visibility.PUBLIC) {
+                render(view: "show", model: [topic: topic, subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts])
+            } else if (topic.visibility == Visibility.PRIVATE) {
                 User user = session.user
 
-                if(Subscription.findByUserAndTopic(user, topic))
-                {
-                    //render "User is subscribed to the topic. ~SUCCESS~"
-                    render (view: "show", model: [subscribedUsers : topic.subscribedUsers, topicPosts : topicPosts])
-                }
-                else
-                {
-                    flash.error = "User is not subscribed to the topic."
+                if (Subscription.findByUserAndTopic(user, topic)) {
+                    render(view: "show", model: [subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts])
+                } else {
+                    flash.error = g.message(code: "not.found.subscription")
                     redirect(controller: "login", action: "index")
                 }
             }
-        }
-        else
-        {
-            flash.error = "Not a valid topic id."
+        } else {
+            flash.error = g.message(code: "not.found.topic")
             redirect(controller: "login", action: "index")
         }
     }
 
-    def save(String topicName, String visibility)
-    {
+    def save(String topicName, String visibility) {
         User user = session.user
         Topic topic = Topic.findOrCreateByCreatedByAndName(user, topicName)
         Map jsonResponseMap = [:]
 
         topic.visibility = visibility
 
-        if(topic.saveInstance())
-        {
-            flash.message = "Topic saved successfully"
-            jsonResponseMap.message = "Topic saved successfully"
+        if (topic.saveInstance()) {
+            jsonResponseMap.message = g.message(code: "is.saved.topic")
 
-            //render "Topic saved. ~SUCCESS~"
-        }
-        else
-        {
-            flash.error = "Topic could not be saved"
-            jsonResponseMap.error = "Topic could not be saved"
-            //render "Topic could not be saved. ~FAILURE~"
-            //render "${topic.errors.allErrors.collect { message(error: it) }}"
-
+        } else {
+            jsonResponseMap.error = g.message(code: "not.saved.topic")
         }
 
         JSON jsonResponse = jsonResponseMap as JSON
@@ -76,57 +53,57 @@ class TopicController {
     }
 
 
-    def delete(Long id){
+    def delete(Long id) {
 
-        Topic topic  = Topic.get(id)
+        Topic topic = Topic.get(id)
         User user = session.user
 
-        if(topic)
-        {
-            if(user.isAdmin || (topic.createdBy == user))
+        if (topic) {
+            if (user.isAdmin || (topic.createdBy == user)) {
                 topic.delete(flush: true)
-
-        }
-        else
-            flash.error = "Topic unavailable."
+                flash.message = g.message(code: "is.deleted.topic")
+            }
+            else
+                flash.error = g.message(code: "not.accessible.topic")
+        } else
+            flash.error = g.message(code: "not.accessible.topic")
 
         redirect(controller: 'login', action: 'index')
 
     }
 
-    def invite(Long topic, String emailID){
-        
+    def invite(Long topic, String emailID) {
+
         Topic topicInstance = Topic.get(topic)
 
         String to = emailID
-        String subject = "Invitation for a new topic."
+        String subject = g.message(code: "send.topic.invitation")
         String hostURL = grailsApplication.config.grails.serverURL
 
         EmailDTO emailDTO = new EmailDTO(to: to, subject: subject, model: [id: topic, hostURL: hostURL])
 
-        if(topicInstance == null)
-            flash.error = "Topic could not be found."
-        else
-        {
+        if (topicInstance == null)
+            flash.error = g.message(code: "not.found.topic")
+        else {
             emailService.sendMail(emailDTO)
-            flash.message = "Email sent"
+            flash.message = g.message(code: "is.sent.email")
         }
 
         redirect(controller: "login", action: "index")
     }
 
-    def join(Long id){
+    def join(Long id) {
 
-        if(session.user){
+        if (session.user) {
 
             User user = session.user
             Topic topic = Topic.get(id)
             Subscription subscription = new Subscription(user: user, topic: topic)
 
-            if(subscription.saveInstance())
-                flash.message = "You have subscribed to this topic successfully."
+            if (subscription.saveInstance())
+                flash.message = g.message(code: "is.saved.subscription")
             else
-                flash.error = "Failure. Could not subscribe to the topic."
+                flash.error = g.message(code: "not.saved.subscription")
 
             redirect(controller: "login", action: "index")
         }

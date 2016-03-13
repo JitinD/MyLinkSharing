@@ -15,12 +15,12 @@ class ResourceRatingController {
             resourceRating.score = score
 
             if(resourceRating.saveInstance())
-                flash.message = "Resource rated successfully"
+                flash.message = g.message(code: "is.rated.resource")
             else
-                flash.error = "Resource couldn't be rated! Try again later."
+                flash.error = g.message(code: "not.rated.resource")
         }
         else
-            flash.error = "Resource not available."
+            flash.error = g.message(code: "not.found.resource")
 
         redirect(controller: "user", action: "index")
     }

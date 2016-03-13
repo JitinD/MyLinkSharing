@@ -13,7 +13,6 @@
                         <g:textField id = "userName" name="userName" class="form-control" required = "required"/>
                     </div>
 
-                    <div class="alert-danger">${flash.error}</div>
                 </div>
 
 
@@ -24,7 +23,6 @@
                         <g:passwordField id = "password" name="password" class="form-control" required = "required" />
                     </div>
 
-                    <div class="alert-danger"> <g:fieldError field="password" bean="${user}"/></div>
                 </div>
 
                 <div class="form-group row">
@@ -36,7 +34,13 @@
                         <g:submitButton class="btn btn-primary submitButtons" type="submit" name="submit" value="Submit" />
                     </div>
                 </div>
+
+                <div class = "row">
+                    <div class="alert-danger">${flash.error}</div>
+                </div>
+
             </g:form>
+
             <g:render template = "/user/forgotPassword" />
         </div>
     </div>

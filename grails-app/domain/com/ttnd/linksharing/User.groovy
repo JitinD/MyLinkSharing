@@ -5,6 +5,7 @@ import CO.UserSearchCO
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
+import com.ttnd.linksharing.constants.Constants
 
 class User {
 
@@ -19,6 +20,9 @@ class User {
     Boolean isActive
     Date dateCreated;
     Date lastUpdated;
+    String contentType
+
+    static transients = ['confirmPassword', 'subscribedTopics', 'subscribedTopicsList', 'contentType'];
 
     static constraints = {
         userName(blank: false, unique: true)
@@ -37,10 +41,10 @@ class User {
         photo(nullable: true)
         isActive(nullable: true)
         isAdmin(nullable: true)
-
+        contentType(bindable: true, validator: {
+            value -> return Constants.IMAGE_CONTENT_TYPE.contains(value)
+        })
     }
-
-    static transients = ['confirmPassword', 'subscribedTopics', 'subscribedTopicsList'];
 
     String getName() {
         return [firstName, lastName].findAll { it }.join(' ');

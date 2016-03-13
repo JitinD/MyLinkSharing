@@ -44,15 +44,12 @@ class ResourceController {
     def search(ResourceSearchCO resourceSearchCO) {
         List<PostVO> posts = []
     //[max: resourceSearchCO.max,        offset: resourceSearchCO.offset, sort: resourceSearchCO.sort, order: resourceSearchCO.order]
-        if (resourceSearchCO.q) {
 
             List<Resource> resources = Resource.search(resourceSearchCO).list()
 
             posts = resources?.collect{ Resource.getPostInfo(it.id) }
 
             render(template:'/resource/searchedPosts', model: [topicPosts: posts])
-        } else
-            render "q variable missing"
 
     }
 
@@ -69,11 +66,11 @@ class ResourceController {
             if (resource.canViewBy(user))
                 render(view: '/resource/show', model: [post: postVO])
             else {
-                flash.error = "User doesn't have valid permissions to access the resource"
+                flash.error = g.message(code: "not.accessible.resource")
                 redirect(controller: "user", action: "index")
             }
         } else {
-            flash.error = "Resource could not be found"
+            flash.error = g.message(code: "not.found.resource")
             redirect(controller: "user", action: "index")
         }
     }
@@ -81,7 +78,6 @@ class ResourceController {
     def showTrendingTopics() {
         List result = Topic.getTrendingTopics()
         return result
-        //render "${result}"
     }
 
 

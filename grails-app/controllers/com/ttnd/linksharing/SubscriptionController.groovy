@@ -11,9 +11,9 @@ class SubscriptionController {
         Subscription subscription = new Subscription(user: session.user, topic: topic)
 
         if (subscription.saveInstance())
-            flash.message = "Subscription saved successfully"
+            flash.message = g.message(code: "is.saved.subscription")
         else
-            flash.error = "Subscription could not be saved"
+            flash.error = g.message(code: "not.saved.subscription")
 
         redirect(controller: "login", action: "index")
 
@@ -31,16 +31,13 @@ class SubscriptionController {
             subscription.seriousness = seriousness
 
             if (subscription.saveInstance()){
-                flash.message = "Subscription updated successfully"
-                jsonResponseMap.message = "Subscription updated successfully"
+                jsonResponseMap.message = g.message(code: "is.updated.subscription")
             }
             else{
-                flash.error = "Subscription could not be updated"
-                jsonResponseMap.error = "Subscription could not be updated"
+                jsonResponseMap.error = g.message(code: "not.updated.subscription")
             }
         } else {
-            flash.error =  "Subscription could not be found."
-            jsonResponseMap.error =  "Subscription could not be found."
+            jsonResponseMap.error =  g.message(code: "not.found.subscription")
         }
 
         JSON jsonResponse = jsonResponseMap as JSON
@@ -60,9 +57,9 @@ class SubscriptionController {
 
                 if (subscription) {
                     subscription.delete(flush: true)
-                    flash.message = "Subscription deleted successfully."
+                    flash.message = g.message(code: "is.deleted.subscription")
                 } else {
-                    flash.error = "Subscription not found."
+                    flash.error = g.message(code: "not.found.subscription")
                 }
             }
             else

@@ -43,7 +43,7 @@ class LoginController {
 
         if(user.hasErrors())
         {
-            flash.error = "User data invalid."
+            flash.error = g.message(code: "not.valid.user")
 
             render (view: "index", model: [topPosts : topPosts, recentPosts: recentPosts, user: user])
         }
@@ -53,16 +53,19 @@ class LoginController {
             newUser.isActive = true
 
             if(!params.pic.empty)
+            {
                 newUser.photo = params.pic.bytes
+                newUser.contentType = params.pic.contentType
+            }
 
             if(newUser.saveInstance())
             {
-                flash.message = "User saved successfully"
+                log.info "User saved successfully"
                 session.user = newUser
                 redirect(controller: "user", action: "index")
             }
             else{
-                flash.error = "User could not be saved."
+                flash.error = g.message(code: "not.saved.user")
                 render (view: "index", model: [topPosts : topPosts, recentPosts: recentPosts, user: newUser])
             }
 
