@@ -45,13 +45,26 @@ $(document).ready(function () {
         });
     });
 
-
     $(".markReadStatus").click(function () {
         $.ajax({
             url: "/readingItem/changeIsRead",
             data: {resourceId: $(this).attr('resourceId'), isRead: $(this).attr('isRead')},
             success: location.reload()
         });
+    });
+
+    $(".saveTopicNameButton").click(function(){
+        topicId = $(this).attr('topicId');
+
+        $.ajax({
+            url: "/topic/save",
+            data: {topicName: $("#oldTopicName"+topicId).val(), newTopicName: $("#newTopicName"+topicId).val()},
+            success:function(result){
+                ajaxSuccess(result);
+                location.reload();
+            }
+
+        })
     });
 
     $("#saveTopicButton").click(function () {
@@ -65,17 +78,6 @@ $(document).ready(function () {
     $("#clearGlobalSearchPostBox").click(function () {
         $("#globalSearchPostBox").val("")
     });
-
-    /*$("#findGlobalSearchPostBox").click(function () {
-        $.ajax({
-            url: "/resource/search",
-            data: {q: $('#globalSearchPostBox').val(), global: true},
-            success: function(result){
-                alert(result)
-                $(document).body.html(result)
-            }
-        })
-    });*/
 
     $(function () {
         $('#registrationForm').validate({

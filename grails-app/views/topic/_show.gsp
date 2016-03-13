@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col-xs-3">
             <ls:userImage id="${topic.createdBy.id}"/>
-            %{--<img src="" class="img img-thumbnail img-responsive image" />--}%
         </div>
 
         <div class="col-xs-9">
@@ -12,6 +11,17 @@
                 </div>
 
                 <div class="col-xs-4"><a href="/topic/show?id=${topic.id}">${topic.name}</a></div>
+            </div>
+
+            <div class = "row">
+                <div id = "topicNameEditForm${topic.id}" class = "form-inline" style = "display: none;">
+                    <div class = "input-group">
+                        <g:textField id = "newTopicName${topic.id}" name="topicName" value = "${topic.name}"/>
+                        <g:hiddenField id = "oldTopicName${topic.id}" name = "topicName" value = "${topic.name}" />
+                        <button class = "saveTopicNameButton" topicId = ${topic.id}>Save</button>
+                        <button class = "closeTopicSaveForm" topicId = ${topic.id}>Cancel</button>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
@@ -44,7 +54,7 @@
                 </div>
 
                 <div class="col-xs-3">
-                    <a href="topic/update/${topic.id}"><ins>Edit</ins></a>
+                    <a href="" class = "editTopicNameButton" topicId = "${topic.id}"><ins>Edit</ins></a>
                 </div>
 
 
@@ -79,6 +89,22 @@
                $(".sendInviteModal #topic").val(topicId);
                $(".sendInviteModal #topic").prop('disabled', 'disabled');
            });*/
+
+
+
+            $(".editTopicNameButton").click(function (e) {
+                e.preventDefault();
+                topicId = $(this).attr('topicId');
+
+                $("#topicNameEditForm"+topicId).css({'display': 'block'})
+            });
+
+            $(".closeTopicSaveForm").click(function(e){
+                e.preventDefault();
+                topicId = $(this).attr('topicId');
+
+                $("#topicNameEditForm"+topicId).css({'display': 'none'})
+            });
 
         });
     </script>

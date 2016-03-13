@@ -34,18 +34,26 @@ class TopicController {
         }
     }
 
-    def save(String topicName, String visibility) {
+    def save(String topicName, String newTopicName, String visibility) {
         User user = session.user
         Topic topic = Topic.findOrCreateByCreatedByAndName(user, topicName)
         Map jsonResponseMap = [:]
 
-        topic.visibility = visibility
+        if(topic){
+            if(visibility)
+                topic.visibility = visibility
 
-        if (topic.saveInstance()) {
-            jsonResponseMap.message = g.message(code: "is.saved.topic")
+            if(newTopicName)
+                topic.name = newTopicName
 
-        } else {
-            jsonResponseMap.error = g.message(code: "not.saved.topic")
+            if (topic.saveInstance()) {
+                jsonResponseMap.message = g.message(code: "is.saved.topic")
+
+            } else {
+                jsonResponseMap.error = g.message(code: "not.saved.topic")
+            }
+        }else {
+            jsonResponseMap.error = g.message(code: "not.found.topic")
         }
 
         JSON jsonResponse = jsonResponseMap as JSON
