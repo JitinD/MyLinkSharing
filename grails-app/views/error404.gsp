@@ -8,9 +8,11 @@
     </head>
 
     <body>
-        404 Error.
-        Resource not found.
+        <div class = "alert alert-danger">
+            404 Error.
+            Resource not found.
 
-        Dhyaan se dekh kya glti kr rha h!
+            Kindly check the URI that you are trying to access is correct.
+        </div>
     </body>
 </html>

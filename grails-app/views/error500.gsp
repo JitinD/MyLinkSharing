@@ -8,9 +8,12 @@
     </head>
 
     <body>
+
+    <div class = "alert alert-danger">
         500 Error.
         Exception found.
+    </div>
 
-        Code phatt gya beta!
+
     </body>
 </html>

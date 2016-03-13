@@ -20,6 +20,14 @@ class SessionCheckFilters {
             }
         }
 
+
+        consoleCheck(controller: "console", action: "*"){
+            before = {
+
+                    redirect(controller: "login", action: "index")
+            }
+        }
+
     }
 
 }
