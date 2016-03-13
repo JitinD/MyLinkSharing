@@ -67,7 +67,7 @@
                             <div class="col-xs-2">
                                 <div class="row">
                                     <div class="col-xs-1">
-                                        <a href="#"><span class="fa fa-facebook-official"></span></a>
+                                        <a href="#"><span class="fa fa fa-facebook-square"></span></a>
                                     </div>
 
                                     <div class="col-xs-1">
@@ -75,7 +75,7 @@
                                     </div>
 
                                     <div class="col-xs-1">
-                                        <a href="#"><span class="fa fa-google-plus"></span></a>
+                                        <a href="#"><span class="fa fa-google-plus-square"></span></a>
                                     </div>
                                 </div>
                             </div>

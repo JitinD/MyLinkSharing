@@ -25,8 +25,8 @@
         <div class = "row">
             <div class = "col-xs-6">
                 <a href="#"><span class="fa fa-facebook-square"></span></a>&nbsp;
-                <a href="#"><span class="fa fa-tumblr"></span></a>&nbsp;
-                <a href="#"><span class="fa fa-google-plus"></span></a>&nbsp;
+                <a href="#"><span class="fa fa-twitter-square"></span></a>&nbsp;
+                <a href="#"><span class="fa fa-google-plus-square"></span></a>&nbsp;
             </div>
             <div class = "col-xs-6">
                 <ls:markAsRead id = "${post.resourceId}" isRead = "${post.isRead}"> </ls:markAsRead>&nbsp;

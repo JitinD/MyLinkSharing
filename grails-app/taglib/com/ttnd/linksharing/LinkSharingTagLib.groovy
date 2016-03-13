@@ -182,6 +182,8 @@ class LinkSharingTagLib {
                 else
                     out << "<a class='col-xs-4' href = ${hrefSubscribe}><ins>Subscribe</ins></a>"
             }
+            else
+                out << "<div class = 'col-xs-4'></div>"
     }
 
     def subscriptionCount = {
