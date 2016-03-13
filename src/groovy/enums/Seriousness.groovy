@@ -4,9 +4,9 @@ package enums
  * Created by jitin on 11/2/16.
  */
 enum Seriousness {
-    SERIOUS,
-    VERY_SERIOUS,
-    CASUAL
+    SERIOUS('Serious'),
+    VERY_SERIOUS('Very serious'),
+    CASUAL('Casual')
 
 
     static Seriousness getSeriousness(String seriousness) {
@@ -16,4 +16,15 @@ enum Seriousness {
         return valueOf(seriousnessInUpperCase)
 
     }
+
+    final String value
+
+    Seriousness(String value) {
+        this.value = value
+    }
+
+    @Override
+    String toString() { value }
+
+    String getKey() { name() }
 }

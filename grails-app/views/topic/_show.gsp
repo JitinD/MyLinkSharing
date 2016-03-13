@@ -18,8 +18,8 @@
                     <div class = "input-group">
                         <g:textField id = "newTopicName${topic.id}" name="topicName" value = "${topic.name}"/>
                         <g:hiddenField id = "oldTopicName${topic.id}" name = "topicName" value = "${topic.name}" />
-                        <button class = "saveTopicNameButton" topicId = ${topic.id}>Save</button>
-                        <button class = "closeTopicSaveForm" topicId = ${topic.id}>Cancel</button>
+                        <button class = "saveTopicNameButton btn-primary" topicId = ${topic.id}>Save</button>
+                        <button class = "closeTopicSaveForm btn-danger" topicId = ${topic.id}>Cancel</button>
                     </div>
                 </div>
             </div>
@@ -47,35 +47,41 @@
     <div class="panel panel-footer">
         <div class="row">
 
+
+            <div class="col-xs-4">
+                <ls:showSeriousness id="${topic.id}"/>
+            </div>
+
             <ls:canUpdateTopic id="${topic.id}">
 
                 <div class="col-xs-3">
                     <ls:showVisibility id="${topic.id}"/>
                 </div>
 
-                <div class="col-xs-3">
-                    <a href="" class = "editTopicNameButton" topicId = "${topic.id}"><ins>Edit</ins></a>
+                <div class="col-xs-offset-1 col-xs-1">
+                    <a href="" class = "editTopicNameButton" topicId = "${topic.id}">
+                        <span class = "glyphicon glyphicon-edit panelIcons"></span>
+                    </a>
                 </div>
 
 
-                <div class="col-xs-3">
-                    <a href="topic/delete/${topic.id}"><ins>Delete</ins></a>
+                <div class="col-xs-1">
+                    <a href="topic/delete/${topic.id}">
+                        <span class = "glyphicon glyphicon-trash panelIcons"></span>
+                    </a>
                 </div>
 
             </ls:canUpdateTopic>
 
             <ls:canInviteToTopic id = "${topic.id}">
 
-                <div class="col-xs-3">
+                <div class="col-xs-1">
                     <a href = "" class="btn invite" topicId = "${topic.id}" name = "invite" data-toggle="modal" data-target="#sendInviteModal">
-                        <ins>Invite</ins>
+                        <span class = "glyphicon glyphicon-envelope panelIcons"></span>
                     </a>
                 </div>
+
             </ls:canInviteToTopic>
-        %{--<ls:canDeleteTopic id="${topic.id}"/>--}%
-            <div class="col-xs-3">
-                <ls:showSeriousness id="${topic.id}"/>
-            </div>
 
         </div>
     </div>
@@ -83,14 +89,13 @@
     <script>
         $(document).ready(function(){
 
-           $(".invite").click(function(){
+           /*$(".invite").click(function(){
 
                var topicId = $(this).attr('topicId');
                $(".sendInviteModal #topic").val(topicId);
                $(".sendInviteModal #topic").prop('disabled', 'disabled');
            });
-
-
+*/
 
             $(".editTopicNameButton").click(function (e) {
                 e.preventDefault();

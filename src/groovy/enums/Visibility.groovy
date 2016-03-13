@@ -5,8 +5,8 @@ package enums
  */
 enum Visibility {
 
-    PUBLIC,
-    PRIVATE
+    PUBLIC('Public'),
+    PRIVATE('Private')
 
     static Visibility getVisibility(String visibility) {
 
@@ -15,5 +15,15 @@ enum Visibility {
         return valueOf(visibilityInUpperCase)
     }
 
+    final String value
+
+    Visibility(String value) {
+        this.value = value
+    }
+
+    @Override
+    String toString() { value }
+
+    String getKey() { name() }
 
 }

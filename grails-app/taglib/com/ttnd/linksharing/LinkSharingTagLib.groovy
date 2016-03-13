@@ -31,9 +31,9 @@ class LinkSharingTagLib {
 
             Long resourceId = attributes.id
             if (Resource.isLinkResource(resourceId))
-                out << "<a href = ${attributes.url} class = 'pull-right' target = '_blank'><ins>View Site</ins></a>&nbsp;"
+                out << "<a href = ${attributes.url} class = 'pull-right' target = '_blank'><span class = 'glyphicon glyphicon-new-window'></span></a>"
             else
-                out << "<a href = ${createLink([controller: 'documentResource', action: 'download', params: [id: resourceId]])} class = 'pull-right'><ins>Download</ins></a> &nbsp;"
+                out << "<a href = ${createLink([controller: 'documentResource', action: 'download', params: [id: resourceId]])} class = 'pull-right'><span class = 'glyphicon glyphicon-save'></span></a>"
 
     }
 
@@ -58,7 +58,7 @@ class LinkSharingTagLib {
 
         List<TopicVo> subscribedTopicsList = user.getSubscribedTopicsList()
 
-        out << "${g.select(name: 'topic', id:'topic', from: subscribedTopicsList, optionKey: 'id', class: 'btn btn-default btn-sm dropdown-toggle')}"
+        out << "${g.select(name: 'topic', id: 'topic', from: subscribedTopicsList, optionKey: 'id', class: 'btn btn-default btn-sm dropdown-toggle')}"
     }
 
     def canDeleteTopic = {
@@ -76,8 +76,7 @@ class LinkSharingTagLib {
 
                     out << "<a href = ${href}><ins>Delete</ins></a>"
                 }
-            }
-            else
+            } else
                 flash.message = "Either topic or user not available."
     }
 
@@ -94,8 +93,7 @@ class LinkSharingTagLib {
                 if (user.isAdmin || user.equals(topic.createdBy)) {
                     out << body()
                 }
-            }
-            else
+            } else
                 flash.error = "Either topic or user not available."
     }
 
@@ -107,12 +105,11 @@ class LinkSharingTagLib {
 
             Topic topic = Topic.get(topicId)
 
-            if(user && topic){
-                if(user.isAdmin || Subscription.findByUserAndTopic(user, topic)){
+            if (user && topic) {
+                if (user.isAdmin || Subscription.findByUserAndTopic(user, topic)) {
                     out << body()
                 }
-            }
-            else
+            } else
                 flash.error = "Either topic or user not available."
     }
 
@@ -122,16 +119,14 @@ class LinkSharingTagLib {
             Long topicId = attributes.id
             User user = session.user
 
-            if(user)
-            {
+            if (user) {
                 Subscription subscription = user.getSubscription(topicId)
 
-                if(subscription)
-                    out << g.select(class: 'seriousness', topicId: topicId, name: 'seriousness', from: enums.Seriousness.values(), value: subscription.seriousness)
+                if (subscription)
+                    out << g.select(class: 'seriousness btn btn-default', optionKey: 'key', topicId: topicId, name: 'seriousness', from: enums.Seriousness.values(), value: subscription.seriousness)
                 else
                     flash.error = "User not subscribed to topic"
-            }
-            else
+            } else
                 flash.error = "Either topic or user not available."
 
     }
@@ -143,19 +138,16 @@ class LinkSharingTagLib {
             Long topicId = attributes.id
             User user = session.user
 
-            if(user)
-            {
+            if (user) {
                 Topic topic = Topic.get(topicId)
 
-                if(topic){
+                if (topic) {
 
                     String topicName = topic.name
-                    out << g.select(class: 'visibility', topicName: topicName, name: 'visibility', from: enums.Visibility.values(), value: topic.visibility)
-                }
-                else
+                    out << g.select(class: 'visibility btn btn-default', optionKey: 'key', topicName: topicName, name: 'visibility', from: enums.Visibility.values(), value: topic.visibility)
+                } else
                     flash.error = "User not subscribed to topic"
-            }
-            else
+            } else
                 flash.error = "Either topic or user not available."
     }
 
@@ -238,16 +230,14 @@ class LinkSharingTagLib {
 
         attributes, body ->
 
-            if(attributes.id)
-            {
+            if (attributes.id) {
                 User user = session.user
 
-                if(user){
+                if (user) {
                     Resource resource = Resource.get(attributes.id)
 
-                    if(resource)
-                    {
-                        if(user.isAdmin || user.equals(resource.createdBy))
+                    if (resource) {
+                        if (user.isAdmin || user.equals(resource.createdBy))
                             out << body()
                     }
                 }

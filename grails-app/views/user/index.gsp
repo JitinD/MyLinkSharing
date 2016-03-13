@@ -8,7 +8,7 @@
     <body>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-xs-4">
 
                     <div class="row panel panel-default panel-body">
                         <g:render template = "/user/show" model = "[user : user]"/>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-7 col-md-push-1">
+                <div class="col-xs-7 col-xs-push-1">
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading panelHeaders">
