@@ -68,7 +68,7 @@
 
                 <div class="col-xs-3">
                     <a href = "" class="btn invite" topicId = "${topic.id}" name = "invite" data-toggle="modal" data-target="#sendInviteModal">
-                        Invite
+                        <ins>Invite</ins>
                     </a>
                 </div>
             </ls:canInviteToTopic>

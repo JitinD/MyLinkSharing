@@ -73,14 +73,18 @@ class ResourceController {
             PostVO postVO = Resource.getPostInfo(id)
             postVO.score = user?.getScore(id)
 
-            if (resource.canViewBy(user))
-                render(view: '/resource/show', model: [post: postVO])
+            if (resource.canViewBy(user)){
+                List<TopicVo> trendingTopics = Topic.getTrendingTopics()
+
+                render(view: '/resource/show', model: [post: postVO, trendingTopics: trendingTopics])
+            }
             else {
                 flash.error = g.message(code: "not.accessible.resource")
                 redirect(controller: "user", action: "index")
             }
         } else {
             flash.error = g.message(code: "not.found.resource")
+
             redirect(controller: "user", action: "index")
         }
     }
@@ -105,5 +109,25 @@ class ResourceController {
             flash.error = "Doc resource could not be added. ~FAILURE~"
             redirect(controller: 'user', action: 'index')
         }
+    }
+
+    def save(Long id, String description) {
+
+        Resource resource = Resource.get(id)
+
+        if (resource) {
+            resource.description = description
+
+            if(resource.saveInstance()){
+
+                flash.message = g.message(code: "is.updated.resource")
+            }
+            else
+                flash.error = g.message(code: "not.updated.resource")
+        } else {
+            flash.error = g.message(code: "not.found.resource")
+        }
+
+        redirect(uri: "/resource/show/${id}")
     }
 }

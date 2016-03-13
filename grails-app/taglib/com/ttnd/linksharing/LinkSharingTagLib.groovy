@@ -235,8 +235,23 @@ class LinkSharingTagLib {
 
 
     def showEdit = {
-        if (session.user)
-            out << "<a href=''><ins>Edit</ins></a>"
+
+        attributes, body ->
+
+            if(attributes.id)
+            {
+                User user = session.user
+
+                if(user){
+                    Resource resource = Resource.get(attributes.id)
+
+                    if(resource)
+                    {
+                        if(user.isAdmin || user.equals(resource.createdBy))
+                            out << body()
+                    }
+                }
+            }
     }
 
     def canRate = {
