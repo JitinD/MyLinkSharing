@@ -28,7 +28,7 @@ class TopicController {
                 User user = session.user
 
                 if (Subscription.findByUserAndTopic(user, topic)) {
-                    render(view: "show", model: [subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts, searchCO: searchCO, topicPostsCount: topic.getTopicPostsCount()])
+                    render(view: "show", model: [topic: topic, subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts, searchCO: searchCO, topicPostsCount: topic.getTopicPostsCount()])
                 } else {
                     flash.error = g.message(code: "not.found.subscription")
                     redirect(controller: "login", action: "index")
