@@ -12,7 +12,7 @@
                         <label class="form-control-label col-xs-4">Registered Email ID</label>
 
                         <div class="col-xs-6">
-                            <g:field type = "email" id="emailID" name="emailID" class="form-control"/>
+                            <g:field type = "email" id="emailID" name="emailID" class="form-control" required = "required"/>
                         </div>
                     </div>
 

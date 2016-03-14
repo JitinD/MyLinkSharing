@@ -18,12 +18,12 @@
 
                     </div>
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" >
                         <div class="panel-heading panelHeaders">
                             <span class = "panelHeadersText">Users: Grails</span>
                         </div>
 
-                        <div class="panel panel-body">
+                        <div class="panel panel-body" style = "overflow-y: auto; height: 250px;">
                             <g:each in = "${subscribedUsers}" var = "user">
                                 <g:render template="/user/show" model = "[user : user]" />
                             </g:each>
@@ -53,7 +53,7 @@
 
                         </div>
 
-                        <div id = "topicPosts" class="panel-body">
+                        <div id = "topicPosts" class="panel-body" style = "overflow-y: auto; height: 250px;">
                             <g:each in = "${topicPosts}" var = "post">
                                 <g:render template = "/resource/show" model = "[post : post]" />
                             </g:each>

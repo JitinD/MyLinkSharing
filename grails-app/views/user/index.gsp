@@ -19,10 +19,11 @@
                             <div class="panel-heading panelHeaders">
                                 <span class = "panelHeadersText">Subscriptions</span>
                             </div>
-
-                            <g:each in="${subscribedTopics}" var="topic">
-                                <g:render template="/topic/show" model="[topic: topic]"/>
-                            </g:each>
+                            <div  style = "overflow-y: auto; height: 300px">
+                                <g:each in="${subscribedTopics}" var="topic">
+                                    <g:render template="/topic/show" model="[topic: topic]"/>
+                                </g:each>
+                            </div>
 
                         </div>
                     </div>
@@ -33,10 +34,11 @@
                             <div class="panel-heading panelHeaders">
                                 <span class = "panelHeadersText">Trending topics</span>
                             </div>
-
-                            <g:each in="${trendingTopics}" var="topic">
-                                <g:render template="/topic/show" model="[topic: topic]"/>
-                            </g:each>
+                            <div style = "overflow-y: auto; height: 300px;">
+                                <g:each in="${trendingTopics}" var="topic">
+                                    <g:render template="/topic/show" model="[topic: topic]"/>
+                                </g:each>
+                            </div>
                         </div>
                     </div>
                 </div>

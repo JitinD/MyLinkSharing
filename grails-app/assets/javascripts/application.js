@@ -45,11 +45,18 @@ $(document).ready(function () {
         });
     });
 
-    $(".markReadStatus").click(function () {
+    $(".markReadStatus").click(function (e) {
+        e.preventDefault()
+
         $.ajax({
             url: "/readingItem/changeIsRead",
             data: {resourceId: $(this).attr('resourceId'), isRead: $(this).attr('isRead')},
-            success: location.reload()
+            success: /*function(){
+                if($(this).attr('isRead'))
+                    $("#readStatus").html("<a href = '' class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>")
+                else
+                    $("#readStatus").html("<a href = '' class = 'markReadStatus text-danger' resourceId = ${resourceId} isRead = ${isRead}>Mark as read</a>")
+            }*/location.reload()
         });
     });
 

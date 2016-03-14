@@ -48,7 +48,7 @@ class LinkSharingTagLib {
                 String href = "${createLink(controller: 'resource', action: 'delete', params: [id: attributes.id])}"
 
                 if (user.canDeleteResource(attributes.id))
-                    out << "<a href = ${href}><ins>Delete</ins></a>"
+                    out << "<a href = ${href}><span class = \"glyphicon glyphicon-trash panelIcons\"></span></a>"
 
             }
     }

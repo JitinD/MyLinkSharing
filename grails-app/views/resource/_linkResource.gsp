@@ -14,7 +14,7 @@
                         <label class="form-control-label col-xs-4">Link*</label>
 
                         <div class="col-xs-6">
-                            <g:field type="url" id="url" name="url" class="form-control"/>
+                            <g:field type="url" id="url" name="url" class="form-control" required = "required"/>
                         </div>
                     </div>
 

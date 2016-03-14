@@ -89,7 +89,7 @@
                                     <div class="col-xs-2">
                                         <ls:showEdit id = "${post.resourceId}">
                                             <a href = "" class="btn editDescription" postId = "${post.resourceId}" postDescription = "${post.description}" name = "editDescription" data-toggle="modal" data-target="#editDescriptionModal">
-                                                <ins>Edit</ins>
+                                                <span class = "glyphicon glyphicon-edit panelIcons"></span>
                                             </a>
                                         </ls:showEdit>
                                     </div>
@@ -109,10 +109,11 @@
                     <div class="panel-heading  panelHeaders">
                         Trending topics
                     </div>
-
-                    <g:each in="${trendingTopics}" var="topic">
-                        <g:render template="/topic/show" model="[topic: topic]"/>
-                    </g:each>
+                    <div style = "overflow-y: auto; height: 300px">
+                        <g:each in="${trendingTopics}" var="topic">
+                            <g:render template="/topic/show" model="[topic: topic]"/>
+                        </g:each>
+                    </div>
                 </div>
             </div>
 

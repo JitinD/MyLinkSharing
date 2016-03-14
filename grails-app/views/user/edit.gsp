@@ -20,7 +20,7 @@
                             <span class = "panelHeadersText">Topics</span>
                         </div>
 
-                        <div id = "createdTopics">
+                        <div id = "createdTopics" style = "overflow-y: auto; height: 300px">
 
                         </div>
                     </div>
