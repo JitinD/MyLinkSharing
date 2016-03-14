@@ -12,7 +12,7 @@
                         <label class="form-control-label col-xs-4">Name*</label>
 
                         <div class="col-xs-6">
-                            <g:textField id="topicName" name="topicName" class="form-control" required="required"/>
+                            <input type="text" id="topicName" name="topicName" class="form-control" required/>
                         </div>
                     </div>
 

@@ -13,7 +13,7 @@
                         <label class="form-control-label col-xs-4">Email*</label>
 
                         <div class="col-xs-6">
-                            <g:field type="email" id="emailID" name="emailID" class="form-control" required = "required"/>
+                            <input type="email" id="emailID" name="emailID" class="form-control" required/>
                         </div>
                     </div>
 

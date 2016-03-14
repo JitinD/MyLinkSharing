@@ -16,11 +16,6 @@
                         <div class="col-xs-4">
                             <input type="file" name = "file" class="form-control" required = "required">
                         </div>
-
-                        %{--<div class="col-xs-2">
-                            <input type="button" class="btn btn-primary submitButtons"
-                                   value="Browse"/>
-                        </div>--}%
                     </div>
 
                     <div class="form-group row">

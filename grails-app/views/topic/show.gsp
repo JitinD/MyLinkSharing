@@ -11,7 +11,7 @@
                 <div class="col-xs-5">
                     <div class="panel panel-default">
                         <div class="panel-heading panelHeaders">
-                            <span  class = "panelHeadersText">Topic: Grails</span>
+                            <span  class = "panelHeadersText">Topic: ${topic.name}</span>
                         </div>
 
                         <g:render template="/topic/show" model="[topic: topic]"/>
@@ -20,7 +20,7 @@
 
                     <div class="panel panel-default" >
                         <div class="panel-heading panelHeaders">
-                            <span class = "panelHeadersText">Users: Grails</span>
+                            <span class = "panelHeadersText">Users: ${topic.name}</span>
                         </div>
 
                         <div class="panel panel-body" style = "overflow-y: auto; height: 250px;">
@@ -35,21 +35,23 @@
                 <div class="col-xs-7">
                     <div class="panel panel-default">
                         <div class="panel-heading panelHeaders">
-                            <span class = "panelHeadersText">Posts:>: ${topic.name}</span>
+                            <span class = "panelHeadersText">Posts: ${topic.name}</span>
 
-                            <div class="input-group">
-                                <span class="input-group-btn">
-                                    <button id = "findSearchPostBox" topicId = "${topic.id}" class="btn btn-primary glyphicon glyphicon-search searchButtons">
-                                    </button>
-                                </span>
+                            <form onsubmit="return false">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button id = "findSearchPostBox" topicId = "${topic.id}" class="btn btn-primary glyphicon glyphicon-search searchButtons" type="submit">
+                                        </button>
+                                    </span>
 
-                                <input type="text" id = "searchPostBox" class="form-control input-group" placeholder="Search">
+                                    <input type="text" id = "searchPostBox" class="form-control input-group" placeholder="Search">
 
-                                <span class="input-group-btn">
-                                    <button id = "clearSearchPostBox" class="btn btn-primary glyphicon-searchphicon glyphicon-remove searchButtons">
-                                    </button>
-                                </span>
-                            </div>
+                                    <span class="input-group-btn">
+                                        <button id = "clearSearchPostBox" class="btn btn-primary glyphicon-searchphicon glyphicon-remove searchButtons">
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
 
                         </div>
 

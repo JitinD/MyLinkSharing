@@ -13,6 +13,6 @@ class LinkResourceController extends ResourceController {
             flash.error = g.message(code: "not.saved.link")
 
         }
-        redirect uri: "/"
+        redirect(uri: [request.forwardURI - request.contextPath])
     }
 }

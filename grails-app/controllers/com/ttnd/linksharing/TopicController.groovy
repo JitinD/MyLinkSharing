@@ -15,7 +15,7 @@ class TopicController {
         Topic topic = Topic.get(id)
 
         searchCO.max = searchCO.max ?: 5
-        searchCO.offset = searchCO.offset ?:0
+        searchCO.offset = searchCO.offset ?: 0
 
 
         if (topic) {
@@ -42,34 +42,66 @@ class TopicController {
 
     def save(String topicName, String newTopicName, String visibility) {
         User user = session.user
-        Topic topic = Topic.findOrCreateByCreatedByAndName(user, topicName)
         Map jsonResponseMap = [:]
 
-        if(topic){
-            if(visibility)
-                topic.visibility = Visibility.getVisibility(visibility)
+        Topic existingTopic = Topic.findByCreatedByAndName(user, topicName)
 
-            if(newTopicName)
-                topic.name = newTopicName
+        if (existingTopic) {
 
-            if (topic.saveInstance()) {
-                if(newTopicName)
-                    jsonResponseMap.message = g.message(code: "is.updated.topic")
-                else
-                    flash.message = g.message(code: "is.saved.topic")
+            if (newTopicName || visibility) {
 
+                if (newTopicName)
+                    existingTopic.name = newTopicName
+
+                if (visibility)
+                    existingTopic.visibility = Visibility.getVisibility(visibility)
+            }else{
+                flash.error = g.message(code: "is.present.topic")
+                redirect(uri: [request.forwardURI - request.contextPath])
+            }
+
+            if (existingTopic.saveInstance()) {
+                jsonResponseMap.message = g.message(code: "is.updated.topic")
 
             } else {
-                flash.error = g.message(code: "not.saved.topic")
-                jsonResponseMap.error = flash.error
+                jsonResponseMap.error = g.message(code: "not.updated.topic")
 
             }
-        }else {
-            jsonResponseMap.error = g.message(code: "not.found.topic")
+
+            JSON jsonResponse = jsonResponseMap as JSON
+            render jsonResponse
+
+        } else {
+            Topic newTopic = new Topic(name: topicName, visibility: Visibility.getVisibility(visibility), createdBy: user)
+
+            if (newTopic.saveInstance())
+                flash.message = g.message(code: "is.saved.topic")
+            else
+                flash.error = g.message(code: "not.saved.topic")
+
+            redirect(uri: [request.forwardURI - request.contextPath])
         }
 
-        JSON jsonResponse = jsonResponseMap as JSON
-        render jsonResponse
+        //if(newTopicName){
+        /*flash.message = g.message(code: "is.saved.topic")
+        jsonResponseMap.message = g.message(code: "is.saved.topic")
+        redirect(uri: [request.forwardURI - request.contextPath])*/
+        //}
+        //else
+        //{
+        /*log.info "1. ${request.forwardURI - request.contextPath}"
+        log.info "2. ${request.getRequestURI()}"
+        log.info "3. ${request.servletPath}"
+        log.info "4. ${request.contextPath}"
+        log.info "5 ${request.getRequestURL()}"
+
+        flash.message = g.message(code: "is.saved.topic")
+        redirect(uri: [request.forwardURI - request.contextPath])
+
+    //}
+}
+}*/
+
     }
 
 
@@ -82,8 +114,7 @@ class TopicController {
             if (user.isAdmin || (topic.createdBy == user)) {
                 topic.delete(flush: true)
                 flash.message = g.message(code: "is.deleted.topic")
-            }
-            else
+            } else
                 flash.error = g.message(code: "not.accessible.topic")
         } else
             flash.error = g.message(code: "not.accessible.topic")
