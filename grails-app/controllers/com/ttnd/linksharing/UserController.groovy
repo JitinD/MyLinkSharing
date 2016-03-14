@@ -177,28 +177,24 @@ class UserController {
         redirect(controller: "login", action: "index")
     }
 
-    def save(UserUpdateCO user) {
+    def save(UserUpdateCO updateUser) {
 
         if (session.user) {
 
-            if (user.hasErrors()) {
-                render user.errors
-                flash.error = "User details are invalid."
+            User sessionUser = User.get(session.user.id)
+
+            sessionUser.firstName = updateUser.firstName
+            sessionUser.lastName = updateUser.lastName
+            sessionUser.userName = updateUser.userName
+
+            if (!params.pic.empty)
+                sessionUser.photo = params.pic.bytes
+
+            if (sessionUser.saveInstance()) {
+                flash.message = "User saved successfully"
+                session.user = sessionUser
             } else {
-
-                User sessionUser = session.user
-
-                sessionUser.properties = user.properties
-
-                if (!params.pic.empty)
-                    sessionUser.photo = params.pic.bytes
-
-                if (sessionUser.saveInstance()) {
-                    flash.message = "User saved successfully"
-                    session.user = sessionUser
-                } else {
-                    flash.error = "User could not be saved."
-                }
+                flash.error = "User could not be saved."
             }
 
             redirect(controller: "user", action: "edit")
@@ -217,12 +213,12 @@ class UserController {
 
     def updatePassword(UpdatePasswordCO updatePasswordCO) {
 
-        User user = session.user
+        if (session.user) {
 
-        if (user) {
+            User user = User.get(session.user.id)
 
             user.password = updatePasswordCO.password
-            user.confirmPassword = updatePasswordCO.password
+            user.confirmPassword = updatePasswordCO.confirmPassword
 
             if (user.saveInstance()) {
                 flash.message = "Password updated successfully."
@@ -230,12 +226,12 @@ class UserController {
             } else {
                 flash.error = "Password could not be updated."
             }
-
-
-            flash.error = "user not found"
             redirect(controller: "user", action: "edit")
 
-        } else
+        } else{
+            flash.error = "user not found"
             redirect(controller: "login", action: "index")
+        }
+
     }
 }

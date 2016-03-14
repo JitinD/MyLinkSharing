@@ -29,13 +29,13 @@ class BootStrap {
     List<User> createUsers() {
         List<User> users = []
 
-        User normalUser = new User('userName': 'normal', emailID: 'normal@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true, contentType: "image/jpeg")
-        User adminUser = new User('userName': 'admin', emailID: 'admin@mail.com', password: Constants.DEFAULT_PASSWORD,  confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'admin', lastName: 'user', isAdmin: true, isActive: true, contentType: "image/jpeg")
-        User firstUser = new User('userName': 'first', emailID: 'first@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'first', lastName: 'user', isAdmin: false, isActive: true, contentType: "image/jpeg")
-        User secondUser = new User('userName': 'second', emailID: 'second@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'second', lastName: 'user', isAdmin: false, isActive: true, contentType: "image/jpeg")
-        User thirdUser = new User('userName': 'third', emailID: 'third@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'third', lastName: 'user', isAdmin: false, isActive: true, contentType: "image/jpeg")
-        User fourthUser = new User('userName': 'fourth', emailID: 'fourth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fourth', lastName: 'user', isAdmin: false, isActive: true, contentType: "image/jpeg")
-        User fifthUser = new User('userName': 'fifth', emailID: 'fifth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fifth', lastName: 'user', isAdmin: false, isActive: true, contentType: "image/jpeg")
+        User normalUser = new User('userName': 'normal', emailID: 'normal@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
+        User adminUser = new User('userName': 'admin', emailID: 'admin@mail.com', password: Constants.DEFAULT_PASSWORD,  confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'admin', lastName: 'user', isAdmin: true, isActive: true)
+        User firstUser = new User('userName': 'first', emailID: 'first@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'first', lastName: 'user', isAdmin: false, isActive: true)
+        User secondUser = new User('userName': 'second', emailID: 'second@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'second', lastName: 'user', isAdmin: false, isActive: true)
+        User thirdUser = new User('userName': 'third', emailID: 'third@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'third', lastName: 'user', isAdmin: false, isActive: true)
+        User fourthUser = new User('userName': 'fourth', emailID: 'fourth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fourth', lastName: 'user', isAdmin: false, isActive: true)
+        User fifthUser = new User('userName': 'fifth', emailID: 'fifth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fifth', lastName: 'user', isAdmin: false, isActive: true)
 
         def list = [normalUser, adminUser]
 

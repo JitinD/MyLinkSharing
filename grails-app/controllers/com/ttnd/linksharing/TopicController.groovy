@@ -53,8 +53,11 @@ class TopicController {
                 topic.name = newTopicName
 
             if (topic.saveInstance()) {
-                flash.message = g.message(code: "is.saved.topic")
-                jsonResponseMap.message = flash.message
+                if(newTopicName)
+                    jsonResponseMap.message = g.message(code: "is.updated.topic")
+                else
+                    flash.message = g.message(code: "is.saved.topic")
+
 
             } else {
                 flash.error = g.message(code: "not.saved.topic")

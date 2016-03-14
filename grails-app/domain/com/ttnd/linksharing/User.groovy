@@ -21,9 +21,8 @@ class User {
     Boolean isActive
     Date dateCreated;
     Date lastUpdated;
-    String contentType
 
-    static transients = ['confirmPassword', 'subscribedTopics', 'subscribedTopicsList', 'contentType'];
+    static transients = ['confirmPassword', 'subscribedTopics', 'subscribedTopicsList'];
 
     static constraints = {
         userName(blank: false, unique: true)
@@ -42,9 +41,9 @@ class User {
         photo(nullable: true)
         isActive(nullable: true)
         isAdmin(nullable: true)
-        contentType(bindable: true, validator: {
+        /*contentType(bindable: true, validator: {
             value -> return Constants.IMAGE_CONTENT_TYPE.contains(value)
-        })
+        })*/
     }
 
     String getName() {
