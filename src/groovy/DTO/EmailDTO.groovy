@@ -13,4 +13,10 @@ class EmailDTO{
     String view
     String content
     Map model
+    String field
+
+
+    static constraints = {
+
+    }
 }

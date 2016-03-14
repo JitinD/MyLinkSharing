@@ -66,7 +66,7 @@
 
 
                 <div class="col-xs-1">
-                    <a href="topic/delete/${topic.id}">
+                    <a href="/topic/delete/${topic.id}">
                         <span class = "glyphicon glyphicon-trash panelIcons"></span>
                     </a>
                 </div>

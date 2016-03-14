@@ -41,9 +41,6 @@ class User {
         photo(nullable: true)
         isActive(nullable: true)
         isAdmin(nullable: true)
-        /*contentType(bindable: true, validator: {
-            value -> return Constants.IMAGE_CONTENT_TYPE.contains(value)
-        })*/
     }
 
     String getName() {
@@ -64,13 +61,13 @@ class User {
                 if (userSearchCO.q) {
 
                     or
-                    {
-                        ilike('firstName', "%${userSearchCO.q}%")
-                        ilike('lastName', "%${userSearchCO.q}%")
-                        ilike('emailID', "%${userSearchCO.q}%")
-                        ilike('userName', "%${userSearchCO.q}%")
+                            {
+                                ilike('firstName', "%${userSearchCO.q}%")
+                                ilike('lastName', "%${userSearchCO.q}%")
+                                ilike('emailID', "%${userSearchCO.q}%")
+                                ilike('userName', "%${userSearchCO.q}%")
 
-                    }
+                            }
                 }
 
                 if (userSearchCO.isActive != null) {
@@ -110,10 +107,10 @@ class User {
     }
 
 
-    public List<TopicVo> getSubscribedTopicsList(TopicSearchCO topicSearchCO) {
+    public List<TopicVo> getSubscribedTopicsList() {
         List<TopicVo> subscribedTopicsList = []
 
-        List<Topic> topicList = Subscription.createCriteria().list(){
+        List<Topic> topicList = Subscription.createCriteria().list() {
             projections {
                 property('topic')
             }
@@ -247,15 +244,15 @@ class User {
         return createdPostVOs
     }
 
-    public Integer getInboxPostsCount(){
+    public Integer getInboxPostsCount() {
         return ReadingItem.countByUser(this)
     }
 
-    public Integer getCreatedTopicsCount(){
+    public Integer getCreatedTopicsCount() {
         return Topic.countByCreatedBy(this)
     }
 
-    public Integer getSubscribedTopicsCount(){
+    public Integer getSubscribedTopicsCount() {
         return Subscription.countByUser(this)
     }
 

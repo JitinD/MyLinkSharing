@@ -1,8 +1,8 @@
 package CO
 
-/**
- * Created by jitin on 11/3/16.
- */
+import grails.validation.Validateable
+
+@Validateable
 class UserSearchCO extends SearchCO{
     Boolean isActive
 }

@@ -72,7 +72,7 @@
                     <label class="form-control-label col-xs-4">Photo</label>
 
                     <div class="col-xs-5">
-                        <input type="file" id = "pic" name = "pic" class="form-control">
+                        <input type="file" accept="image/jpeg,image/png,jpg|png" id = "pic" name = "pic" class="form-control">
                     </div>
 
                 </div>

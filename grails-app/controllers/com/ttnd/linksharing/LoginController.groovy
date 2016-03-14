@@ -2,6 +2,7 @@ package com.ttnd.linksharing
 
 import CO.UserCO
 import VO.PostVO
+import com.ttnd.linksharing.constants.Constants
 
 class LoginController {
 
@@ -51,11 +52,12 @@ class LoginController {
         {
             User newUser = user.properties
             newUser.isActive = true
+            newUser.isAdmin = false
 
             if(!params.pic.empty)
             {
-                newUser.photo = params.pic.bytes
-                newUser.contentType = params.pic.contentType
+                if(Constants.IMAGE_CONTENT_TYPE.contains(params.pic.contentType))
+                    newUser.photo = params.pic.bytes
             }
 
             if(newUser.saveInstance())

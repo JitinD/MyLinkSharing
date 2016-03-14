@@ -105,7 +105,7 @@
                                         <g:hiddenField name="id" id="id" value="${user.userId}"/>
                                     </div>
 
-                                    <div class="alert-danger"> <g:fieldError field="password" bean="${user}"/></div>
+                                    <div class="alert-danger"> <g:fieldError field="oldPassword" bean="${user}"/></div>
                                 </div>
 
 

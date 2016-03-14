@@ -12,13 +12,21 @@ class UpdatePasswordCO {
     String confirmPassword
 
     static constraints = {
-        importFrom(User, include: ['password', 'confirmPassword'])
+        importFrom(User, include: ['password'])
 
         oldPassword(validator: {
-            value, user ->
-                if (!user.id) {
-                    if(!user.id && value.equals(user.getUser()?.password))
-                        return "Enter the old password correctly."
+            value, UpdatePasswordCO updatePasswordCO ->
+
+                if(!(value && value.equals(updatePasswordCO.getUser()?.password))){
+                    return  "Enter the current password correctly."
+                }
+        })
+
+        confirmPassword(validator: {
+            value, UpdatePasswordCO updatePasswordCO ->
+
+                if(!(value && value.equals(updatePasswordCO.password))){
+                    return "Confirm password and new password do not match."
                 }
         })
     }

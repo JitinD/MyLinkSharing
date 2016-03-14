@@ -205,7 +205,7 @@ class UserController {
     def edit() {
         if (session.user) {
             UserVO user = session.user.getInfo()
-
+            System.err.println("++++++++++++++++++++++++++++++++++$user")
             render(view: "edit", model: [user: user])
         } else
             redirect(controller: "login", action: "index")
@@ -217,21 +217,37 @@ class UserController {
 
             User user = User.get(session.user.id)
 
-            user.password = updatePasswordCO.password
-            user.confirmPassword = updatePasswordCO.confirmPassword
+            if(!(updatePasswordCO.hasErrors())){
 
-            if (user.saveInstance()) {
-                flash.message = "Password updated successfully."
-                session.user = user
-            } else {
-                flash.error = "Password could not be updated."
+                user.password = updatePasswordCO.password
+                user.confirmPassword = updatePasswordCO.confirmPassword
+
+                if (user.saveInstance()) {
+                    flash.message = "Password updated successfully."
+                    session.user = user
+                } else {
+                    flash.error = "Password could not be updated."
+                }
+                redirect(controller: "user", action: "edit")
             }
-            redirect(controller: "user", action: "edit")
+            else{
+                if(updatePasswordCO.errors.hasFieldErrors('password')){
+                    flash.error = "Password length should be greater than 5 characters"
+                }
+
+                if(updatePasswordCO.errors.hasFieldErrors('oldPassword')){
+                    flash.error = "Password length should be greater than 5 characters"
+                }
+
+                if(updatePasswordCO.errors.hasFieldErrors('confirmPassword')){
+                    flash.error = "Confirm password and passfields do not match."
+                }
+            }
 
         } else{
             flash.error = "user not found"
             redirect(controller: "login", action: "index")
         }
-
+        redirect(controller: "user", action: "edit")
     }
 }

@@ -124,8 +124,7 @@ class LinkSharingTagLib {
 
                 if (subscription)
                     out << g.select(class: 'seriousness btn btn-default', optionKey: 'key', topicId: topicId, name: 'seriousness', from: enums.Seriousness.values(), value: subscription.seriousness)
-                else
-                    flash.error = "User not subscribed to topic"
+
             } else
                 flash.error = "Either topic or user not available."
 
