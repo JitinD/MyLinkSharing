@@ -4,15 +4,6 @@ import grails.test.spock.IntegrationSpec
 
 class ReadingItemControllerIntegrationSpec extends IntegrationSpec {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
-
     def "testing readingItem/changeIsRead"()
     {
         setup:

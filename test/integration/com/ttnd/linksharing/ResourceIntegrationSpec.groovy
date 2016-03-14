@@ -26,6 +26,6 @@ class ResourceIntegrationSpec extends IntegrationSpec {
         RatingInfoVo ratingInfoVo = resourceController.show(1)
 
         then:
-        !result.isEmpty()
+        ratingInfoVo != null
     }
 }
