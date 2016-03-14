@@ -8,7 +8,7 @@
     <body>
     <div>
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-5">
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading panelHeaders">
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-7">
+            <div class="col-xs-offset-1 col-xs-6">
                 <div class="panel panel-default">
                     <div class="panel-heading panelHeaders">
                         <span class = "panelHeadersText">Posts:</span>
