@@ -40,15 +40,15 @@ class LinkSharingTagLib {
 
     def canDeleteResoure = {
 
-        attributes ->
+        attributes, body ->
 
             User user = session.user
 
             if (user) {
-                String href = "${createLink(controller: 'resource', action: 'delete', params: [id: attributes.id])}"
+                /*String href = "${createLink(controller: 'resource', action: 'delete', params: [id: attributes.id])}"*/
 
                 if (user.canDeleteResource(attributes.id))
-                    out << "<a href = ${href}><span class = \"glyphicon glyphicon-trash panelIcons\"></span></a>"
+                    out << body()
 
             }
     }
@@ -123,7 +123,7 @@ class LinkSharingTagLib {
                 Subscription subscription = user.getSubscription(topicId)
 
                 if (subscription)
-                    out << g.select(class: 'seriousness btn btn-default', optionKey: 'key', topicId: topicId, name: 'seriousness', from: enums.Seriousness.values(), value: subscription.seriousness)
+                    out << g.select(class: 'seriousness btn-default', optionKey: 'key', topicId: topicId, name: 'seriousness', from: enums.Seriousness.values(), value: subscription.seriousness)
 
             } else
                 flash.error = "Either topic or user not available."
@@ -143,7 +143,7 @@ class LinkSharingTagLib {
                 if (topic) {
 
                     String topicName = topic.name
-                    out << g.select(class: 'visibility btn btn-default', optionKey: 'key', topicName: topicName, name: 'visibility', from: enums.Visibility.values(), value: topic.visibility)
+                    out << g.select(class: 'visibility btn-default', optionKey: 'key', topicName: topicName, name: 'visibility', from: enums.Visibility.values(), value: topic.visibility)
                 } else
                     flash.error = "User not subscribed to topic"
             } else

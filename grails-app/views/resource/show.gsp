@@ -83,12 +83,14 @@
                             <div class="col-xs-10">
                                 <div class="row">
                                     <div class="col-xs-offset-6 col-xs-2">
-                                        <ls:canDeleteResoure id="${post.resourceId}"/>
+                                        <ls:canDeleteResoure id="${post.resourceId}">
+                                            <a id = 'resourceDelete' href = "" data-target = "#deleteResourceConfirmationModal" data-toggle="modal" postId = ${post.resourceId}><span class = 'glyphicon glyphicon-trash panelIcons'></span></a>
+                                        </ls:canDeleteResoure>
                                     </div>
 
                                     <div class="col-xs-2">
                                         <ls:showEdit id = "${post.resourceId}">
-                                            <a href = "" class="btn editDescription" postId = "${post.resourceId}" postDescription = "${post.description}" name = "editDescription" data-toggle="modal" data-target="#editDescriptionModal">
+                                            <a href = "" class="editDescription" postId = "${post.resourceId}" postDescription = "${post.description}" name = "editDescription" data-toggle="modal" data-target="#editDescriptionModal">
                                                 <span class = "glyphicon glyphicon-edit panelIcons"></span>
                                             </a>
                                         </ls:showEdit>
@@ -117,7 +119,9 @@
                 </div>
             </div>
 
+
             <g:render template="/resource/edit"/>
+            <g:render template="/resource/confirmation" />
         </div>
 
         <script>
@@ -130,6 +134,13 @@
                 $("#editDescriptionModal #description").val(description);
                 $("#editDescriptionModal #id").val(id)
             });
+
+
+            $("#resourceDelete").click(function(){
+                var postId = $(this).attr('postId')
+
+                $("#deleteResourceConfirmationModal #id").val(postId)
+            })
 
         </script>
     </body>

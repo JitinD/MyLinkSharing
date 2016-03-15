@@ -111,13 +111,13 @@ class TopicController {
         User user = session.user
 
         if (topic) {
-            if (user.isAdmin || (topic.createdBy == user)) {
+            if (user.isAdmin || (user.equals(topic.createdBy))) {
                 topic.delete(flush: true)
                 flash.message = g.message(code: "is.deleted.topic")
             } else
-                flash.error = g.message(code: "not.accessible.topic")
+                flash.error = g.message(code: "not.deleted.topic")
         } else
-            flash.error = g.message(code: "not.accessible.topic")
+            flash.error = g.message(code: "not.found.topic")
 
         redirect(controller: 'login', action: 'index')
 

@@ -193,7 +193,7 @@ class User {
     public Boolean canDeleteResource(Long resourceId) {
         Resource resource = Resource.read(resourceId)
 
-        if (this.isAdmin || (resource.createdBy.id == this.id))
+        if (this.isAdmin || (this.equals(resource.createdBy)))
             return true
 
         return false

@@ -66,7 +66,7 @@
 
 
                 <div class="col-xs-1">
-                    <a href="/topic/delete/${topic.id}">
+                    <a id = "topicDelete" href="" data-toggle="modal" data-target = "#deleteTopicConfirmationModal" topicId = "${topic.id}">
                         <span class = "glyphicon glyphicon-trash panelIcons"></span>
                     </a>
                 </div>
@@ -76,7 +76,7 @@
             <ls:canInviteToTopic id = "${topic.id}">
 
                 <div class="col-xs-1">
-                    <a href = "" class="btn invite" topicId = "${topic.id}" name = "invite" data-toggle="modal" data-target="#sendInviteModal">
+                    <a href = "" class="invite" topicId = "${topic.id}" name = "invite" data-toggle="modal" data-target="#sendInviteModal">
                         <span class = "glyphicon glyphicon-envelope panelIcons"></span>
                     </a>
                 </div>
@@ -85,6 +85,7 @@
 
         </div>
     </div>
+    <g:render template="/topic/confirmation" />
 
     <script>
         $(document).ready(function(){
@@ -110,6 +111,13 @@
 
                 $("#topicNameEditForm"+topicId).css({'display': 'none'})
             });
+
+            $("#topicDelete").click(function(e){
+                e.preventDefault()
+                var topicId = $(this).attr('topicId')
+
+                $("#deleteTopicConfirmationModal #id").val(topicId)
+            })
 
         });
     </script>

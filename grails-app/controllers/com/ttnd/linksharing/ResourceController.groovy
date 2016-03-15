@@ -38,7 +38,7 @@ class ResourceController {
             flash.error = "User doesn't have valid permissions to delete the resource"
 
 
-        redirect(controller: "user", action: "index")
+        redirect(controller: "login", action: "index")
 
     }
 
