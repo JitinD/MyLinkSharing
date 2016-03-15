@@ -12,7 +12,7 @@ class SessionCheckFilters {
 
         }
 
-        userIndexcheck(controller: 'user', action: '*') {
+        userIndexcheck(controller: 'user', action: 'index|toggleActive|edit|save|updatePassword') {
             before = {
 
                 if (!session.user)
