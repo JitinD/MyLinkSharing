@@ -256,4 +256,16 @@ class User {
         return Subscription.countByUser(this)
     }
 
+    public unreadResources(){
+
+        List<Resource> resourceList = ReadingItem.createCriteria().list(){
+
+            projections {
+                property('resource')
+            }
+
+            eq('isRead', false)
+        }
+    }
+
 }

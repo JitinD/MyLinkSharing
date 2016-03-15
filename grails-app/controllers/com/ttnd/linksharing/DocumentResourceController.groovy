@@ -30,7 +30,10 @@ class DocumentResourceController extends ResourceController {
                 flash.error = g.message("not.saved.file")
         }
 
-        redirect(uri: [request.forwardURI - request.contextPath])
+        if(request.forwardURI == request.contextPath)
+            redirect(controller: "login", action: "index")
+        else
+            redirect(uri: [request.forwardURI - request.contextPath])
     }
 
     def download(Long id)

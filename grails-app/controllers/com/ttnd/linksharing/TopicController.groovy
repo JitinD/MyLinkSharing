@@ -57,7 +57,11 @@ class TopicController {
                     existingTopic.visibility = Visibility.getVisibility(visibility)
             }else{
                 flash.error = g.message(code: "is.present.topic")
-                redirect(uri: [request.forwardURI - request.contextPath])
+
+                if(request.forwardURI == request.contextPath)
+                    redirect(controller: "login", action: "index")
+                else
+                    redirect(uri: [request.forwardURI - request.contextPath])
             }
 
             if (existingTopic.saveInstance()) {
@@ -79,7 +83,10 @@ class TopicController {
             else
                 flash.error = g.message(code: "not.saved.topic")
 
-            redirect(uri: [request.forwardURI - request.contextPath])
+            if(request.forwardURI == request.contextPath)
+                redirect(controller: "login", action: "index")
+            else
+                redirect(uri: [request.forwardURI - request.contextPath])
         }
 
         //if(newTopicName){
@@ -158,5 +165,20 @@ class TopicController {
 
             redirect(controller: "login", action: "index")
         }
+    }
+
+    public Boolean validateTopicNameForSessionUser(){
+
+        if(session.user){
+            User user = session.user
+
+            Integer numTopic = Topic.countByName(params.topicName)
+
+            Boolean result = numTopic ? true : false
+
+            return result
+        }
+        else
+            redirect(controller: "login", action: "index")
     }
 }

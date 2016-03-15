@@ -5,6 +5,7 @@ import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
 import enums.Visibility
+import org.h2.engine.Session
 
 class Topic {
 

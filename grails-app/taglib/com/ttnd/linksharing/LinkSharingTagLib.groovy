@@ -170,16 +170,22 @@ class LinkSharingTagLib {
 
             User user = session.user
             Long topicId = attributes.id
+            Topic topic = Topic.get(topicId)
 
             String hrefSubscribe = "${createLink(controller: 'Subscription', action: 'save', params: [topicId: topicId])}"
 
             String hrefUnsubscribe = "${createLink(controller: 'Subscription', action: 'delete', params: [topicId: topicId])}"
 
-            if (user && topicId) {
-                if (user.isSubscribed(topicId))
-                    out << "<a class='col-xs-4' href = ${hrefUnsubscribe}><ins>Unsubscribe</ins></a>"
+            if (user) {
+
+                if(topic && !(user.equals(topic.createdBy))){
+                    if (user.isSubscribed(topicId))
+                        out << "<a class='col-xs-4' href = ${hrefUnsubscribe}><ins>Unsubscribe</ins></a>"
+                    else
+                        out << "<a class='col-xs-4' href = ${hrefSubscribe}><ins>Subscribe</ins></a>"
+                }
                 else
-                    out << "<a class='col-xs-4' href = ${hrefSubscribe}><ins>Subscribe</ins></a>"
+                    out << "<div class = 'col-xs-4'></div>"
             }
             else
                 out << "<div class = 'col-xs-4'></div>"

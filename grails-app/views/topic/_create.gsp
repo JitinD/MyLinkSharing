@@ -12,7 +12,7 @@
                         <label class="form-control-label col-xs-4">Name*</label>
 
                         <div class="col-xs-6">
-                            <input type="text" id="topicName" name="topicName" class="form-control" required/>
+                            <input type="text" id="topicName" name="topicName" class="form-control" />
                         </div>
                     </div>
 
@@ -44,3 +44,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('#createTopicModal').validate({
+            rules: {
+                'topicName': {
+                    required: true,
+                    remote: {
+                        url: "/Topic/validateTopicNameForSessionUser",
+                        type: "post"
+                    }
+                }
+            },
+            messages: {
+                'topicName': {
+                    required: "Topic name can't be blank.",
+                    remote: "Topic name already exist."
+                }
+            }
+        });
+    });
+
+</script>
