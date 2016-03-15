@@ -14,7 +14,7 @@
                         <label class="form-control-label col-xs-4">Document*</label>
 
                         <div class="col-xs-4">
-                            <input type="file" name = "file" class="form-control" required = "required">
+                            <input type="file" name = "file" class="form-control" accept="application/pdf" required = "required">
                         </div>
                     </div>
 
@@ -53,3 +53,23 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    $(function () {
+        $('#shareDocModal').validate({
+            rules: {
+                'file': {
+                    required: true
+                }
+            },
+            messages: {
+                'file': {
+                    required: "Topic name can't be blank."
+                }
+            }
+        });
+    });
+
+</script>

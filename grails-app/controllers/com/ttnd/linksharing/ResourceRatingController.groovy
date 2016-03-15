@@ -22,6 +22,6 @@ class ResourceRatingController {
         else
             flash.error = g.message(code: "not.found.resource")
 
-        redirect(controller: "user", action: "index")
+        redirect(url: request.getHeader('referer'))
     }
 }

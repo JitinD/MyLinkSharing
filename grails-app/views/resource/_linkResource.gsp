@@ -53,3 +53,22 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(function () {
+        $('#shareLinkModal').validate({
+            rules: {
+                'url': {
+                    required: true
+                }
+            },
+            messages: {
+                'url': {
+                    required: "Topic name can't be blank."
+                }
+            }
+        });
+    });
+
+</script>

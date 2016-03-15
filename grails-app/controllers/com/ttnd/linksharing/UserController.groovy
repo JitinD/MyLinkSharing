@@ -250,4 +250,15 @@ class UserController {
         }
         redirect(controller: "user", action: "edit")
     }
+
+
+    def validateEmailForInvitation(){
+
+        Integer numUser = User.countByEmailID(params.emailID)
+        log.info params.emailID
+
+        Boolean result = numUser ? true : false
+
+        render result
+    }
 }

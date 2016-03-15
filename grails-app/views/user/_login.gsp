@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel-body">
-            <g:form class="form-horizontal" role="form" controller = "login" action="loginHandler">
+            <g:form id = "#loginForm" class="form-horizontal" role="form" controller = "login" action="loginHandler">
                 <div class="form-group row">
                     <label class="form-control-label col-sm-4">Username:</label>
 
@@ -20,7 +20,7 @@
                     <label class="form-control-label col-sm-4">Password:</label>
 
                     <div class="col-sm-8">
-                        <g:passwordField id = "password" name="password" class="form-control" required = "required" />
+                        <input type = "password" id = "password" name="password" class="form-control" required/>
                     </div>
 
                 </div>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class = "row">
-                    <div class="alert-danger">${flash.error}</div>
+                    <div class="alert-danger">${flash.loginError}</div>
                 </div>
 
             </g:form>

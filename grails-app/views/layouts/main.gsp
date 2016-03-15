@@ -14,6 +14,7 @@
         <asset:stylesheet src="font-awesome.min.css"/>
         <asset:stylesheet src="bootstrap.min.css"/>
         <asset:javascript src="jquery-2.2.1.min.js"/>
+        <asset:javascript src="jquery.validate.min.js"/>
         <g:layoutHead/>
 
     </head>
@@ -146,7 +147,6 @@
         </div>
 
         <asset:javascript src="bootstrap.min.js"/>
-        <asset:javascript src="jquery.validate.min.js"/>
         <asset:javascript src="application.js"/>
 
     </body>

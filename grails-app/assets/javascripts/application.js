@@ -74,7 +74,7 @@ $(document).ready(function () {
         })
     });
 
-    $("#saveTopicButton").click(function () {
+    $("#saveTopicButton").submit(function () {
         $.ajax({
             url: "/topic/save",
             data: {topicName: $('#topicName').val(), visibility: $('#visibility').val()},

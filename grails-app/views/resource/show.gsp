@@ -37,7 +37,7 @@
 
                                     <div class="col-xs-4">
 
-                                        <ls:canRate score="${post.score}">
+                                        <ls:canRate id = "${post.resourceId}" score="${post.score}">
                                             <g:form controller="resourceRating" action="save"
                                                     params="['resourceId': post.resourceId]">
 

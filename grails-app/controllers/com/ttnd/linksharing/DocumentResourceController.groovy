@@ -14,26 +14,27 @@ class DocumentResourceController extends ResourceController {
         def file = params.file
 
         if (file.empty) {
-            flash.error = "Invalid file"
+            flash.error = "File is empty"
         } else {
             String filePath = "${grailsApplication.config.grails.documentsPath}/${UUID.randomUUID()}.pdf"
             documentResource.contentType = file.contentType
             documentResource.filePath = filePath
 
-            if (documentResource.saveInstance()) {
-                File savedFile = new File(filePath)
-                file.transferTo(savedFile)
-                addToReadingItems(documentResource)
+            if(documentResource.contentType != Constants.DOCUMENT_CONTENT_TYPE)
+                flash.error = g.message(code: "not.valid.file")
+            else {
+                if (documentResource.saveInstance()) {
+                    File savedFile = new File(filePath)
+                    file.transferTo(savedFile)
+                    addToReadingItems(documentResource)
 
-                flash.message = g.message(code: "is.saved.file")
-            } else
-                flash.error = g.message("not.saved.file")
+                    flash.message = g.message(code: "is.saved.file")
+                } else
+                    flash.error = g.message(code: "not.saved.file")
+            }
         }
 
-        if(request.forwardURI == request.contextPath)
-            redirect(controller: "login", action: "index")
-        else
-            redirect(uri: [request.forwardURI - request.contextPath])
+        redirect(url: request.getHeader('referer'))
     }
 
     def download(Long id)

@@ -33,3 +33,27 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(function () {
+        $('#forgotPasswordModal').validate({
+            rules: {
+                'emailID': {
+                    required: true,
+                    remote: {
+                        url: "/user/validateEmailForInvitation",
+                        type: "post"
+                    }
+                }
+            },
+            messages: {
+                'topicName': {
+                    required: "Topic name can't be blank.",
+                    remote: "Topic name already exist."
+                }
+            }
+        });
+    });
+
+</script>

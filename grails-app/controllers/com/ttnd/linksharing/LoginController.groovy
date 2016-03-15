@@ -28,11 +28,11 @@ class LoginController {
                 session.user = user
                 redirect(action: "index")
             } else {
-                flash.error = g.message(code: "not.active.user")
+                flash.loginError = g.message(code: "not.active.user")
                 redirect controller: "login"
             }
         } else {
-            flash.error = g.message(code: "not.found.user")
+            flash.loginError = g.message(code: "not.found.user")
             redirect controller: "login"
         }
     }

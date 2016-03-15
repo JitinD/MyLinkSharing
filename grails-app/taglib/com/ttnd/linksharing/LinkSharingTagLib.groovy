@@ -254,7 +254,10 @@ class LinkSharingTagLib {
     def canRate = {
         attributes, body ->
 
-            if (attributes.score)
+            User user = session.user
+            Resource resource = Resource.get(attributes.id)
+
+            if (attributes.score && !(user.equals(resource.createdBy)))
                 out << body()
     }
 }

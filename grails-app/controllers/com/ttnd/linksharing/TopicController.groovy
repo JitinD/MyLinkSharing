@@ -57,11 +57,6 @@ class TopicController {
                     existingTopic.visibility = Visibility.getVisibility(visibility)
             }else{
                 flash.error = g.message(code: "is.present.topic")
-
-                if(request.forwardURI == request.contextPath)
-                    redirect(controller: "login", action: "index")
-                else
-                    redirect(uri: [request.forwardURI - request.contextPath])
             }
 
             if (existingTopic.saveInstance()) {
@@ -83,32 +78,8 @@ class TopicController {
             else
                 flash.error = g.message(code: "not.saved.topic")
 
-            if(request.forwardURI == request.contextPath)
-                redirect(controller: "login", action: "index")
-            else
-                redirect(uri: [request.forwardURI - request.contextPath])
+            redirect(url: request.getHeader('referer'))
         }
-
-        //if(newTopicName){
-        /*flash.message = g.message(code: "is.saved.topic")
-        jsonResponseMap.message = g.message(code: "is.saved.topic")
-        redirect(uri: [request.forwardURI - request.contextPath])*/
-        //}
-        //else
-        //{
-        /*log.info "1. ${request.forwardURI - request.contextPath}"
-        log.info "2. ${request.getRequestURI()}"
-        log.info "3. ${request.servletPath}"
-        log.info "4. ${request.contextPath}"
-        log.info "5 ${request.getRequestURL()}"
-
-        flash.message = g.message(code: "is.saved.topic")
-        redirect(uri: [request.forwardURI - request.contextPath])
-
-    //}
-}
-}*/
-
     }
 
 
@@ -167,7 +138,7 @@ class TopicController {
         }
     }
 
-    public Boolean validateTopicNameForSessionUser(){
+    public def validateTopicNameForSessionUser(){
 
         if(session.user){
             User user = session.user
@@ -176,7 +147,7 @@ class TopicController {
 
             Boolean result = numTopic ? true : false
 
-            return result
+            render result
         }
         else
             redirect(controller: "login", action: "index")

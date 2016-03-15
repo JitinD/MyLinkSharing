@@ -1,4 +1,4 @@
-<div class="modal fade" id="createTopicModal" tabindex="-1" role="dialog" aria-labelledby="createtopicModal">
+<div class="modal fade" id="createTopicModal" tabindex="-1" role="dialog" aria-labelledby="createTopicModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header panelHeaders">
@@ -12,7 +12,7 @@
                         <label class="form-control-label col-xs-4">Name*</label>
 
                         <div class="col-xs-6">
-                            <input type="text" id="topicName" name="topicName" class="form-control" />
+                            <input type="text" id="topicName" name="topicName" class="form-control" required/>
                         </div>
                     </div>
 
@@ -29,7 +29,7 @@
 
                     <div class="form-group row">
                         <div class="col-xs-offset-4 col-xs-4">
-                            <g:submitButton id = "saveTopicButton" name = "saveTopicButton" class="btn btn-primary submitButtons" type="button"
+                            <g:submitButton id = "saveTopicButton" name = "saveTopicButton" class="btn btn-primary submitButtons"
                                              value="Save"/>
                         </div>
 
@@ -52,7 +52,7 @@
                 'topicName': {
                     required: true,
                     remote: {
-                        url: "/Topic/validateTopicNameForSessionUser",
+                        url: "/topic/validateTopicNameForSessionUser",
                         type: "post"
                     }
                 }
