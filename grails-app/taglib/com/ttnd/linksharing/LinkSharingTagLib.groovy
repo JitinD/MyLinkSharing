@@ -15,11 +15,16 @@ class LinkSharingTagLib {
             if (session.user) {
                 Long resourceId = attributes.id
                 Boolean isRead = !attributes.isRead
+                User user = session.user
 
-                if (attributes.isRead)
-                    out << "<a href = '' class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>"
-                else
-                    out << "<a href = '' class = 'markReadStatus text-danger' resourceId = ${resourceId} isRead = ${isRead}>Mark as read</a>"
+                if(!(user.equals(Resource.get(resourceId).createdBy)))
+                {
+                    if (attributes.isRead)
+                        out << "<a href = '' class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>"
+                    else
+                        out << "<a href = '' class = 'markReadStatus text-danger' resourceId = ${resourceId} isRead = ${isRead}>Mark as read</a>"
+                }
+
 
             }
     }
