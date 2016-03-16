@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel-body">
-            <g:form id = "#loginForm" class="form-horizontal" role="form" controller = "login" action="loginHandler">
+            <g:form id = "loginForm" class="form-horizontal" role="form" controller = "login" action="loginHandler">
                 <div class="form-group row">
                     <label class="form-control-label col-sm-4">Username:</label>
 

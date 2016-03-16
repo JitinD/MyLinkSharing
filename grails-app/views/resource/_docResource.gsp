@@ -14,7 +14,7 @@
                         <label class="form-control-label col-xs-4">Document*</label>
 
                         <div class="col-xs-4">
-                            <input type="file" name = "file" class="form-control" accept="application/pdf" required = "required">
+                            <input type="file" name = "file" class="form-control" accrequired = "required">
                         </div>
                     </div>
 

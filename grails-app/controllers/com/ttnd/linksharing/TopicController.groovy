@@ -147,7 +147,7 @@ class TopicController {
 
             Boolean result = numTopic ? true : false
 
-            render result
+            return result
         }
         else
             redirect(controller: "login", action: "index")

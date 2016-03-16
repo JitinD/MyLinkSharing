@@ -46,7 +46,7 @@ $(document).ready(function () {
     });
 
     $(".markReadStatus").click(function (e) {
-        e.preventDefault()
+        e.preventDefault();
 
         $.ajax({
             url: "/readingItem/changeIsRead",
@@ -143,6 +143,7 @@ $(document).ready(function () {
                 }
             }
         });
+
 
         jQuery.validator.addMethod("confirm", function (value, element) {
             var result = false;

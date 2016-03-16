@@ -11,6 +11,7 @@ import Utility.Util
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
+import com.ttnd.linksharing.constants.Constants
 import enums.Visibility
 
 
@@ -25,7 +26,7 @@ class UserController {
     def index(SearchCO searchCO) {
 
         searchCO.max = searchCO.max ?: 5
-        searchCO.offset = searchCO.offset ?:0
+        searchCO.offset = searchCO.offset ?: 0
 
         render(view: 'index', model: [user                : session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics,
                                       trendingTopics      : Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(searchCO),
@@ -97,6 +98,8 @@ class UserController {
     }
 
     def list(UserSearchCO userSearchCO) {
+
+        userSearchCO.max = Constants.NUMBER_RECORDS_IN_LIST
 
         if (session.user) {
             if (session.user.isAdmin) {
@@ -217,47 +220,53 @@ class UserController {
 
             User user = User.get(session.user.id)
 
-            if(!(updatePasswordCO.hasErrors())){
+            if(updatePasswordCO.oldPassword == user.password) {
 
-                user.password = updatePasswordCO.password
-                user.confirmPassword = updatePasswordCO.confirmPassword
+                if(updatePasswordCO.password && updatePasswordCO.password.size() >= 5){
+                    if ((updatePasswordCO.password == updatePasswordCO.confirmPassword)) {
 
-                if (user.saveInstance()) {
-                    flash.message = "Password updated successfully."
-                    session.user = user
-                } else {
-                    flash.error = "Password could not be updated."
+                        user.password = updatePasswordCO.password
+                        user.confirmPassword = updatePasswordCO.confirmPassword
+
+                        if (user.saveInstance()) {
+                            flash.message = "Password updated successfully."
+                            session.user = user
+                        } else {
+                            flash.error = "Password could not be updated."
+                        }
+                    }else
+                        flash.error = "Password and confirm password do not match."
+
+                }else{
+                    flash.error = "Password should be more than 5 characters long."
                 }
-                redirect(controller: "user", action: "edit")
-            }
-            else{
-                if(updatePasswordCO.errors.hasFieldErrors('password')){
-                    flash.error = "Password length should be greater than 5 characters"
-                }
+            }else
+                flash.error = "Current and old passwod field do not match."
 
-                if(updatePasswordCO.errors.hasFieldErrors('oldPassword')){
-                    flash.error = "Password length should be greater than 5 characters"
-                }
-
-                if(updatePasswordCO.errors.hasFieldErrors('confirmPassword')){
-                    flash.error = "Confirm password and passfields do not match."
-                }
-            }
-
-        } else{
+            redirect(controller: "user", action: "edit")
+        } else {
             flash.error = "user not found"
             redirect(controller: "login", action: "index")
         }
-        redirect(controller: "user", action: "edit")
     }
 
 
-    def validateEmailForInvitation(){
+    def validateEmailForInvitation() {
 
         Integer numUser = User.countByEmailID(params.emailID)
         log.info params.emailID
 
-        Boolean result = numUser ? true : false
+        Boolean result = numUser ? false : true
+
+        render result
+    }
+
+
+    def validateOldPassword() {
+
+        User user = session.user
+
+        Boolean result = (user.password == params.oldPassword)
 
         render result
     }

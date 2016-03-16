@@ -26,15 +26,14 @@ class LoginController {
         if (user) {
             if (user.isActive) {
                 session.user = user
-                redirect(action: "index")
             } else {
                 flash.loginError = g.message(code: "not.active.user")
-                redirect controller: "login"
             }
         } else {
             flash.loginError = g.message(code: "not.found.user")
-            redirect controller: "login"
         }
+
+        redirect(action: "index")
     }
 
     def register(UserCO user) {

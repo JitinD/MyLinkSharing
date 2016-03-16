@@ -72,7 +72,7 @@
                                     <label class="form-control-label col-xs-4">Photo</label>
 
                                     <div class="col-xs-5">
-                                        <input type="file" id = "pic" name = "pic" class="form-control">
+                                        <input type="file" accept="image/jpeg,image/png,jpg|png" id = "pic" name = "pic" class="form-control">
                                     </div>
 
                                 </div>
@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="panel-body">
-                            <g:form class="form-horizontal" role="form" controller = "user" action="updatePassword">
+                            <g:form id = "updatePasswordForm" class="form-horizontal" role="form" controller = "user" action="updatePassword">
 
 
                                 <div class="form-group row">
@@ -153,6 +153,90 @@
                     }
 
                 });
+
+
+                $(function () {
+                    $('#updateForm').validate({
+                        rules: {
+                            'firstName': {
+                                required: true
+                            },
+                            'lastName': {
+                                required: true
+                            },
+                            'userName': {
+                                required: true,
+                                /*remote: {
+                                    url: "/login/validateUserName",
+                                    type: "post"
+                                }*/
+                            }
+                        },
+                        messages: {
+                            'firstName': {
+                                required: "First name can't be blank",
+                            },
+                            'lastName': {
+                                required: "Last name can't be blank",
+                            },
+                            'userName': {
+                                required: "User name can't be blank",
+                                remote: "User name entered already exist"
+                            }
+                        }
+                    });
+                });
+
+
+
+                $(function () {
+                    $('#updatePasswordForm').validate({
+                        rules: {
+                            'oldPassword': {
+                                required: true,
+                                remote:{
+                                    url: "/user/validateOldPassword",
+                                    type: "post"
+
+                                }
+                            },
+                            'password': {
+                                required: true,
+                                minlength: 5
+                            },
+                            'confirmPassword': {
+                                required: true,
+                                confirm: true
+                            }
+                        },
+                        messages: {
+                            'oldPassword': {
+                                required: "Old password field can't be blank",
+                                remote: "This is not the current password."
+                            },
+                            'password': {
+                                required: "Password can't be blank",
+                                minlength: "Password should be atleast 5 character long"
+                            },
+                            'confirmPassword': {
+                                required: "Confirm password can't be blank."
+                            }
+                        }
+                    });
+
+
+                    jQuery.validator.addMethod("confirm", function (value, element) {
+                        var result = false;
+                        var password = $('form#registrationForm input[id=password]').val();
+
+                        if (password === value) {
+                            result = true;
+                        }
+                        return result;
+                    }, "Confirm password not matched with password");
+                });
+
+
             });
         </g:javascript>
 

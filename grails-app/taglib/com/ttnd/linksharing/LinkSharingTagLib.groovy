@@ -54,11 +54,14 @@ class LinkSharingTagLib {
     }
 
     def showSubscribedTopics = {
-        User user = session.user
 
-        List<TopicVo> subscribedTopicsList = user.getSubscribedTopicsList()
+        attributes ->
 
-        out << "${g.select(name: 'topic', id: 'topic', from: subscribedTopicsList, optionKey: 'id', class: 'btn btn-default btn-sm dropdown-toggle')}"
+            User user = session.user
+
+            List<TopicVo> subscribedTopicsList = user.getSubscribedTopicsList()
+
+            out << "${g.select(name: 'topic', id: 'topic', from: subscribedTopicsList, optionKey: 'id', class: 'btn btn-default btn-sm dropdown-toggle')}"
     }
 
     def canDeleteTopic = {
