@@ -161,7 +161,14 @@ class UserController {
 
                 if (user.saveInstance()) {
 
-                    emailService.sendMail(emailDTO)
+                    def ctx = startAsync()
+
+                    ctx.start{
+                        emailService.sendMail(emailDTO)
+                    }
+
+                    ctx.complete()
+
                     flash.message = g.message(code: "is.sent.email")
                 } else {
                     flash.error = g.message(code: "not.sent.email")

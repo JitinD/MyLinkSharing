@@ -114,7 +114,15 @@ class TopicController {
         if (topicInstance == null)
             flash.error = g.message(code: "not.found.topic")
         else {
-            emailService.sendMail(emailDTO)
+
+            def ctx = startAsync()
+
+            ctx.start{
+                emailService.sendMail(emailDTO)
+            }
+
+            ctx.complete()
+
             flash.message = g.message(code: "is.sent.email")
         }
 
@@ -138,16 +146,16 @@ class TopicController {
         }
     }
 
-    public def validateTopicNameForSessionUser(){
+    def validateTopicNameForSessionUser(){
 
         if(session.user){
             User user = session.user
 
-            Integer numTopic = Topic.countByName(params.topicName)
+            Integer numTopic = Topic.countByNameAndCreatedBy(params.topicName, user)
 
-            Boolean result = numTopic ? true : false
+            Boolean result =  numTopic ? false : true
 
-            return result
+            render result
         }
     }
 }

@@ -71,7 +71,7 @@
                 <div class="form-group row">
                     <label class="form-control-label col-xs-4">Photo</label>
 
-                    <div class="col-xs-5">
+                    <div class="col-xs-8">
                         <input type="file" accept="image/jpeg,image/png,jpg|png" id = "pic" name = "pic" class="form-control">
                     </div>
 

@@ -13,8 +13,8 @@
                     <div class="form-group row">
                         <label class="form-control-label col-xs-4">Document*</label>
 
-                        <div class="col-xs-4">
-                            <input type="file" name = "file" class="form-control" accept=".pdf" />
+                        <div class="col-xs-6">
+                            <input type="file" name = "file" class="form-control" accept="application/pdf|.pdf" />
                         </div>
                     </div>
 

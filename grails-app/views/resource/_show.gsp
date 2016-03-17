@@ -29,7 +29,6 @@
                 <a href="#"><span class="fa fa-google-plus-square"></span></a>&nbsp;
             </div>
             <div class = "col-xs-6">
-                %{--<span id = "readStatus"><ls:markAsRead id = "${post.resourceId}" isRead = "${post.isRead}"> </ls:markAsRead>&nbsp;</span>--}%
                 <ls:markAsRead id = "${post.resourceId}" isRead = "${post.isRead}"> </ls:markAsRead>&nbsp;
                 <ls:showResource id = "${post.resourceId}" url = "${post.url}" filePath = "${post.filePath}"></ls:showResource>&nbsp;
                 <g:link controller = "resource" action = "show" params = "[id: post.resourceId]"><ins>View post</ins></g:link>
