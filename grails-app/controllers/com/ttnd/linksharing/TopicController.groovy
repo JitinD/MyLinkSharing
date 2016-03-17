@@ -149,7 +149,5 @@ class TopicController {
 
             return result
         }
-        else
-            redirect(controller: "login", action: "index")
     }
 }

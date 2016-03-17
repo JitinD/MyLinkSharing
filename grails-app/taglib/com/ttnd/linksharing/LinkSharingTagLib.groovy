@@ -36,9 +36,9 @@ class LinkSharingTagLib {
 
             Long resourceId = attributes.id
             if (Resource.isLinkResource(resourceId))
-                out << "<a href = ${attributes.url} class = 'pull-right' target = '_blank'><span class = 'glyphicon glyphicon-new-window'></span></a>"
+                out << "<a href = ${attributes.url} class = 'pull-right panelIcons' target = '_blank'><span class = 'glyphicon glyphicon-new-window'></span></a>"
             else
-                out << "<a href = ${createLink([controller: 'documentResource', action: 'download', params: [id: resourceId]])} class = 'pull-right'><span class = 'glyphicon glyphicon-save'></span></a>"
+                out << "<a href = ${createLink([controller: 'documentResource', action: 'download', params: [id: resourceId]])} class = 'pull-right panelIcons'><span class = 'glyphicon glyphicon-save'></span></a>"
 
     }
 

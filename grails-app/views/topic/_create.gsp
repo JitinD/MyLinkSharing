@@ -6,7 +6,7 @@
                     Create Topic
                 </h4>
             </div>
-            <g:form class="form form-horizontal" controller="topic" action="save">
+            <g:form name = "createTopicForm" class="form form-horizontal" controller="topic" action="save">
                 <div class="modal-body table-responsive">
                     <div class="form-group row">
                         <label class="form-control-label col-xs-4">Name*</label>
@@ -29,7 +29,7 @@
 
                     <div class="form-group row">
                         <div class="col-xs-offset-4 col-xs-4">
-                            <g:submitButton id = "saveTopicButton" name = "saveTopicButton" class="btn btn-primary submitButtons"
+                            <g:submitButton name = "saveTopicButton" class="btn btn-primary submitButtons"
                                              value="Save"/>
                         </div>
 
@@ -47,7 +47,7 @@
 
 <script>
     $(function () {
-        $('#createTopicModal').validate({
+        $('#createTopicForm').validate({
             rules: {
                 'topicName': {
                     required: true,

@@ -6,7 +6,7 @@
                     Send Invitation
                 </h4>
             </div>
-            <g:form class="form sendInviteModal" controller = "topic" action = "invite">
+            <g:form name = "sendInviteForm" class="form sendInviteModal" controller = "topic" action = "invite">
                 <div class="modal-body table-responsive">
 
                     <div class="form-group row">
@@ -17,7 +17,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div id = "subscribedTopicsList" class="form-group row">
                         <label class="form-control-label col-xs-4">
                             Topic *
                         </label>
@@ -47,7 +47,7 @@
 
 <script>
     $(function () {
-        $('#sendInviteModal').validate({
+        $('#sendInviteForm').validate({
             rules: {
                 'emailID': {
                     required: true,
@@ -58,9 +58,9 @@
                 }
             },
             messages: {
-                'topicName': {
-                    required: "Topic name can't be blank.",
-                    remote: "Topic name already exist."
+                'emailID': {
+                    required: "Email id can't be blank.",
+                    remote: "Email id doesn't belong to a registered user."
                 }
             }
         });

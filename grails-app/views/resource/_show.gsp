@@ -18,7 +18,7 @@
 
         <div class = "row">
             <div class = "col-xs-12">
-                <div class="text-justify">${post.description}</div>
+                <div id = "postDescription" class="text-justify">${post.description}</div>
             </div>
         </div>
 

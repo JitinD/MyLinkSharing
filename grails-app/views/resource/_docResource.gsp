@@ -7,14 +7,14 @@
                 </h4>
             </div>
 
-            <g:uploadForm class="form" controller = "documentResource" action = "save">
+            <g:uploadForm name = "shareDocForm" class="form" controller = "documentResource" action = "save">
                 <div class="modal-body table-responsive">
 
                     <div class="form-group row">
                         <label class="form-control-label col-xs-4">Document*</label>
 
                         <div class="col-xs-4">
-                            <input type="file" name = "file" class="form-control" accrequired = "required">
+                            <input type="file" name = "file" class="form-control" accept=".pdf" />
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@
 
 <script>
     $(function () {
-        $('#shareDocModal').validate({
+        $('#shareDocForm').validate({
             rules: {
                 'file': {
                     required: true
@@ -66,7 +66,7 @@
             },
             messages: {
                 'file': {
-                    required: "Topic name can't be blank."
+                    required: "No file chosen."
                 }
             }
         });

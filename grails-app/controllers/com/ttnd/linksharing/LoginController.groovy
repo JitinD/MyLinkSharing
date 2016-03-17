@@ -7,6 +7,7 @@ import com.ttnd.linksharing.constants.Constants
 class LoginController {
 
     def mailService
+
     def index() {
         if (session.user) {
             forward(controller: "user", action: "index")
@@ -81,7 +82,6 @@ class LoginController {
     def validateEmail(){
 
         Integer numUser = User.countByEmailID(params.emailID)
-        log.info params.emailID
 
         Boolean result = numUser ? false : true
 
@@ -89,13 +89,19 @@ class LoginController {
     }
 
     def validateUserName(){
-        System.err.println("................$params")
+
         Integer numUser = User.countByUserName(params.userName)
-        log.info params.userName
         Boolean result = numUser ? false : true
 
         render result
+    }
 
+    def validateUserNameForLogin(){
+
+        Integer numUser = User.countByUserName(params.userName)
+        Boolean result = numUser ? true : false
+
+        render result
     }
 
 }

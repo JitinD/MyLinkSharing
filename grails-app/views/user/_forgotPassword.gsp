@@ -6,7 +6,7 @@
                     Forgot Password
                 </h4>
             </div>
-            <g:form class="form form-horizontal" controller = "user" action = "forgotPassword">
+            <g:form name = "forgotPasswordForm"  class="form form-horizontal" controller = "user" action = "forgotPassword">
                 <div class="modal-body table-responsive">
                     <div class="form-group row">
                         <label class="form-control-label col-xs-4">Registered Email ID</label>
@@ -37,7 +37,7 @@
 
 <script>
     $(function () {
-        $('#forgotPasswordModal').validate({
+        $('#forgotPasswordForm').validate({
             rules: {
                 'emailID': {
                     required: true,
@@ -48,9 +48,9 @@
                 }
             },
             messages: {
-                'topicName': {
-                    required: "Topic name can't be blank.",
-                    remote: "Topic name already exist."
+                'emailID': {
+                    required: "Email id can't be blank.",
+                    remote: "Email id doesn't belong to a registered user."
                 }
             }
         });

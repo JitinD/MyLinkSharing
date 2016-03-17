@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel-body">
-            <g:form id = "loginForm" class="form-horizontal" role="form" controller = "login" action="loginHandler">
+            <g:form name = "loginForm" class="form-horizontal" role="form" controller = "login" action="loginHandler">
                 <div class="form-group row">
                     <label class="form-control-label col-sm-4">Username:</label>
 
@@ -45,3 +45,45 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('#loginForm').validate({
+            rules: {
+                'password': {
+                    required: true,
+                    minlength: 5
+                },
+                'userName': {
+                    required: true,
+                    remote: {
+                        url: "/login/validateUserNameForLogin",
+                        type: "post"
+                    }
+                }
+            },
+            messages: {
+                'password': {
+                    required: "Password can't be blank",
+                    minlength: "Password should be atleast 5 character long"
+                },
+                'userName': {
+                    required: "User name can't be blank",
+                    remote: "Sorry, no such username found."
+                }
+            }
+        });
+
+
+        jQuery.validator.addMethod("confirm", function (value, element) {
+            var result = false;
+            var password = $('form#registrationForm input[id=password]').val();
+
+            if (password === value) {
+                result = true;
+            }
+            return result;
+        }, "Confirm password not matched with password");
+    });
+
+</script>

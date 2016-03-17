@@ -115,9 +115,7 @@ class UserController {
                 render(view: "/user/list", model: [usersList: usersList])
             } else
                 redirect(controller: "login", action: "index")
-        } else
-            redirect(controller: "login", action: "index")
-
+        }
     }
 
     def toggleActive(Long id) {
@@ -143,8 +141,6 @@ class UserController {
                 redirect(controller: "user", action: "list")
             } else
                 redirect(controller: "login", action: "index")
-        } else {
-            redirect(controller: "login", action: "index")
         }
     }
 
@@ -201,17 +197,14 @@ class UserController {
             }
 
             redirect(controller: "user", action: "edit")
-        } else
-            redirect(controller: "login", action: "index")
+        }
     }
 
     def edit() {
         if (session.user) {
             UserVO user = session.user.getInfo()
-            System.err.println("++++++++++++++++++++++++++++++++++$user")
             render(view: "edit", model: [user: user])
-        } else
-            redirect(controller: "login", action: "index")
+        }
     }
 
     def updatePassword(UpdatePasswordCO updatePasswordCO) {
@@ -220,9 +213,9 @@ class UserController {
 
             User user = User.get(session.user.id)
 
-            if(updatePasswordCO.oldPassword == user.password) {
+            if (updatePasswordCO.oldPassword == user.password) {
 
-                if(updatePasswordCO.password && updatePasswordCO.password.size() >= 5){
+                if (updatePasswordCO.password && updatePasswordCO.password.size() >= 5) {
                     if ((updatePasswordCO.password == updatePasswordCO.confirmPassword)) {
 
                         user.password = updatePasswordCO.password
@@ -234,19 +227,16 @@ class UserController {
                         } else {
                             flash.error = "Password could not be updated."
                         }
-                    }else
+                    } else
                         flash.error = "Password and confirm password do not match."
 
-                }else{
+                } else {
                     flash.error = "Password should be more than 5 characters long."
                 }
-            }else
+            } else
                 flash.error = "Current and old passwod field do not match."
 
             redirect(controller: "user", action: "edit")
-        } else {
-            flash.error = "user not found"
-            redirect(controller: "login", action: "index")
         }
     }
 
@@ -254,9 +244,8 @@ class UserController {
     def validateEmailForInvitation() {
 
         Integer numUser = User.countByEmailID(params.emailID)
-        log.info params.emailID
 
-        Boolean result = numUser ? false : true
+        Boolean result = numUser ? true : false
 
         render result
     }

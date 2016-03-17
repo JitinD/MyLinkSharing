@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="panel-body">
-                            <g:form id = "updatePasswordForm" class="form-horizontal" role="form" controller = "user" action="updatePassword">
+                            <g:form name="updatePasswordForm" id ="updatePasswordForm" class="form-horizontal" role="form" controller = "user" action="updatePassword">
 
 
                                 <div class="form-group row">

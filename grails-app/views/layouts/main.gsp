@@ -58,23 +58,23 @@
                         </li>
                         <g:if test="${session.user}">
                             <li>
-                                <a class="btn" data-toggle="modal" data-target="#createTopicModal">
-                                    <span class="fa fa-weixin modalIcons"></span></a>
+                                <a class="btn" data-toggle="modal" data-target="#createTopicModal" title = "Create topic" >
+                                    <span class="fa fa-weixin modalIcons" ></span></a>
                             </li>
 
                             <li>
-                                <a class="btn" data-toggle="modal" data-target="#sendInviteModal">
-                                    <span class="glyphicon glyphicon-envelope modalIcons"></span></a>
+                                <a class="btn" data-toggle="modal" data-target="#sendInviteModal" title = "Send invitation">
+                                    <span class="glyphicon glyphicon-envelope modalIcons" ></span></a>
                             </li>
 
                             <li>
-                                <a class="btn" data-toggle="modal" data-target="#shareLinkModal">
-                                    <span class="fa fa-link modalIcons"></span>
+                                <a class="btn" data-toggle="modal" data-target="#shareLinkModal" title = "Share link">
+                                    <span class="fa fa-link modalIcons" ></span>
                                 </a>
                             </li>
 
                             <li>
-                                <a class="btn" data-toggle="modal" data-target="#shareDocModal">
+                                <a class="btn" data-toggle="modal" data-target="#shareDocModal"  title = "Share document">
                                     <span class="fa fa-file-o modalIcons"></span>
                                 </a>
                             </li>

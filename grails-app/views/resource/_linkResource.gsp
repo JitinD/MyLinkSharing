@@ -7,7 +7,7 @@
                 </h4>
             </div>
 
-            <g:form class="form" controller="linkResource" action="save">
+            <g:form name = "shareLinkForm" class="form" controller="linkResource" action="save">
                 <div class="modal-body table-responsive">
 
                     <div class="form-group row">
@@ -57,7 +57,7 @@
 
 <script>
     $(function () {
-        $('#shareLinkModal').validate({
+        $('#shareLinkForm').validate({
             rules: {
                 'url': {
                     required: true
@@ -65,7 +65,7 @@
             },
             messages: {
                 'url': {
-                    required: "Topic name can't be blank."
+                    required: "Link name can't be blank."
                 }
             }
         });
