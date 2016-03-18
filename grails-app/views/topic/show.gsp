@@ -11,7 +11,7 @@
                 <div class="col-xs-5">
                     <div class="panel panel-default">
                         <div class="panel-heading panelHeaders">
-                            <span  class = "panelHeadersText">Topic: ${topic.name}</span>
+                            <span  class = "panelHeadersText" style = "word-wrap: break-word">Topic: ${topic.name}</span>
                         </div>
 
                         <g:render template="/topic/show" model="[topic: topic]"/>
@@ -20,7 +20,7 @@
 
                     <div class="panel panel-default" >
                         <div class="panel-heading panelHeaders">
-                            <span class = "panelHeadersText">Users: ${topic.name}</span>
+                            <span class = "panelHeadersText"  style = "word-wrap: break-word">Users: ${topic.name}</span>
                         </div>
 
                         <div class="panel panel-body" style = "overflow-y: auto; height: 250px;">
@@ -35,7 +35,7 @@
                 <div class="col-xs-7">
                     <div class="panel panel-default">
                         <div class="panel-heading panelHeaders">
-                            <span class = "panelHeadersText">Posts: ${topic.name}</span>
+                            <span class = "panelHeadersText"  style = "word-wrap: break-word">Posts: ${topic.name}</span>
 
                             <form onsubmit="return false">
                                 <div class="input-group">

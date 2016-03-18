@@ -54,6 +54,9 @@
                     remote: {
                         url: "/user/validateEmailForInvitation",
                         type: "post"
+                    },
+                    'name':{
+                        required: true
                     }
                 }
             },
@@ -61,6 +64,9 @@
                 'emailID': {
                     required: "Email id can't be blank.",
                     remote: "Email id doesn't belong to a registered user."
+                },
+                'name':{
+                    required: "Topic can't be empty."
                 }
             }
         });

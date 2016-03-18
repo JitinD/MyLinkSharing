@@ -22,8 +22,11 @@
                                 <div class="row">
                                     <div class="col-xs-10">${post.user}</div>
 
-                                    <div class="col-xs-2"><a href="/topic/show?id=${post.topicId}"><ins>${post.topicName}</ins>
-                                    </a></div>
+                                    <div class="col-xs-2 topicNameClass">
+                                        <a style = "width: 100%"  title = "${post.topicName}" href="/topic/show?id=${post.topicId}">
+                                            ${post.topicName}
+                                        </a>
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -46,16 +49,6 @@
                                             <input type="hidden" id="default-hidden-resource-rating" value="${post?.score}"/>
                                             <input type="hidden" id="hidden-resource-id" value="${post?.resourceId}"/>
 
-                                            %{--<g:form controller="resourceRating" action="save"
-                                                    params="['resourceId': post.resourceId]">
-
-
-                                                <g:select name="score" from="${[1, 2, 3, 4, 5]}" optionKey="${it}"
-                                                          value="${post.score}" class="btn btn-default btn-sm dropdown-toggle"/>
-                                                &nbsp;
-                                                <g:submitButton class="btn btn-primary submitButtons" type="submit"
-                                                                name="submit" value="Vote"/>
-                                            </g:form>--}%
                                         </ls:canRate>
 
                                     </div>

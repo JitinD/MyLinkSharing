@@ -62,3 +62,10 @@
     font-size: small;
     text-overflow: ellipsis;
 }
+
+
+.topicNameClass{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

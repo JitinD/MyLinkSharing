@@ -10,7 +10,7 @@
                     <g:link controller = "user" action = "profile" params = "[id: topic.createdBy.id]">${topic.createdBy.name}</g:link>
                 </div>
 
-                <div class="col-xs-4"><a href="/topic/show?id=${topic.id}">${topic.name}</a></div>
+                <div class="col-xs-4 topicNameClass"><a style = "width: 100%"  title = "${topic.name}" href="/topic/show?id=${topic.id}">${topic.name}</a></div>
             </div>
 
             <div class = "row">

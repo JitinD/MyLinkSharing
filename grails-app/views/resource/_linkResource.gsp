@@ -61,11 +61,23 @@
             rules: {
                 'url': {
                     required: true
+                },
+                'description': {
+                    required: true
+                },
+                'name':{
+                    required: true
                 }
             },
             messages: {
                 'url': {
                     required: "Link name can't be blank."
+                },
+                'description': {
+                    required: "Description can't be blank."
+                },
+                'name':{
+                    required: "Topic can't be empty."
                 }
             }
         });

@@ -100,11 +100,12 @@ class UserController {
     def list(UserSearchCO userSearchCO) {
 
         userSearchCO.max = Constants.NUMBER_RECORDS_IN_LIST
+        userSearchCO.offset = userSearchCO.offset ?: 0
 
         if (session.user) {
             if (session.user.isAdmin) {
 
-                List<User> users = User.search(userSearchCO).list(max: userSearchCO.max, sort: userSearchCO.sort, order: userSearchCO.order)
+                List<User> users = User.search(userSearchCO).list(max: userSearchCO.max, offset: userSearchCO.offset, sort: userSearchCO.sort, order: userSearchCO.order)
 
                 List<UserVO> usersList = users?.collect {
                     user ->
@@ -112,7 +113,7 @@ class UserController {
                                 lastName: user.lastName, isActive: user.isActive)
                 }
 
-                render(view: "/user/list", model: [usersList: usersList])
+                render(view: "/user/list", model: [usersList: usersList, userSearchCO: userSearchCO, totalUsersCount: User.getTotalUsersCount()])
             } else
                 redirect(controller: "login", action: "index")
         }
@@ -266,4 +267,5 @@ class UserController {
 
         render result
     }
+
 }

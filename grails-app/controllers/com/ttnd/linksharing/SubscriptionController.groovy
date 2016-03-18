@@ -15,7 +15,7 @@ class SubscriptionController {
         else
             flash.error = g.message(code: "not.saved.subscription")
 
-        redirect(controller: "login", action: "index")
+        redirect(url: request.getHeader('referer'))
 
     }
 

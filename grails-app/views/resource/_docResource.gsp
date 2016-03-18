@@ -62,11 +62,23 @@
             rules: {
                 'file': {
                     required: true
+                },
+                'description': {
+                    required: true
+                },
+                'name':{
+                    required: true
                 }
             },
             messages: {
                 'file': {
                     required: "No file chosen."
+                },
+                'description': {
+                    required: "Description can't be blank."
+                },
+                'name':{
+                    required: "Topic can't be empty."
                 }
             }
         });

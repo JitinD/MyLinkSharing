@@ -268,4 +268,11 @@ class User {
         }
     }
 
+    public static Integer getTotalUsersCount(){
+
+        Integer numUsers = User.countByIsAdmin(false)
+
+        return numUsers
+    }
+
 }

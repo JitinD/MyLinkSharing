@@ -13,7 +13,9 @@ class DocumentResource extends Resource {
     static constraints = {
         filePath(blank: false, nullable: true)
         contentType(bindable: true, validator: {
-            value -> return value.equals(Constants.DOCUMENT_CONTENT_TYPE)
+            value, documentResource ->
+                if(!documentResource.id)
+                    return value.equals(Constants.DOCUMENT_CONTENT_TYPE)
         })
     }
 

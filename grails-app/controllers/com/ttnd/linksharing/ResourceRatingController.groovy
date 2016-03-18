@@ -7,9 +7,11 @@ class ResourceRatingController {
         Resource resource = Resource.get(resourceId)
         User user = session.user
 
-        ReadingItem readingItem = ReadingItem.findByUserAndResource(user, resource)
+        //ReadingItem readingItem = ReadingItem.findByUserAndResource(user, resource)
 
-        if(readingItem)
+        //if(readingItem)
+
+        if(Subscription.findByUserAndTopic(user, resource.topic))
         {
             ResourceRating resourceRating = ResourceRating.findOrCreateByUserAndResource(user, resource)
             resourceRating.score = score
@@ -20,7 +22,7 @@ class ResourceRatingController {
                 flash.error = g.message(code: "not.rated.resource")
         }
         else
-            flash.error = g.message(code: "not.found.resource")
+            flash.error = g.message(code: "not.found.subscription")
 
         redirect(url: request.getHeader('referer'))
     }

@@ -71,12 +71,21 @@ class TopicController {
             render jsonResponse
 
         } else {
-            Topic newTopic = new Topic(name: topicName, visibility: Visibility.getVisibility(visibility), createdBy: user)
+            if(topicName){
+                if(visibility){
+                    Topic newTopic = new Topic(name: topicName, visibility: Visibility.getVisibility(visibility), createdBy: user)
 
-            if (newTopic.saveInstance())
-                flash.message = g.message(code: "is.saved.topic")
-            else
-                flash.error = g.message(code: "not.saved.topic")
+                    if (newTopic.saveInstance())
+                        flash.message = g.message(code: "is.saved.topic")
+                    else
+                        flash.error = g.message(code: "not.saved.topic")
+
+                }else {
+                    flash.error = "Visibility not set."
+                }
+            }else {
+                flash.error = "Topic name not set."
+            }
 
             redirect(url: request.getHeader('referer'))
         }

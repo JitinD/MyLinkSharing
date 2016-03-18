@@ -8,7 +8,6 @@
 
 
 function ajaxSuccess(result) {
-
     if (result) {
         var jsonResponseDiv = $(".jsonResponse");
 
@@ -48,15 +47,30 @@ $(document).ready(function () {
     $(".markReadStatus").click(function (e) {
         e.preventDefault();
 
+        var elm = $(this);
+        var isRead = elm.attr('isRead');
+        var resourceId = elm.attr('resourceId');
+
         $.ajax({
             url: "/readingItem/changeIsRead",
-            data: {resourceId: $(this).attr('resourceId'), isRead: $(this).attr('isRead')},
-            success: /*function(){
-                if($(this).attr('isRead'))
-                    $("#readStatus").html("<a href = '' class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>")
-                else
-                    $("#readStatus").html("<a href = '' class = 'markReadStatus text-danger' resourceId = ${resourceId} isRead = ${isRead}>Mark as read</a>")
-            }*/location.reload()
+            data: {resourceId: resourceId, isRead: isRead},
+
+            success: function(result){
+                        ajaxSuccess(result);
+
+                        if(isRead){
+                            elm.removeClass("text-danger");
+                            elm.addClass("text-success");
+                            elm.text('Mark as unread');
+                            elm.attr('isRead').val(false)
+                        }
+                        else {
+                            elm.removeClass("text-success");
+                            elm.addClass("text-danger");
+                            elm.text('Mark as read');
+                            elm.attr('isRead').val(true)
+                        }
+                    }
         });
     });
 

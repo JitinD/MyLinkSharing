@@ -13,7 +13,7 @@
                     <g:formatDate format="dd-MM-yyyy" date="${post.createdDate}" style="MEDIUM"/>
                 </small>
             </div>
-            <div class = "col-xs-2"><a href="/topic/show?id=${post.topicId}">${post.topicName}</a></div>
+            <div class = "col-xs-2 text-right topicNameClass"><a style = "width: 100%"  title = "${post.topicName}" href="/topic/show?id=${post.topicId}">${post.topicName}</a></div>
         </div>
 
         <div class = "row">
@@ -29,7 +29,9 @@
                 <a href="#"><span class="fa fa-google-plus-square"></span></a>&nbsp;
             </div>
             <div class = "col-xs-6">
-                <ls:markAsRead id = "${post.resourceId}" isRead = "${post.isRead}"> </ls:markAsRead>&nbsp;
+                <g:if test="${controllerName == 'user' && actionName == 'index'}">
+                    <ls:markAsRead id = "${post.resourceId}" isRead = "${post.isRead}"> </ls:markAsRead>&nbsp;
+                </g:if>
                 <ls:showResource id = "${post.resourceId}" url = "${post.url}" filePath = "${post.filePath}"></ls:showResource>&nbsp;
                 <g:link controller = "resource" action = "show" params = "[id: post.resourceId]"><ins>View post</ins></g:link>
             </div>

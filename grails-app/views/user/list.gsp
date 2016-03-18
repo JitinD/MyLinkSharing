@@ -102,6 +102,7 @@
                     </tbody>
 
                 </table>
+                <g:paginate class = "pagination" total = "${totalUsersCount}" controller = "user" action = "list" max = "${userSearchCO.max}" offset = "${userSearchCO.offset}" />
             </div>
         </div>
     </div>

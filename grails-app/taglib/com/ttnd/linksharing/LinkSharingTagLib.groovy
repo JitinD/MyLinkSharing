@@ -17,8 +17,7 @@ class LinkSharingTagLib {
                 Boolean isRead = !attributes.isRead
                 User user = session.user
 
-                if(!(user.equals(Resource.get(resourceId).createdBy)))
-                {
+                if (!(user.equals(Resource.get(resourceId).createdBy))) {
                     if (attributes.isRead)
                         out << "<a href = '' class = 'markReadStatus text-success' resourceId = ${resourceId} isRead = ${isRead}>Mark as unread</a>"
                     else
@@ -186,16 +185,14 @@ class LinkSharingTagLib {
 
             if (user) {
 
-                if(topic && !(user.equals(topic.createdBy))){
+                if (topic && !(user.equals(topic.createdBy))) {
                     if (user.isSubscribed(topicId))
                         out << "<a class='col-xs-4' href = ${hrefUnsubscribe}><ins>Unsubscribe</ins></a>"
                     else
                         out << "<a class='col-xs-4' href = ${hrefSubscribe}><ins>Subscribe</ins></a>"
-                }
-                else
+                } else
                     out << "<div class = 'col-xs-4'></div>"
-            }
-            else
+            } else
                 out << "<div class = 'col-xs-4'></div>"
     }
 
@@ -265,7 +262,7 @@ class LinkSharingTagLib {
             User user = session.user
             Resource resource = Resource.get(attributes.id)
 
-            if (attributes.score && !(user.equals(resource.createdBy)))
+            if (attributes.score && !(user.equals(resource.createdBy)) && Subscription.findByUserAndTopic(user, resource.topic))
                 out << body()
     }
 }
