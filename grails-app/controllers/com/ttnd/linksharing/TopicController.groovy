@@ -27,11 +27,15 @@ class TopicController {
             } else if (topic.visibility == Visibility.PRIVATE) {
                 User user = session.user
 
-                if (Subscription.findByUserAndTopic(user, topic)) {
-                    render(view: "show", model: [topic: topic, subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts, searchCO: searchCO, topicPostsCount: topic.getTopicPostsCount()])
-                } else {
-                    flash.error = g.message(code: "not.found.subscription")
-                    redirect(controller: "login", action: "index")
+                if(user){
+                    if (Subscription.findByUserAndTopic(user, topic)) {
+                        render(view: "show", model: [topic: topic, subscribedUsers: topic.subscribedUsers, topicPosts: topicPosts, searchCO: searchCO, topicPostsCount: topic.getTopicPostsCount()])
+                    } else {
+                        flash.error = g.message(code: "not.found.subscription")
+                        redirect(controller: "login", action: "index")
+                    }
+                }else{
+                    flash.error = "User can't access the topic."
                 }
             }
         } else {

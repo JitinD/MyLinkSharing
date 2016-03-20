@@ -122,7 +122,6 @@ class Topic {
 
             order('lastUpdated', 'desc')
             createAlias('topic', 't')
-            eq('t.visibility', Visibility.PUBLIC)
             eq('t.id', id)
         }
 

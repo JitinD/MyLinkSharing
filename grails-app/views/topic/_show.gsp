@@ -117,7 +117,23 @@
                 var topicId = $(this).attr('topicId')
 
                 $("#deleteTopicConfirmationModal #id").val(topicId)
-            })
+            });
+
+
+            $(".saveTopicNameButton").click(function(){
+                topicId = $(this).attr('topicId');
+
+                $.ajax({
+                    url: "/topic/save",
+                    data: {topicName: $("#oldTopicName"+topicId).val(), newTopicName: $("#newTopicName"+topicId).val()},
+                    success:function(result){
+                        ajaxSuccess(result);
+                        location.reload();
+                    }
+
+                });
+            });
+
 
         });
     </script>
