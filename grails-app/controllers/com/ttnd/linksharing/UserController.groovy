@@ -57,7 +57,6 @@ class UserController {
         if (user.photo)
             photo = user.photo
         else {
-
             photo = assetResourceLocator.findAssetForURI('dummy.jpeg').byteArray
         }
         response.outputStream << photo

@@ -24,10 +24,23 @@
 
         <div class = "row">
             <div class = "col-xs-6">
-                <a href="#"><span class="fa fa-facebook-square"></span></a>&nbsp;
-                <a href="#"><span class="fa fa-twitter-square"></span></a>&nbsp;
-                <a href="#"><span class="fa fa-google-plus-square"></span></a>&nbsp;
+
+                <a href="" class = "fb_share_button" resourceId = "${post.resourceId}" resourceDescription = "${post.description}"
+                   topicName = "${post.topicName}">
+                    <span class="fa fa-facebook-square"></span>
+                </a>&nbsp;
+
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${post.description}&hashtags=${post.topicName}&url=http://127.0.0.1:8080/resource/show/${post.resourceId}">
+                    <span class="fa fa-twitter-square"></span>
+                </a>
+
+                <a href="https://plus.google.com/share?url={http://127.0.0.1:8080/resource/show/${post.resourceId}" onclick="window.open(this.href,
+                        '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                    <img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/>
+                </a>
+
             </div>
+
             <div class = "col-xs-6">
                 <g:if test="${controllerName == 'user' && actionName == 'index'}">
                     <ls:markAsRead id = "${post.resourceId}" isRead = "${post.isRead}"> </ls:markAsRead>&nbsp;

@@ -43,10 +43,13 @@ environments {
         }
     }
     production {
-/*
+
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            uri = new URI(System.env.DATABASE_URL ?: "mysql://root:igdefault@localhost")
+            username = uri.userInfo ? uri.userInfo.split(":")[0] : ""
+            password = uri.userInfo ? uri.userInfo.split(":")[1] : ""
+            url = "jdbc:mysql://" + uri.host + uri.path
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true
@@ -68,8 +71,9 @@ environments {
                defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
             }
         }
-*/
 
+
+/*
         dataSource {
             dbCreate = "update"
             driverClassName = "org.postgresql.Driver"
@@ -81,6 +85,7 @@ environments {
             username = uri.userInfo.split(":")[0]
             password = uri.userInfo.split(":")[1]
         }
+*/
 
 
 

@@ -91,5 +91,20 @@ $(document).ready(function () {
         $(this).find('form')[0].reset();
     });
 
+    $('.fb_share_button').click(function(e){
+        e.preventDefault();
+        var id = $(this).attr('resourceId');
+        var description = $(this).attr('resourceDescription');
+        var topicName = $(this).attr('topicName');
+
+        FB.ui(
+            {
+                method: 'feed',
+                name: 'A new post on '+topicName,
+                link: ' http://127.0.0.1:8080/resource/show/'+id,
+                description: description
+            });
+    });
+
 });
 
