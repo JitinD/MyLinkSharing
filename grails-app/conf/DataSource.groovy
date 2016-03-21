@@ -43,6 +43,7 @@ environments {
         }
     }
     production {
+/*
         dataSource {
             dbCreate = "update"
             url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
@@ -67,5 +68,21 @@ environments {
                defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
             }
         }
+*/
+
+        dataSource {
+            dbCreate = "update"
+            driverClassName = "org.postgresql.Driver"
+            dialect = org.hibernate.dialect.PostgreSQLDialect
+
+            uri = new URI(System.env.DATABASE_URL?:"postgres://nhsdyxjpmkemje:MCgOcbLe9lUveUtM82xyrhPMo1@ec2-107-22-246-250.compute-1.amazonaws.com:5432/d9f8i909lc0s36")
+
+            url = "jdbc:postgresql://" + uri.host + ":" + uri.port + uri.path
+            username = uri.userInfo.split(":")[0]
+            password = uri.userInfo.split(":")[1]
+        }
+
+
+
     }
 }
