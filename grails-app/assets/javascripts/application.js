@@ -101,7 +101,7 @@ $(document).ready(function () {
             {
                 method: 'feed',
                 name: 'A new post on '+topicName,
-                link: ' http://127.0.0.1:8080/resource/show/'+id,
+                link: 'http://linksharing.cfapps.io/resource/show/'+id,
                 description: description
             });
     });

@@ -30,12 +30,12 @@
                     <span class="fa fa-facebook-square"></span>
                 </a>&nbsp;
 
-                <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${post.description}&hashtags=${post.topicName}&url=http://127.0.0.1:8080/resource/show/${post.resourceId}"
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${post.description}&hashtags=${post.topicName}&url=http://linksharing.cfapps.io/resource/show/${post.resourceId}"
                    onclick="window.open(this.href, '', 'menubar=no, toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
                     <span class="fa fa-twitter-square"></span>
-                </a>
+                </a>&nbsp;
 
-                <a href="https://plus.google.com/share?url={http://127.0.0.1:8080/resource/show/${post.resourceId}" onclick="window.open(this.href,
+                <a href="https://plus.google.com/share?url={http://linksharing.cfapps.io/resource/show/${post.resourceId}" onclick="window.open(this.href,
                         '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
                     <img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/>
                 </a>
