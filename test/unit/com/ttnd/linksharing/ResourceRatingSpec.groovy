@@ -34,7 +34,7 @@ class ResourceRatingSpec extends Specification {
     def "validating a resource is only rated once by a user"()
     {
         setup:
-        User user = new User(userName: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
+        User user = new User(username: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
         Resource resource = new DocumentResource(description: "testDocResource", createdBy: user, filePath: "test/doc")
 
         ResourceRating resourceRating = new ResourceRating(resource: resource, user: user, score: 3)

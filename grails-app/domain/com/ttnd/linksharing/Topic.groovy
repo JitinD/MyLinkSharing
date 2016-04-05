@@ -95,14 +95,13 @@ class Topic {
         }
 
         userList.each {
-            user -> userVOList.add(new UserVO(userId: user.id, name: user.name, userName: user.userName, emailID: user.emailID, photo: user.photo))
+            user -> userVOList.add(new UserVO(userId: user.id, name: user.name, username: user.username, emailID: user.emailID, photo: user.photo))
         }
 
         return userVOList
     }
 
-    public List<User> getSubscribedUsersList()
-    {
+    public List<User> getSubscribedUsersList() {
         List<User> userList = Subscription.createCriteria().list {
             projections {
                 property('user')
@@ -128,7 +127,7 @@ class Topic {
         topicPosts.each {
             post ->
                 topicPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
-                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
+                        user: post.createdBy.name, username: post.createdBy.username, topicName: post.topic.name,
                         description: post.description, url: post instanceof LinkResource ? post.url : null,
                         filePath: post instanceof DocumentResource ? post.filePath : null, createdDate: post.dateCreated))
         }
@@ -162,7 +161,7 @@ class Topic {
                 }
     }
 
-    public Integer getTopicPostsCount(){
+    public Integer getTopicPostsCount() {
         return Resource.countByTopic(this)
     }
 }

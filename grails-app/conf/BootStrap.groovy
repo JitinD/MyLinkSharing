@@ -3,9 +3,11 @@ import com.ttnd.linksharing.LinkResource
 import com.ttnd.linksharing.ReadingItem
 import com.ttnd.linksharing.Resource
 import com.ttnd.linksharing.ResourceRating
+import com.ttnd.linksharing.Role
 import com.ttnd.linksharing.Subscription
 import com.ttnd.linksharing.Topic
 import com.ttnd.linksharing.User
+import com.ttnd.linksharing.UserRole
 import com.ttnd.linksharing.constants.Constants
 import enums.Seriousness
 import enums.Visibility
@@ -17,7 +19,7 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        List<User> users = createUsers()
+        List<User> users = createUsersAndRoles()
         List<Topic> topics = createTopics()
         List<Resource> resources = createResources()
         List<Subscription> subscriptions = subscribeTopics()
@@ -26,36 +28,43 @@ class BootStrap {
 
     }
 
-    List<User> createUsers() {
+
+    List<User> createUsersAndRoles() {
         List<User> users = []
 
-        User normalUser = new User('userName': 'normal', emailID: 'normal@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
-        User adminUser = new User('userName': 'admin', emailID: 'admin@mail.com', password: Constants.DEFAULT_PASSWORD,  confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'admin', lastName: 'user', isAdmin: true, isActive: true)
-        User firstUser = new User('userName': 'first', emailID: 'first@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'first', lastName: 'user', isAdmin: false, isActive: true)
-        User secondUser = new User('userName': 'second', emailID: 'second@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'second', lastName: 'user', isAdmin: false, isActive: true)
-        User thirdUser = new User('userName': 'third', emailID: 'third@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'third', lastName: 'user', isAdmin: false, isActive: true)
-        User fourthUser = new User('userName': 'fourth', emailID: 'fourth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fourth', lastName: 'user', isAdmin: false, isActive: true)
-        User fifthUser = new User('userName': 'fifth', emailID: 'fifth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fifth', lastName: 'user', isAdmin: false, isActive: true)
+        User normalUser = new User(username: 'normal', emailID: 'normal@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'normal', lastName: 'user', isAdmin: false, isActive: true)
+        User adminUser = new User(username: 'admin', emailID: 'admin@mail.com', password: Constants.DEFAULT_PASSWORD, firstName: 'admin', lastName: 'user', isAdmin: true, isActive: true)
+        User firstUser = new User('username': 'first', emailID: 'first@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'first', lastName: 'user', isAdmin: false, isActive: true)
+        User secondUser = new User('username': 'second', emailID: 'second@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'second', lastName: 'user', isAdmin: false, isActive: true)
+        User thirdUser = new User('username': 'third', emailID: 'third@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'third', lastName: 'user', isAdmin: false, isActive: true)
+        User fourthUser = new User('username': 'fourth', emailID: 'fourth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fourth', lastName: 'user', isAdmin: false, isActive: true)
+        User fifthUser = new User('username': 'fifth', emailID: 'fifth@mail.com', password: Constants.DEFAULT_PASSWORD, confirmPassword: Constants.DEFAULT_PASSWORD, firstName: 'fifth', lastName: 'user', isAdmin: false, isActive: true)
 
-        def list = [normalUser, adminUser]
+        Role normalRole = Role.findOrSaveWhere(authority: 'ROLE_NORMAL')
+        Role adminRole = Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
+
+        /*def list = [normalUser, adminUser]*/
 
         if (User.count() == 0) {
             log.info "Initially, no users exist in the table"
 
-            list.each{
-                user -> if (user.saveInstance()) {
-                    users.add(user)
-                }
-            }
+            /*list.each {
+                user ->
+                    if (user.saveInstance()) {
+                        users.add(user)
+                    }
+            }*/
 
-            /*if (normalUser.saveInstance()) {
+            if (normalUser.saveInstance()) {
                 users.add(normalUser)
+                UserRole.create(normalUser, normalRole, true)
             }
 
             if (adminUser.saveInstance()) {
-
                 users.add(adminUser)
-            }*/
+                UserRole.create(adminUser, adminRole, true)
+                UserRole.create(adminUser, normalRole, true)
+            }
         } else
             log.info "There are some records present in the table. Hence, could not perform desired operations."
 

@@ -7,7 +7,7 @@ import grails.validation.Validateable
 class UserUpdateCO {
 
     Long id
-    String userName;
+    String username;
     String firstName;
     String lastName;
     byte[] photo;

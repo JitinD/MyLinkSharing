@@ -30,7 +30,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xs-8 text-muted"><small>(@${post.userName})</small></div>
+                                    <div class="col-xs-8 text-muted"><small>(@${post.username})</small></div>
 
                                     <div class="col-xs-offset-1 col-xs-3">
                                         <g:formatDate format="dd-MM-yyyy" date="${post.createdDate}" style="MEDIUM"/>

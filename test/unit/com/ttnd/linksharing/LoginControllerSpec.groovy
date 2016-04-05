@@ -46,14 +46,14 @@ class LoginControllerSpec extends Specification {
     def "testing login/loginHandler when user is not found"() {
 
         when:
-        controller.loginHandler(userName, password)
+        controller.loginHandler(username, password)
 
         then:
         flash.error == "User not found"
         response.contentAsString == flash.error
 
         where:
-        userName  | password
+        username  | password
         null      | "wrongPassword"
         ""        | "wrongPassword"
         "notInDB" | null
@@ -64,19 +64,19 @@ class LoginControllerSpec extends Specification {
     def "testing login/loginHandler when user found is inactive"() {
 
         setup:
-        User user = new User(userName:userName, password: password, isActive: false)
+        User user = new User(username:username, password: password, isActive: false)
         user.save(validate: false)
         session.user = user
 
         when:
-        controller.loginHandler(userName, password)
+        controller.loginHandler(username, password)
 
         then:
         flash.error == "User account is not active"
         response.contentAsString == flash.error
 
         where:
-        userName | password
+        username | password
         "normal" | "defaultPassword"
 
     }
@@ -84,19 +84,19 @@ class LoginControllerSpec extends Specification {
     def "testing login/loginHandler when user found is active"() {
 
         setup:
-        User user = new User(userName:userName, password: password, isActive: true)
+        User user = new User(username:username, password: password, isActive: true)
         user.save(validate: false)
         session.user = user
 
         when:
-        controller.loginHandler(userName, password)
+        controller.loginHandler(username, password)
 
         then:
         session.user != null
         response.redirectedUrl == "/"
 
         where:
-        userName | password
+        username | password
         "normal" | "defaultPassword"
     }
 

@@ -62,10 +62,10 @@
                                     <label class="form-control-label col-xs-4">Username*</label>
 
                                     <div class="col-xs-8">
-                                        <input name = "userName" id = "userName" type="text" value = "${user?.userName}" class="form-control">
+                                        <input name = "username" id = "username" type="text" value = "${user?.username}" class="form-control">
                                     </div>
 
-                                    <div class="alert-danger"> <g:fieldError field="userName" bean="${user}"/></div>
+                                    <div class="alert-danger"> <g:fieldError field="username" bean="${user}"/></div>
                                 </div>
 
                                 <div class="form-group row">
@@ -164,10 +164,10 @@
                             'lastName': {
                                 required: true
                             },
-                            'userName': {
+                            'username': {
                                 required: true,
                                 /*remote: {
-                                    url: "/login/validateUserName",
+                                    url: "/login/validateUsername",
                                     type: "post"
                                 }*/
                             }
@@ -179,7 +179,7 @@
                             'lastName': {
                                 required: "Last name can't be blank",
                             },
-                            'userName': {
+                            'username': {
                                 required: "User name can't be blank",
                                 remote: "User name entered already exist"
                             }

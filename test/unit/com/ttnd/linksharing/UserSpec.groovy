@@ -13,7 +13,7 @@ class UserSpec extends Specification {
     @Unroll
     def "validating User basic constraints related to blank, nullable and size : #sno"() {
         setup:
-        User user = new User(userName: userName, firstName: firstName, lastName: lastName, emailID: emailID, password: password);
+        User user = new User(username: username, firstName: firstName, lastName: lastName, emailID: emailID, password: password);
 
         when:
         Boolean isValid = user.validate()
@@ -23,28 +23,28 @@ class UserSpec extends Specification {
 
         where:
 
-        sno | userName       | firstName       | lastName       | emailID             | password       | isAdmin | isActive | photo         | result
+        sno | username       | firstName       | lastName       | emailID             | password       | isAdmin | isActive | photo         | result
         1   | ""             | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
         2   | null           | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
-        3   | "testUserName" | ""              | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
-        4   | "testUserName" | null            | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
-        5   | "testUserName" | "testFirstName" | ""             | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
-        6   | "testUserName" | "testFirstName" | null           | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
-        7   | "testUserName" | "testFirstName" | "testLastName" | ""                  | "testPassword" | true    | true     | "photo".bytes | false
-        8   | "testUserName" | "testFirstName" | "testLastName" | null                | "testPassword" | true    | true     | "photo".bytes | false
-        9   | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | ""             | true    | true     | "photo".bytes | false
-        10  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | null           | true    | true     | "photo".bytes | false
-        11  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | false   | true     | "photo".bytes | true
-        12  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
-        13  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | null    | true     | "photo".bytes | true
-        14  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | false    | "photo".bytes | true
-        15  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
-        16  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | null     | "photo".bytes | true
-        17  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "".bytes      | true
-        18  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | null          | true
-        19  | "testUserName" | "testFirstName" | "testLastName" | "testUsermail.com"  | "testPassword" | true    | true     | "photo".bytes | false
-        20  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "test"         | true    | true     | "photo".bytes | false
-        21  | "testUserName" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
+        3   | "testUsername" | ""              | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        4   | "testUsername" | null            | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        5   | "testUsername" | "testFirstName" | ""             | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        6   | "testUsername" | "testFirstName" | null           | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | false
+        7   | "testUsername" | "testFirstName" | "testLastName" | ""                  | "testPassword" | true    | true     | "photo".bytes | false
+        8   | "testUsername" | "testFirstName" | "testLastName" | null                | "testPassword" | true    | true     | "photo".bytes | false
+        9   | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | ""             | true    | true     | "photo".bytes | false
+        10  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | null           | true    | true     | "photo".bytes | false
+        11  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | false   | true     | "photo".bytes | true
+        12  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
+        13  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | null    | true     | "photo".bytes | true
+        14  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | false    | "photo".bytes | true
+        15  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
+        16  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | null     | "photo".bytes | true
+        17  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "".bytes      | true
+        18  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | null          | true
+        19  | "testUsername" | "testFirstName" | "testLastName" | "testUsermail.com"  | "testPassword" | true    | true     | "photo".bytes | false
+        20  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "test"         | true    | true     | "photo".bytes | false
+        21  | "testUsername" | "testFirstName" | "testLastName" | "testUser@mail.com" | "testPassword" | true    | true     | "photo".bytes | true
 
     }
 
@@ -52,8 +52,8 @@ class UserSpec extends Specification {
     def "validating email address is unique for users"() {
 
         setup:
-        User user = new User(userName: "testUser1", firstName: "test", lastName: "user", emailID: "testUser@mail.com", password: "testPassword")
-        User newUser = new User(userName: "testUser1", firstName: "test", lastName: "user", emailID: "testUser@mail.com", password: "testPassword")
+        User user = new User(username: "testUser1", firstName: "test", lastName: "user", emailID: "testUser@mail.com", password: "testPassword")
+        User newUser = new User(username: "testUser1", firstName: "test", lastName: "user", emailID: "testUser@mail.com", password: "testPassword")
 
         when:
         user.save(flush: true)
@@ -83,7 +83,7 @@ class UserSpec extends Specification {
 
     def "validating toString of user"() {
         setup:
-        User user = new User(userName: userName)
+        User user = new User(username: username)
 
         when:
         String name = user.toString()
@@ -93,7 +93,7 @@ class UserSpec extends Specification {
         name == result
 
         where:
-        userName       | result
-        "testUserName" | "testUserName"
+        username       | result
+        "testUsername" | "testUsername"
     }
 }

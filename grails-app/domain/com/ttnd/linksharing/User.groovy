@@ -1,55 +1,71 @@
 package com.ttnd.linksharing
 
 import CO.SearchCO
-import CO.TopicSearchCO
 import CO.UserSearchCO
 import VO.PostVO
 import VO.TopicVo
 import VO.UserVO
-import com.ttnd.linksharing.constants.Constants
+import grails.util.Holders
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
-class User {
+@EqualsAndHashCode(includes = 'username')
+@ToString(includes = 'username', includeNames = true, includePackage = false)
+class User implements Serializable {
 
-    String userName;
-    String password;
-    String confirmPassword;
+    String username
+    String password
     String firstName;
     String lastName;
     String emailID;
     byte[] photo;
-    Boolean isAdmin;
-    Boolean isActive
+    boolean enabled = true
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
     Date dateCreated;
     Date lastUpdated;
 
-    static transients = ['confirmPassword', 'subscribedTopics', 'subscribedTopicsList'];
+    private static final long serialVersionUID = 1
+
+    transient springSecurityService
+
+    Set<Role> getAuthorities() {
+        UserRole.findAllBySecUser(this)*.secRole
+    }
+
+    def beforeInsert() {
+        encodePassword()
+    }
+
+    def beforeUpdate() {
+        if (isDirty('password')) {
+            encodePassword()
+        }
+    }
+
+    protected void encodePassword() {
+        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+    }
+
+    static transients = ['springSecurityService', 'confirmPassword', 'subscribedTopics', 'subscribedTopicsList']
 
     static constraints = {
-        userName(blank: false, unique: true)
         emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
-
-        confirmPassword(bindable: true, nullable: true, blank: true, validator: {
-            value, user ->
-                if (!user.id) {
-                    return value && value == user.password
-                }
-        })
-
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
         photo(nullable: true)
-        isActive(nullable: true)
-        isAdmin(nullable: true)
+    }
+
+    static mapping = {
+        password column: '`password`'
+        photo sqlType: 'longblob'
+        sort id: 'desc'
     }
 
     String getName() {
         return [firstName, lastName].findAll { it }.join(' ');
-    }
-
-    static mapping = {
-        photo sqlType: 'longblob'
-        sort id: 'desc'
     }
 
     static hasMany = [topics: Topic, subscriptions: Subscription, readingItems: ReadingItem, resources: Resource, resourceRatings: ResourceRating]
@@ -65,7 +81,7 @@ class User {
                                 ilike('firstName', "%${userSearchCO.q}%")
                                 ilike('lastName', "%${userSearchCO.q}%")
                                 ilike('emailID', "%${userSearchCO.q}%")
-                                ilike('userName', "%${userSearchCO.q}%")
+                                ilike('username', "%${userSearchCO.q}%")
 
                             }
                 }
@@ -85,7 +101,7 @@ class User {
 
 
     String toString() {
-        return userName ?: ""
+        return username ?: ""
     }
 
 
@@ -175,7 +191,7 @@ class User {
         inboxPosts.each {
             post ->
                 inboxPostVOs.add(new PostVO(userId: post[0].createdBy.id, topicId: post[0].topic.id, resourceId: post[0].id,
-                        isRead: post[1], user: post[0].createdBy.name, userName: post[0].createdBy.userName,
+                        isRead: post[1], user: post[0].createdBy.name, username: post[0].createdBy.username,
                         topicName: post[0].topic.name, description: post[0].description, url: post[0].class.equals(LinkResource) ? post[0].url : null,
                         filePath: post[0].class.equals(DocumentResource) ? post[0].filePath : null, createdDate: post[0].dateCreated))
         }
@@ -184,7 +200,7 @@ class User {
     }
 
     public UserVO getInfo() {
-        UserVO userVO = new UserVO(userId: this.id, name: this.name, userName: this.userName, emailID: this.emailID,
+        UserVO userVO = new UserVO(userId: this.id, name: this.name, username: this.username, emailID: this.emailID,
                 firstName: this.firstName, lastName: this.lastName, photo: this.photo)
 
         return userVO
@@ -236,7 +252,7 @@ class User {
         createdPosts.each {
             post ->
                 createdPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
-                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
+                        user: post.createdBy.name, username: post.createdBy.username, topicName: post.topic.name,
                         description: post.description, url: post.class.equals(LinkResource) ? post.url : null,
                         filePath: post.class.equals(DocumentResource) ? post.filePath : null, createdDate: post.dateCreated))
         }
@@ -256,9 +272,9 @@ class User {
         return Subscription.countByUser(this)
     }
 
-    public unreadResources(){
+    public unreadResources() {
 
-        List<Resource> resourceList = ReadingItem.createCriteria().list(){
+        List<Resource> resourceList = ReadingItem.createCriteria().list() {
 
             projections {
                 property('resource')
@@ -268,11 +284,21 @@ class User {
         }
     }
 
-    public static Integer getTotalUsersCount(){
+    public static Integer getTotalUsersCount() {
 
         Integer numUsers = User.countByIsAdmin(false)
 
         return numUsers
     }
 
+    static User loggedInUser() {
+        return Holders.applicationContext.getBean('springSecurityService').getCurrentUser()
+    }
+
+    Boolean isAdmin(){
+
+        this.authorities.any{
+            it.authority == 'ROLE_ADMIN'
+        }
+    }
 }

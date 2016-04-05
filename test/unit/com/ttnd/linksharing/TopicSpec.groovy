@@ -14,7 +14,7 @@ class TopicSpec extends Specification {
     def "validate topic name is unique per user"() {
         setup:
 
-        User user = new User(userName: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
+        User user = new User(username: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
         Topic topic = new Topic(name: "testTopic", visibility: Visibility.PRIVATE, createdBy: user)
         Topic newTopic = new Topic(name: "testTopic", visibility: Visibility.PRIVATE, createdBy: user)
 
@@ -34,7 +34,7 @@ class TopicSpec extends Specification {
 
         setup:
 
-        //User user = new User(userName: "JitinD", firstName: "Jitin", lastName: "Dominic", emailID: 'jitin.dominic@gmail.com', password: '123456')
+        //User user = new User(username: "JitinD", firstName: "Jitin", lastName: "Dominic", emailID: 'jitin.dominic@gmail.com', password: '123456')
         Topic topic = new Topic(name: topicName, visibility: visibility, createdBy: newUser)
 
         when:

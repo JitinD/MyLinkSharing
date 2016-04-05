@@ -37,7 +37,7 @@ class SubscriptionSpec extends Specification {
 
     def "validating user is subscribed to unique topics"()
     {
-        User user = new User(userName: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
+        User user = new User(username: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
         Topic topic = new Topic(name: "testTopic", visibility: Visibility.PRIVATE, createdBy: user)
         Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.SERIOUS)
         Subscription newSubscription = new Subscription(user: user, topic: topic, seriousness: Seriousness.SERIOUS)

@@ -108,7 +108,7 @@ abstract class Resource {
         topPosts.each {
             post ->
                 topPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
-                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
+                        user: post.createdBy.name, username: post.createdBy.username, topicName: post.topic.name,
                         description: post.description, url: post.class.equals(LinkResource) ? post.url : null,
                         filePath: post.class.equals(DocumentResource) ? post.filePath : null, createdDate: post.dateCreated))
         }
@@ -132,7 +132,7 @@ abstract class Resource {
         recentPosts.each {
             post ->
                 recentPostVOs.add(new PostVO(userId: post.createdBy.id, topicId: post.topic.id, resourceId: post.id,
-                        user: post.createdBy.name, userName: post.createdBy.userName, topicName: post.topic.name,
+                        user: post.createdBy.name, username: post.createdBy.username, topicName: post.topic.name,
                         description: post.description, url: post.class.equals(LinkResource) ? post.url : null,
                         filePath: post.class.equals(DocumentResource) ? post.filePath : null, createdDate: post.dateCreated))
         }
@@ -158,7 +158,7 @@ abstract class Resource {
                 {
                     resourceInfo ->
                         postVO = new PostVO(userId: resourceInfo.createdBy.id, topicId: resourceInfo.topic.id, resourceId: resourceInfo.id, user: resourceInfo.createdBy.name,
-                                userName: resourceInfo.createdBy.userName, topicName: resourceInfo.topic.name, description: resourceInfo.description,
+                                username: resourceInfo.createdBy.username, topicName: resourceInfo.topic.name, description: resourceInfo.description,
                                 url: resourceInfo.class.equals(LinkResource) ? resourceInfo.url : null, filePath: resourceInfo.class.equals(DocumentResource) ? resourceInfo.filePath : null,
                                 createdDate: resourceInfo.dateCreated)
                 }

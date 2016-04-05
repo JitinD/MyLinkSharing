@@ -52,7 +52,7 @@
                     <thead>
                         <tr>
                             <g:sortableColumn property="id" title ="Id"/>
-                            <g:sortableColumn property="userName" title ="Username"/>
+                            <g:sortableColumn property="username" title ="Username"/>
                             <g:sortableColumn property="emailID" title ="Email"/>
                             <g:sortableColumn property="firstName" title ="First name"/>
                             <g:sortableColumn property="lastName" title ="Last name"/>
@@ -71,7 +71,7 @@
 
                             <tr class = "${bootstrapClass}">
                                 <td>${user.userId}</td>
-                                <td>${user.userName}</td>
+                                <td>${user.username}</td>
                                 <td>${user.emailID}</td>
                                 <td>${user.firstName}</td>
                                 <td>${user.lastName}</td>

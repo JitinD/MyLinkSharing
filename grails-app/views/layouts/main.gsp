@@ -1,3 +1,4 @@
+<%@ page import="com.ttnd.linksharing.User" %>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -74,7 +75,7 @@
                                 </div>
                             </g:form>
                         </li>
-                        <g:if test="${session.user}">
+                        <g:if test="${User.loggedInUser()}">
                             <li>
                                 <a class="btn" data-toggle="modal" data-target="#createTopicModal" title = "Create topic" >
                                     <span class="fa fa-weixin modalIcons" ></span></a>
@@ -101,7 +102,7 @@
                                 <div class="dropdown">
                                     <a class="btn dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-user"  style= "color: #4ba2f7; font-size: xx-large"></span>
-                                        <span  class = "modalIcons">${session.user}</span>
+                                        <span  class = "modalIcons">${User.loggedInUser()}</span>
                                         <span class="caret modalIcons"></span>
                                     </a>
 
@@ -113,7 +114,7 @@
                                         </li>
 
                                         <li>
-                                            <g:if test = "${session.user.isAdmin}">
+                                            <g:if test = "${User.loggedInUser().isAdmin()}">
                                                 <g:link controller = "user" action = "list">
                                                     Users
                                                 </g:link>
@@ -121,7 +122,7 @@
                                         </li>
 
                                         <li>
-                                            <g:link controller = "login" action = "logout">
+                                            <g:link controller = "logout" action = "index">
                                                 Logout
                                             </g:link>
                                         </li>
@@ -134,7 +135,8 @@
             </div>
         </nav>
 
-        <g:if test="${session.user}">
+
+        <g:if test="${User.loggedInUser()}">
             <g:render template="/topic/create"/>
             <g:render template="/topic/email"/>
             <g:render template="/resource/docResource"/>
@@ -168,6 +170,7 @@
 
         <asset:javascript src="bootstrap.min.js"/>
         <asset:javascript src="application.js"/>
+
 
     </body>
 </html>

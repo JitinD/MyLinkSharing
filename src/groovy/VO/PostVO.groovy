@@ -11,7 +11,7 @@ class PostVO {
     Boolean isRead
     Integer score
     String user
-    String userName
+    String username
     String topicName
     String description
     String url

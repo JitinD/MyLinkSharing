@@ -13,5 +13,9 @@ class UrlMappings {
         //"500"(view:'/error')
         "404"(view: 'error404')
         "500"(view: "error500")
-	}
+
+        "/login/$action?"(controller: "login")
+        "/logout/$action?"(controller: "logout")
+
+    }
 }

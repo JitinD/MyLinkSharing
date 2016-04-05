@@ -61,7 +61,7 @@ class LinkSharingTagLib {
 
         attributes ->
 
-            User user = session.user
+            User user = /*session.user*/ User.loggedInUser()
 
             List<TopicVo> subscribedTopicsList = user.getSubscribedTopicsList()
 

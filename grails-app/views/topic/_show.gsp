@@ -25,7 +25,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-4 text-muted"><small>(@${topic.createdBy.userName})</small></div>
+                <div class="col-xs-4 text-muted"><small>(@${topic.createdBy.username})</small></div>
 
                 <div class="col-xs-4 text-muted">Subscriptions</div>
 

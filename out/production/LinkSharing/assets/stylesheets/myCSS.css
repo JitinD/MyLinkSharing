@@ -1,0 +1,71 @@
+.modalIcons
+{
+    color: #4ba2f7!important;
+    font-size: x-large!important;
+}
+
+.panelIcons{
+    color: #4ba2f7!important;
+    font-size: large;!important;
+}
+.navBarHeader
+{
+    background-color: #cfd7ff!important;
+    height: 70px!important;
+}
+
+.navBarHeaderBrand
+{
+    color: #4ba2f7!important;
+    font-size: x-large!important;
+    font-weight: bolder!important;
+}
+
+.searchButtons
+{
+    background-color:#4ba2f7!important;
+}
+
+.panelHeaders
+{
+    background-color: #cfd7ff!important;
+}
+
+.panelHeadersText
+{
+    color: #4ba2f7;
+    font-weight: bold;
+}
+
+.submitButtons
+{
+    background-color:#4ba2f7!important;
+}
+
+.image{
+    width:80px!important;
+    height:70px!important;
+}
+
+.error{
+    color: red;
+}
+
+.bodyContainer{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#postDescription{
+    max-height: 4em;
+    overflow: hidden;
+    font-size: small;
+    text-overflow: ellipsis;
+}
+
+
+.topicNameClass{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

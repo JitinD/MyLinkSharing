@@ -1,7 +1,9 @@
 package com.ttnd.linksharing
 
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_NORMAL'])
 class ReadingItemController {
 
     def changeIsRead(Long resourceId, Boolean isRead) {

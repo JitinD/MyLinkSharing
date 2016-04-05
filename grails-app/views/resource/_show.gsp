@@ -9,7 +9,7 @@
             <div class = "col-xs-10">
                 <g:link controller = "user" action = "profile" params = "[id: post.userId]">${post.user}</g:link>
                 <small>
-                    (@${post.userName}) on
+                    (@${post.username}) on
                     <g:formatDate format="dd-MM-yyyy" date="${post.createdDate}" style="MEDIUM"/>
                 </small>
             </div>

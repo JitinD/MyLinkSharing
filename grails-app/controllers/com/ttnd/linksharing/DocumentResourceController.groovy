@@ -1,11 +1,14 @@
 package com.ttnd.linksharing
 
 import com.ttnd.linksharing.constants.Constants
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
+@Secured(['permitAll'])
 class DocumentResourceController extends ResourceController {
 
 
+    @Secured(['ROLE_NORMAL, ROLE_ADMIN'])
     @Transactional
     def save(DocumentResource documentResource) {
 

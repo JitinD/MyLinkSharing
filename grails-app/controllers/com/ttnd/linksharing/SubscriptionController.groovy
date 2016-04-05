@@ -2,7 +2,9 @@ package com.ttnd.linksharing
 
 import enums.Seriousness
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_NORMAL'])
 class SubscriptionController {
 
     def save(Long topicId) {

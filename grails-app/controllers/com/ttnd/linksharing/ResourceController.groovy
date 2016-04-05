@@ -4,10 +4,12 @@ import CO.ResourceSearchCO
 import VO.PostVO
 import VO.TopicVo
 import enums.Visibility
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['permitAll'])
 class ResourceController {
 
-
+    @Secured(['ROLE_NORMAL'])
     private addToReadingItems(Resource resource) {
 
         Topic topic = resource.topic
@@ -21,7 +23,7 @@ class ResourceController {
         }
     }
 
-
+    @Secured(['ROLE_NORMAL'])
     def delete(Long id) {
         Resource resource = Resource.load(id)
         User user = session.user
@@ -88,12 +90,13 @@ class ResourceController {
         }
     }
 
+    @Secured(['ROLE_NORMAL'])
     def showTrendingTopics() {
         List result = Topic.getTrendingTopics()
         return result
     }
 
-
+    @Secured(['ROLE_NORMAL'])
     def saveDocResource(String filePath, String description, String topicName) {
         User user = session.user
         Topic topic = Topic.findByNameAndCreatedBy(topicName, user)
@@ -110,6 +113,7 @@ class ResourceController {
         }
     }
 
+    @Secured(['ROLE_NORMAL'])
     def save(Long id, String description) {
 
         Resource resource = Resource.get(id)

@@ -7,7 +7,7 @@ class UserVO {
 
     Long userId
     String name
-    String userName
+    String username
     String emailID
     String firstName
     String lastName

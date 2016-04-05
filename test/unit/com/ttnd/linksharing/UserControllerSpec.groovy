@@ -12,7 +12,7 @@ class UserControllerSpec extends Specification {
     def "validating user/index"()
     {
         setup:
-        User user = new User(userName: "testUser")
+        User user = new User(username: "testUser")
         session.user = user
 
         when:

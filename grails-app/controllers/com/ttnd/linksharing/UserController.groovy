@@ -13,8 +13,9 @@ import VO.TopicVo
 import VO.UserVO
 import com.ttnd.linksharing.constants.Constants
 import enums.Visibility
+import grails.plugin.springsecurity.annotation.Secured
 
-
+@Secured(['permitAll'])
 class UserController {
 
     def assetResourceLocator
@@ -22,23 +23,25 @@ class UserController {
     def subscriptionService
     def emailService
     def messageSource
+    def springSecurityService
 
+    @Secured(['ROLE_NORMAL'])
     def index(SearchCO searchCO) {
 
         searchCO.max = searchCO.max ?: 5
         searchCO.offset = searchCO.offset ?: 0
-
-        render(view: 'index', model: [user                : session.user?.getInfo(), subscribedTopics: session.user?.subscribedTopics,
-                                      trendingTopics      : Topic.getTrendingTopics(), inboxPosts: session.user?.getInboxPosts(searchCO),
-                                      subscribedTopicsList: session.user?.getSubscribedTopicsList(), searchCO: searchCO, totalInboxPosts: session.user.getInboxPostsCount()])
+        User user = User.loggedInUser()
+        render(view: 'index', model: [user                : user?.getInfo(), subscribedTopics: user?.subscribedTopics,
+                                      trendingTopics      : Topic.getTrendingTopics(), inboxPosts: user?.getInboxPosts(searchCO),
+                                      subscribedTopicsList: user?.getSubscribedTopicsList(), searchCO: searchCO, totalInboxPosts: user.getInboxPostsCount()])
     }
 
     def profile(ResourceSearchCO resourceSearchCO) {
 
         User user = User.get(resourceSearchCO.id)
 
-        if (session.user) {
-            if (!(session.user.isAdmin || session.user.equals(user))) {
+        if (User.loggedInUser()) {
+            if (!(User.loggedInUser().isAdmin() || User.loggedInUser().equals(user))) {
                 resourceSearchCO.visibility = Visibility.PUBLIC
             }
         } else
@@ -67,8 +70,8 @@ class UserController {
 
         TopicSearchCO topicSearchCO = new TopicSearchCO(id: id)
 
-        if (session.user) {
-            if (!(session.user.isAdmin || session.user.equals(User.load(id)))) {
+        if (User.loggedInUser()) {
+            if (!(User.loggedInUser().isAdmin() || User.loggedInUser().equals(User.load(id)))) {
                 topicSearchCO.visibility = Visibility.PUBLIC
             }
         } else
@@ -83,8 +86,8 @@ class UserController {
 
         TopicSearchCO topicSearchCO = new TopicSearchCO(id: id)
 
-        if (session.user) {
-            if (!(session.user.isAdmin || session.user.equals(User.load(id)))) {
+        if (User.loggedInUser()) {
+            if (!(User.loggedInUser().isAdmin() || User.loggedInUser().equals(User.load(id)))) {
                 topicSearchCO.visibility = Visibility.PUBLIC
             }
         } else
@@ -96,19 +99,20 @@ class UserController {
 
     }
 
+    @Secured(['ROLE_ADMIN'])
     def list(UserSearchCO userSearchCO) {
 
         userSearchCO.max = Constants.NUMBER_RECORDS_IN_LIST
         userSearchCO.offset = userSearchCO.offset ?: 0
 
-        if (session.user) {
-            if (session.user.isAdmin) {
+        if (User.loggedInUser()) {
+            if (User.loggedInUser().isAdmin()) {
 
                 List<User> users = User.search(userSearchCO).list(max: userSearchCO.max, offset: userSearchCO.offset, sort: userSearchCO.sort, order: userSearchCO.order)
 
                 List<UserVO> usersList = users?.collect {
                     user ->
-                        new UserVO(userId: user.id, userName: user.userName, emailID: user.emailID, firstName: user.firstName,
+                        new UserVO(userId: user.id, username: user.username, emailID: user.emailID, firstName: user.firstName,
                                 lastName: user.lastName, isActive: user.isActive)
                 }
 
@@ -118,15 +122,16 @@ class UserController {
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def toggleActive(Long id) {
-        if (session.user) {
+        if (User.loggedInUser()) {
 
-            if (session.user.isAdmin) {
+            if (User.loggedInUser().isAdmin()) {
 
                 User user = User.get(id)
 
                 if (user) {
-                    if (user.isAdmin) {
+                    if (user.isAdmin()) {
                         flash.error = "Admin active status cannot be changed."
                     } else
                         user.isActive = !(user.isActive)
@@ -163,7 +168,7 @@ class UserController {
 
                     def ctx = startAsync()
 
-                    ctx.start{
+                    ctx.start {
                         emailService.sendMail(emailDTO)
                     }
 
@@ -183,15 +188,16 @@ class UserController {
         redirect(controller: "login", action: "index")
     }
 
+    @Secured(['ROLE_NORMAL'])
     def save(UserUpdateCO updateUser) {
 
-        if (session.user) {
+        if (User.loggedInUser()) {
 
-            User sessionUser = User.get(session.user.id)
+            User sessionUser = User.get(User.loggedInUser().id)
 
             sessionUser.firstName = updateUser.firstName
             sessionUser.lastName = updateUser.lastName
-            sessionUser.userName = updateUser.userName
+            sessionUser.username = updateUser.username
 
             if (!params.pic.empty)
                 sessionUser.photo = params.pic.bytes
@@ -207,18 +213,21 @@ class UserController {
         }
     }
 
+    @Secured(['ROLE_NORMAL'])
     def edit() {
-        if (session.user) {
-            UserVO user = session.user.getInfo()
+        if (User.loggedInUser()) {
+            UserVO user = User.loggedInUser().getInfo()
             render(view: "edit", model: [user: user])
         }
     }
 
+
+    @Secured(['ROLE_NORMAL'])
     def updatePassword(UpdatePasswordCO updatePasswordCO) {
 
-        if (session.user) {
+        if (User.loggedInUser()) {
 
-            User user = User.get(session.user.id)
+            User user = User.get(User.loggedInUser().id)
 
             if (updatePasswordCO.oldPassword == user.password) {
 
@@ -247,7 +256,7 @@ class UserController {
         }
     }
 
-
+    @Secured(['ROLE_NORMAL'])
     def validateEmailForInvitation() {
 
         Integer numUser = User.countByEmailID(params.emailID)
@@ -257,10 +266,10 @@ class UserController {
         render result
     }
 
-
+    @Secured(['ROLE_NORMAL'])
     def validateOldPassword() {
 
-        User user = session.user
+        User user = User.loggedInUser()
 
         Boolean result = (user.password == params.oldPassword)
 

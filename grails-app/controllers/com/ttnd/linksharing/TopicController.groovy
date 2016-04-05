@@ -4,7 +4,9 @@ import CO.SearchCO
 import DTO.EmailDTO
 import enums.Visibility
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['permitAll'])
 class TopicController {
 
     def emailService
@@ -44,6 +46,7 @@ class TopicController {
         }
     }
 
+    @Secured(['ROLE_NORMAL'])
     def save(String topicName, String newTopicName, String visibility) {
         User user = session.user
         Map jsonResponseMap = [:]
@@ -95,7 +98,7 @@ class TopicController {
         }
     }
 
-
+    @Secured(['ROLE_NORMAL'])
     def delete(Long id) {
 
         Topic topic = Topic.get(id)
@@ -114,6 +117,7 @@ class TopicController {
 
     }
 
+    @Secured(['ROLE_NORMAL'])
     def invite(Long topic, String emailID) {
 
         Topic topicInstance = Topic.get(topic)
@@ -142,6 +146,7 @@ class TopicController {
         redirect(controller: "login", action: "index")
     }
 
+    @Secured(['ROLE_NORMAL'])
     def join(Long id) {
 
         if (session.user) {
@@ -159,6 +164,7 @@ class TopicController {
         }
     }
 
+    @Secured(['ROLE_NORMAL'])
     def validateTopicNameForSessionUser(){
 
         if(session.user){

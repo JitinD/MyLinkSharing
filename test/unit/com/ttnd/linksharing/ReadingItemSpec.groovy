@@ -34,7 +34,7 @@ class ReadingItemSpec extends Specification {
     def "validating reading item status is unique per user"()
     {
         setup:
-        User user = new User(userName: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
+        User user = new User(username: "testUser", firstName: "test", lastName: "User", emailID: "testUser@mail.com", password: "testPassword")
         Resource resource = new DocumentResource(description: "testDocResource", createdBy: user, filePath: "test/doc")
 
         ReadingItem readingItem = new ReadingItem(resource: resource, user: user, isRead: true)

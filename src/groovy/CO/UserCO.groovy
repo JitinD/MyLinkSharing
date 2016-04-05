@@ -6,7 +6,7 @@ import grails.validation.Validateable
 class UserCO {
 
     String emailID
-    String userName;
+    String username;
     String password;
     String confirmPassword;
     String firstName;
@@ -15,7 +15,7 @@ class UserCO {
 
 
     static constraints = {
-        userName(blank: false, null: false)
+        username(blank: false, null: false)
         emailID(unique: true, blank: false, nullable: false, email: true)
         password(nullable: false, blank: false, minSize: 5)
 

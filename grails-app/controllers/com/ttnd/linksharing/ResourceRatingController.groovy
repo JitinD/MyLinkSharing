@@ -1,5 +1,8 @@
 package com.ttnd.linksharing
 
+import grails.plugin.springsecurity.annotation.Secured
+
+@Secured(['ROLE_NORMAL'])
 class ResourceRatingController {
 
     def save(Long resourceId, Integer score)

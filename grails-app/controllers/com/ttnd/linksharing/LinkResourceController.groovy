@@ -1,5 +1,8 @@
 package com.ttnd.linksharing
 
+import grails.plugin.springsecurity.annotation.Secured
+
+@Secured(['permitAll'])
 class LinkResourceController extends ResourceController {
 
     def save(LinkResource linkResource) {
